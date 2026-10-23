@@ -5,7 +5,10 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   turbopack: {
     rules: {
-      "*.css": {
+      "*": {
+        condition: {
+          all: [{ path: "*.css" }, { not: { path: "*.module.css" } }],
+        },
         loaders: ["@tailwindcss/turbopack"],
         as: "*.css",
       },

@@ -1,0 +1,531 @@
+.sidebar {
+  --sidebar-expanded-width: 265px;
+  --sidebar-collapsed-width: 76px;
+  --sidebar-expanded-inset: 18px;
+  --sidebar-collapsed-inset: 12px;
+  --sidebar-navigation-row-height: 32px;
+  --sidebar-icon-row-height: 40px;
+  --sidebar-item-gap: 10px;
+
+  position: sticky;
+  inset-block-start: 0;
+  display: grid;
+  block-size: 100dvh;
+  grid-template-rows: 70px auto minmax(0, 1fr);
+  inline-size: var(--sidebar-expanded-width);
+  flex: 0 0 var(--sidebar-expanded-width);
+  overflow: visible;
+  border-inline-end: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--ams-color-surface-sidebar);
+  color: var(--ams-color-text-inverse);
+  transition:
+    inline-size 160ms ease,
+    flex-basis 160ms ease;
+}
+
+.branding {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-inline-size: 0;
+  padding: 14px 18px 14px;
+  border-block-end: 1px dashed rgba(255, 255, 255, 0.07);
+}
+
+.brandMark {
+  display: grid;
+  grid-template-columns: repeat(2, 7px);
+  grid-template-rows: repeat(2, 7px);
+  gap: 2px;
+  flex: 0 0 auto;
+  inline-size: 40px;
+  block-size: 40px;
+  place-content: center;
+  border-radius: var(--ams-radius-8);
+  background: var(--ams-color-action-primary-background);
+}
+
+.brandMark span {
+  display: block;
+  inline-size: 7px;
+  block-size: 7px;
+  border-radius: 2px;
+  background: var(--ams-color-text-inverse);
+}
+
+.brandMark span:nth-child(2) {
+  border-radius: 7px 2px 2px;
+}
+
+.brandMark span:nth-child(3) {
+  border-radius: 2px 2px 7px;
+}
+
+.brandName {
+  overflow: hidden;
+  color: var(--ams-color-action-primary-background);
+  font-size: 24px;
+  font-weight: var(--ams-font-weight-bold);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.sidebarToggle {
+  position: absolute;
+  inset-inline-end: -10px;
+  inset-block-start: 50%;
+  display: grid;
+  inline-size: 20px;
+  block-size: 20px;
+  padding: 0;
+  border: 1px solid var(--ams-color-border-default);
+  border-radius: 50%;
+  place-items: center;
+  transform: translateY(-50%);
+  background: var(--ams-color-surface-sidebar);
+  color: var(--ams-color-text-inverse);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.sidebarToggle svg {
+  inline-size: 13px;
+  block-size: 13px;
+}
+
+.sidebarToggle:focus-visible,
+.groupTrigger:focus-visible,
+.navigationItem:focus-visible,
+.collapsedCategoryTrigger:focus-visible,
+.collapsedSearchButton:focus-visible,
+.searchInput:focus-visible {
+  outline: 3px solid var(--ams-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+  inline-size: 229px;
+  min-inline-size: 0;
+  block-size: 40px;
+  margin: 14px var(--sidebar-expanded-inset) 12px;
+  gap: var(--ams-spacing-2-5);
+  border: 1px solid var(--ams-color-sidebar-search-background);
+  border-radius: var(--ams-radius-5);
+  padding: var(--ams-spacing-2-5);
+  background: var(--ams-color-sidebar-search-background);
+}
+
+.collapsedSearchButton {
+  display: none;
+}
+
+.searchIcon {
+  flex: 0 0 auto;
+  color: var(--ams-color-text-inverse);
+  opacity: 0.82;
+}
+
+.searchInput {
+  min-inline-size: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ams-color-text-inverse);
+  font: inherit;
+  font-size: var(--ams-typography-body-normal-font-size);
+}
+
+.searchInput::placeholder {
+  color: var(--ams-color-text-muted);
+  opacity: 1;
+}
+
+.navigation {
+  min-block-size: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: 4px var(--sidebar-expanded-inset) 24px;
+  /* Figma has no visible gutter; retain native scrolling without its indicator. */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.navigation::-webkit-scrollbar {
+  display: none;
+}
+
+.group + .group {
+  margin-block-start: 18px;
+}
+
+.groupHeading {
+  margin: 0 0 9px;
+  color: var(--ams-color-text-muted);
+  font-size: 9px;
+  font-weight: var(--ams-font-weight-medium);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.groupTrigger {
+  display: flex;
+  inline-size: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ams-spacing-2);
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.groupTriggerLabel {
+  display: inline-flex;
+  min-inline-size: 0;
+  align-items: center;
+  gap: var(--ams-spacing-2);
+}
+
+.groupIcon {
+  inline-size: 14px;
+  block-size: 14px;
+  flex: 0 0 auto;
+}
+
+.groupTrigger svg {
+  flex: 0 0 auto;
+  inline-size: 14px;
+  block-size: 14px;
+}
+
+.navigationList {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  gap: 3px;
+  list-style: none;
+}
+
+.nestedNavigationList {
+  display: grid;
+  margin: 0 0 0 7px;
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.11);
+  padding: 0 0 0 var(--ams-spacing-3);
+  gap: 1px;
+  list-style: none;
+}
+
+.nestedNavigationList .navigationItem {
+  min-block-size: 26px;
+  border-radius: var(--ams-radius-4);
+  padding: 4px 0;
+  font-size: 10px;
+  line-height: 18px;
+}
+
+.nestedNavigationList .navigationItem::before {
+  inline-size: var(--ams-spacing-2);
+  block-size: 1px;
+  margin-inline-start: calc(var(--ams-spacing-3) * -1);
+  background: rgba(255, 255, 255, 0.11);
+  content: "";
+}
+
+.navigationItem {
+  display: flex;
+  min-block-size: var(--sidebar-navigation-row-height);
+  align-items: center;
+  gap: var(--sidebar-item-gap);
+  border-radius: var(--ams-radius-5);
+  padding: 7px 8px;
+  color: var(--ams-color-text-inverse);
+  font-size: var(--ams-typography-body-normal-font-size);
+  font-weight: var(--ams-font-weight-regular);
+  line-height: 18px;
+  text-decoration: none;
+}
+
+a.navigationItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.currentItem {
+  background: var(--ams-color-action-primary-background);
+  /* Figma requires white on blue here; this 3.63:1 pairing is a documented visual exception. */
+  color: var(--ams-color-action-primary-foreground);
+  font-weight: var(--ams-font-weight-medium);
+}
+
+a.currentItem:hover {
+  background: var(--ams-color-action-primary-background);
+}
+
+.navigationIcon {
+  flex: 0 0 auto;
+  color: var(--ams-color-text-muted);
+}
+
+.currentItem .navigationIcon {
+  color: currentColor;
+}
+
+.currentItem:focus-visible {
+  outline-color: var(--ams-color-text-inverse);
+}
+
+.navigationLabel {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emptySearchResult {
+  margin: 12px 0;
+  color: var(--ams-color-text-inverse);
+  font-size: var(--ams-typography-body-normal-font-size);
+  line-height: 1.5;
+}
+
+.collapsedNavigationGroups {
+  display: grid;
+  gap: var(--ams-spacing-3);
+}
+
+.collapsedDashboardList,
+.categoryFlyoutList {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  gap: 6px;
+  list-style: none;
+}
+
+.collapsedCategoryList {
+  display: grid;
+  gap: 6px;
+}
+
+.collapsedCategoryTrigger {
+  display: grid;
+  inline-size: 100%;
+  min-block-size: var(--sidebar-icon-row-height);
+  place-items: center;
+  border: 0;
+  border-radius: var(--ams-radius-5);
+  padding: 0;
+  background: transparent;
+  color: var(--ams-color-text-muted);
+  cursor: pointer;
+}
+
+.collapsedCategoryTrigger:hover,
+.collapsedCategoryTrigger[data-open] {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--ams-color-text-inverse);
+}
+
+.collapsedCategoryTrigger svg {
+  inline-size: 19px;
+  block-size: 19px;
+}
+
+.categoryFlyout {
+  inline-size: min(260px, calc(100vw - 100px));
+  max-block-size: calc(100dvh - 24px);
+  overflow-y: auto;
+  border: 1px solid var(--ams-color-border-subtle);
+  border-radius: var(--ams-radius-8);
+  padding: var(--ams-spacing-3);
+  background: var(--ams-color-surface-card);
+  box-shadow: 0 12px 24px rgb(13 14 18 / 16%);
+}
+
+.categoryFlyoutHeading {
+  margin: 0 0 var(--ams-spacing-2);
+  color: var(--ams-color-text-secondary);
+  font-size: var(--ams-typography-body-medium-font-size);
+  font-weight: var(--ams-font-weight-medium);
+  line-height: 1.3;
+}
+
+.categoryFlyoutItem {
+  min-block-size: 32px;
+  border-radius: var(--ams-radius-5);
+  padding: 7px var(--ams-spacing-2);
+  color: var(--ams-color-text-secondary);
+  font-size: var(--ams-typography-body-medium-font-size);
+  line-height: 18px;
+}
+
+.categoryFlyoutItem:focus-visible {
+  outline: 3px solid var(--ams-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.sidebarCollapsed {
+  inline-size: var(--sidebar-collapsed-width);
+  flex-basis: var(--sidebar-collapsed-width);
+}
+
+.sidebarExpanded {
+  inline-size: var(--sidebar-expanded-width);
+  flex-basis: var(--sidebar-expanded-width);
+}
+
+.sidebarCollapsed .branding {
+  justify-content: center;
+  padding-inline: 18px;
+}
+
+.sidebarCollapsed .brandName,
+.sidebarCollapsed .searchForm,
+.sidebarCollapsed .groupHeading {
+  display: none;
+}
+
+.sidebarCollapsed .navigation {
+  padding-inline: var(--sidebar-collapsed-inset);
+}
+
+.sidebarCollapsed .collapsedSearchButton {
+  display: grid;
+  inline-size: calc(100% - (var(--sidebar-collapsed-inset) * 2));
+  block-size: var(--sidebar-icon-row-height);
+  margin: 14px var(--sidebar-collapsed-inset) 12px;
+  border: 1px solid var(--ams-color-sidebar-search-background);
+  border-radius: var(--ams-radius-5);
+  place-items: center;
+  background: var(--ams-color-sidebar-search-background);
+  color: var(--ams-color-text-inverse);
+  cursor: pointer;
+}
+
+.sidebarCollapsed .collapsedSearchButton svg {
+  inline-size: 19px;
+  block-size: 19px;
+}
+
+.sidebarCollapsed .group + .group {
+  margin-block-start: 12px;
+}
+
+.sidebarCollapsed .navigationList {
+  gap: 6px;
+}
+
+.sidebarCollapsed .navigationItem {
+  justify-content: center;
+  min-block-size: var(--sidebar-icon-row-height);
+  padding-inline: 0;
+}
+
+.sidebarCollapsed .navigationIcon {
+  inline-size: 19px;
+  block-size: 19px;
+}
+
+.sidebarCollapsed .navigationLabel {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+  .sidebar:not(.sidebarExpanded) {
+    inline-size: var(--sidebar-collapsed-width);
+    flex-basis: var(--sidebar-collapsed-width);
+  }
+
+  .sidebar:not(.sidebarExpanded) .branding {
+    justify-content: center;
+    padding-inline: 18px;
+  }
+
+  .sidebar:not(.sidebarExpanded) .brandName,
+  .sidebar:not(.sidebarExpanded) .searchForm,
+  .sidebar:not(.sidebarExpanded) .groupHeading {
+    display: none;
+  }
+
+  .sidebar:not(.sidebarExpanded) .navigation {
+    padding-inline: var(--sidebar-collapsed-inset);
+  }
+
+  .sidebar:not(.sidebarExpanded) .collapsedSearchButton {
+    display: grid;
+    inline-size: calc(100% - (var(--sidebar-collapsed-inset) * 2));
+    block-size: var(--sidebar-icon-row-height);
+    margin: 14px var(--sidebar-collapsed-inset) 12px;
+    border: 1px solid var(--ams-color-sidebar-search-background);
+    border-radius: var(--ams-radius-5);
+    place-items: center;
+    background: var(--ams-color-sidebar-search-background);
+    color: var(--ams-color-text-inverse);
+    cursor: pointer;
+  }
+
+  .sidebar:not(.sidebarExpanded) .collapsedSearchButton svg {
+    inline-size: 19px;
+    block-size: 19px;
+  }
+
+  .sidebar:not(.sidebarExpanded) .group + .group {
+    margin-block-start: 12px;
+  }
+
+  .sidebar:not(.sidebarExpanded) .navigationList {
+    gap: 6px;
+  }
+
+  .sidebar:not(.sidebarExpanded) .navigationItem {
+    justify-content: center;
+    min-block-size: var(--sidebar-icon-row-height);
+    padding-inline: 0;
+  }
+
+  .sidebar:not(.sidebarExpanded) .navigationIcon {
+    inline-size: 19px;
+    block-size: 19px;
+  }
+
+  .sidebar:not(.sidebarExpanded) .navigationLabel {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar {
+    transition: none;
+  }
+}

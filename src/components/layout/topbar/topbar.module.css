@@ -1,0 +1,125 @@
+.topbar {
+  display: flex;
+  block-size: 70px;
+  flex: 0 0 70px;
+  align-items: center;
+  justify-content: flex-end;
+  border-block-end: 1px solid var(--ams-color-border-subtle);
+  padding-inline: clamp(var(--ams-spacing-4), 2vw, var(--ams-spacing-6));
+  background: var(--ams-color-surface-card);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--ams-spacing-2);
+}
+
+.iconButton,
+.profileButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--ams-radius-5);
+  background: transparent;
+  color: var(--ams-color-text-secondary);
+  font: inherit;
+  cursor: default;
+}
+
+.iconButton {
+  inline-size: 32px;
+  block-size: 32px;
+  padding: 0;
+}
+
+.topbarIconImage {
+  inline-size: 19px;
+  block-size: 19px;
+  object-fit: contain;
+}
+
+.profileButton {
+  min-inline-size: 0;
+  gap: var(--ams-spacing-2-5);
+  margin-inline-start: var(--ams-spacing-1);
+  padding: var(--ams-spacing-1);
+  padding-inline-end: 0;
+  text-align: start;
+}
+
+.avatar {
+  display: grid;
+  inline-size: 40px;
+  block-size: 40px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  place-items: center;
+  background: var(--ams-color-action-primary-subtle);
+  color: var(--ams-color-action-primary-background);
+  font-size: var(--ams-font-size-14);
+  font-weight: var(--ams-font-weight-bold);
+}
+
+.profileDetails {
+  display: grid;
+  min-inline-size: 0;
+  gap: 2px;
+  line-height: 1.1;
+}
+
+.profileName {
+  overflow: hidden;
+  color: var(--ams-color-text-primary);
+  font-size: var(--ams-typography-body-medium-font-size);
+  font-weight: var(--ams-font-weight-medium);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profileRole {
+  overflow: hidden;
+  color: var(--ams-color-text-secondary);
+  font-size: var(--ams-typography-body-normal-font-size);
+  font-weight: var(--ams-font-weight-regular);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profileChevron {
+  inline-size: 16px;
+  block-size: 16px;
+  flex: 0 0 auto;
+}
+
+.iconButton:focus-visible,
+.profileButton:focus-visible {
+  outline: 3px solid var(--ams-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 860px) {
+  .topbar {
+    padding-inline: var(--ams-spacing-4);
+  }
+
+  .controls {
+    gap: var(--ams-spacing-1);
+  }
+
+  .profileButton {
+    gap: var(--ams-spacing-2);
+  }
+}

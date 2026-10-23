@@ -1,0 +1,17 @@
+.shell {
+  display: flex;
+  min-block-size: 100dvh;
+  background: var(--ams-color-surface-page);
+}
+
+.workspace {
+  display: flex;
+  min-inline-size: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.content {
+  min-inline-size: 0;
+  flex: 1 1 auto;
+}
