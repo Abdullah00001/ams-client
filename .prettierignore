@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Build and cache artifacts
+.next/
+out/
+build/
+dist/
+coverage/
+
+# Next.js environment declarations
+next-env.d.ts
+
+# Package lockfiles
+pnpm-lock.yaml
