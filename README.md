@@ -52,9 +52,10 @@ Frontend client for the Academy Management System (AMS) dashboard, built with Ne
   - Next.js App Router root layout and root landing route (`src/app/page.tsx`).
   - ESLint flat configuration and Prettier configuration established.
   - Quality verification scripts (`typecheck`, `format:check`, `format`, `lint`) enabled.
+  - Style Dictionary generates primitive and semantic `--ams-*` custom properties for `src/styles/tokens.css`.
+  - Global CSS imports generated tokens before Tailwind v4 and exposes a focused semantic utility set.
+  - `--ams-font-family-sans` remains the intended design-stack token; licensed local Inter is loaded by `next/font/local` through `--font-inter-next`.
 - **Planned / Pending Implementation (Future Chunks):**
-  - **Design Tokens:** Style Dictionary v5 pipeline and DTCG token sources (`tokens/`).
-  - **Typography:** Inter font family integration via `next/font/google`.
   - **Components:** Reusable UI library (`src/components/ui/`) leveraging Base UI and CSS Modules.
   - **Dashboard Shell:** Sidebar, Topbar, and responsive desktop-to-tablet shell (`src/components/layout/`).
   - **Dashboard Routes:** Primary dashboard route at `src/app/(dashboard)/dashboard/page.tsx`.
@@ -74,6 +75,8 @@ The project enforces a clear styling contract:
    - Component visual surfaces, borders, elevations, hover/focus states, and micro-interactions.
 4. **Accessible Headless Primitives:**
    - Base UI (`@base-ui/react`) for compound interactive elements (Dialog, Menu, Tooltip).
+5. **Accessibility Policy:**
+   - Component color usage and contrast decisions are documented in [`docs/accessibility-and-color-usage.md`](docs/accessibility-and-color-usage.md).
 
 ---
 

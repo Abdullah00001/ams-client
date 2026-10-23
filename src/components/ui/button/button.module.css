@@ -1,0 +1,58 @@
+.button {
+  display: inline-flex;
+  min-block-size: calc(var(--ams-spacing-6) + var(--ams-spacing-5));
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: var(--ams-radius-6);
+  padding-block: var(--ams-spacing-1);
+  font-family: inherit;
+  font-weight: var(--ams-font-weight-medium);
+  text-align: center;
+  cursor: pointer;
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--ams-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  border-color: var(--ams-color-border-default);
+  background-color: var(--ams-color-surface-subtle);
+  color: var(--ams-color-text-secondary);
+  cursor: not-allowed;
+}
+
+.primary {
+  border-color: var(--ams-color-action-primary-background);
+  background-color: var(--ams-color-action-primary-background);
+  /* Provisional AA pairing: dark text on primary blue is 5.32:1. */
+  color: var(--ams-color-text-primary);
+}
+
+.secondary {
+  border-color: var(--ams-color-border-default);
+  background-color: var(--ams-color-surface-card);
+  color: var(--ams-color-text-primary);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--ams-color-text-primary);
+}
+
+.sm {
+  padding-inline: var(--ams-spacing-2);
+  font-size: var(--ams-typography-body-normal-font-size);
+}
+
+.md {
+  padding-inline: var(--ams-spacing-3);
+  font-size: var(--ams-typography-body-medium-font-size);
+}
+
+.lg {
+  padding-inline: var(--ams-spacing-4);
+  font-size: var(--ams-typography-body-large-font-size);
+}

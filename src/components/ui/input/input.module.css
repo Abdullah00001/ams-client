@@ -1,0 +1,73 @@
+.field {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--ams-spacing-1);
+}
+
+.label {
+  color: var(--ams-color-text-primary);
+  font-family: inherit;
+  font-size: var(--ams-typography-body-medium-font-size);
+  font-weight: var(--ams-font-weight-medium);
+}
+
+.input {
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: calc(var(--ams-spacing-6) + var(--ams-spacing-5));
+  border: 1px solid var(--ams-color-text-secondary);
+  border-radius: var(--ams-radius-6);
+  padding-inline: var(--ams-spacing-3);
+  background-color: var(--ams-color-surface-card);
+  color: var(--ams-color-text-primary);
+  font-family: inherit;
+  font-size: var(--ams-typography-body-medium-font-size);
+  font-weight: var(--ams-typography-body-medium-font-weight);
+}
+
+.input::placeholder {
+  color: var(--ams-color-text-secondary);
+}
+
+.input:focus-visible {
+  outline: 3px solid var(--ams-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.input:disabled {
+  background-color: var(--ams-color-surface-subtle);
+  color: var(--ams-color-text-secondary);
+  cursor: not-allowed;
+}
+
+.input:read-only:not(:disabled) {
+  background-color: var(--ams-color-surface-subtle);
+  color: var(--ams-color-text-primary);
+}
+
+.input.invalid {
+  border-color: var(--ams-color-feedback-error);
+}
+
+.helperText,
+.errorText {
+  margin: 0;
+  color: var(--ams-color-text-secondary);
+  font-family: inherit;
+  font-size: var(--ams-typography-body-normal-font-size);
+  font-weight: var(--ams-typography-body-normal-font-weight);
+}
+
+.errorLabel {
+  font-weight: var(--ams-font-weight-medium);
+}
+
+.visuallyHidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

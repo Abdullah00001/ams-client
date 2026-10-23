@@ -1,0 +1,8 @@
+.card {
+  min-inline-size: 0;
+  border: 1px solid var(--ams-color-border-subtle);
+  border-radius: var(--ams-radius-8);
+  padding: var(--ams-spacing-4);
+  background-color: var(--ams-color-surface-card);
+  color: var(--ams-color-text-primary);
+}
