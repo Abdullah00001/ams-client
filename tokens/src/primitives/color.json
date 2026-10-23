@@ -1,0 +1,154 @@
+{
+  "color": {
+    "base": {
+      "black": {
+        "$value": "#0D0E12",
+        "$type": "color",
+        "$description": "Core dark base color",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "white": {
+        "$value": "#FFFFFF",
+        "$type": "color",
+        "$description": "Core white base color",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      }
+    },
+    "primary": {
+      "100": {
+        "$value": "#E8F3FF",
+        "$type": "color",
+        "$description": "Primary brand tint 100",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "200": {
+        "$value": "#D1E6FF",
+        "$type": "color",
+        "$description": "Primary brand tint 200",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "300": {
+        "$value": "#1B84FF",
+        "$type": "color",
+        "$description": "Primary brand accent 300",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      }
+    },
+    "grayscale": {
+      "100": {
+        "$value": "#F4F6FA",
+        "$type": "color",
+        "$description": "Grayscale 100 surface tint",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "200": {
+        "$value": "#EFF1F4",
+        "$type": "color",
+        "$description": "Grayscale 200 border and subtle tint",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "300": {
+        "$value": "#99A1B7",
+        "$type": "color",
+        "$description": "Grayscale 300 muted text and icon tone",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "400": {
+        "$value": "#071437",
+        "$type": "color",
+        "$description": "Grayscale 400 deep text and dark surface",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      }
+    },
+    "status": {
+      "success": {
+        "$value": "#17C653",
+        "$type": "color",
+        "$description": "Status success indicator",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "warning": {
+        "$value": "#F6C000",
+        "$type": "color",
+        "$description": "Status warning indicator",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "error": {
+        "$value": "#F8285A",
+        "$type": "color",
+        "$description": "Status error indicator",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "info": {
+        "$value": "#009FFD",
+        "$type": "color",
+        "$description": "Status info indicator",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      }
+    },
+    "sidebar": {
+      "search-background": {
+        "$value": "#2C2C41",
+        "$type": "color",
+        "$description": "Sidebar search input background color",
+        "$extensions": {
+          "ams": {
+            "provenance": "OBSERVED"
+          }
+        }
+      }
+    }
+  }
+}

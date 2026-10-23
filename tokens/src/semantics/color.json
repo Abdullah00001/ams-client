@@ -1,0 +1,198 @@
+{
+  "color": {
+    "text": {
+      "primary": {
+        "$value": "{color.base.black}",
+        "$type": "color",
+        "$description": "Primary text color",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      },
+      "secondary": {
+        "$value": "{color.grayscale.400}",
+        "$type": "color",
+        "$description": "Secondary text color",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      },
+      "muted": {
+        "$value": "{color.grayscale.300}",
+        "$type": "color",
+        "$description": "Muted text color; contrast requires context-specific review",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      },
+      "inverse": {
+        "$value": "{color.base.white}",
+        "$type": "color",
+        "$description": "Text color for dark surfaces",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      }
+    },
+    "surface": {
+      "page": {
+        "$value": "{color.grayscale.100}",
+        "$type": "color",
+        "$description": "Page background surface",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      },
+      "card": {
+        "$value": "{color.base.white}",
+        "$type": "color",
+        "$description": "Card background surface",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      },
+      "subtle": {
+        "$value": "{color.grayscale.200}",
+        "$type": "color",
+        "$description": "Subtle background surface",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      },
+      "sidebar": {
+        "$value": "{color.base.black}",
+        "$type": "color",
+        "$description": "Confirmed sidebar background surface",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      }
+    },
+    "border": {
+      "subtle": {
+        "$value": "{color.grayscale.200}",
+        "$type": "color",
+        "$description": "Subtle border color",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      },
+      "default": {
+        "$value": "{color.grayscale.300}",
+        "$type": "color",
+        "$description": "Default border color",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      }
+    },
+    "action": {
+      "primary": {
+        "background": {
+          "$value": "{color.primary.300}",
+          "$type": "color",
+          "$description": "Primary action background color",
+          "$extensions": {
+            "ams": {
+              "provenance": "ASSUMED"
+            }
+          }
+        },
+        "foreground": {
+          "$value": "{color.base.white}",
+          "$type": "color",
+          "$description": "Primary action foreground color",
+          "$extensions": {
+            "ams": {
+              "provenance": "ASSUMED"
+            }
+          }
+        },
+        "subtle": {
+          "$value": "{color.primary.100}",
+          "$type": "color",
+          "$description": "Subtle primary action color",
+          "$extensions": {
+            "ams": {
+              "provenance": "ASSUMED"
+            }
+          }
+        }
+      }
+    },
+    "feedback": {
+      "success": {
+        "$value": "{color.status.success}",
+        "$type": "color",
+        "$description": "Success feedback color",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      },
+      "warning": {
+        "$value": "{color.status.warning}",
+        "$type": "color",
+        "$description": "Warning feedback color",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      },
+      "error": {
+        "$value": "{color.status.error}",
+        "$type": "color",
+        "$description": "Error feedback color",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      },
+      "info": {
+        "$value": "{color.status.info}",
+        "$type": "color",
+        "$description": "Informational feedback color",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      }
+    },
+    "focus": {
+      "ring": {
+        "$value": "{color.primary.300}",
+        "$type": "color",
+        "$description": "Assumed focus ring color; rendered focus treatment requires accessibility review",
+        "$extensions": {
+          "ams": {
+            "provenance": "ASSUMED"
+          }
+        }
+      }
+    }
+  }
+}

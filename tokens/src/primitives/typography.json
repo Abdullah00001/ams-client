@@ -1,0 +1,120 @@
+{
+  "font": {
+    "family": {
+      "sans": {
+        "$value": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+        "$type": "fontFamily",
+        "$description": "Primary sans-serif font family stack with Inter",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      }
+    },
+    "size": {
+      "12": {
+        "$value": "12px",
+        "$type": "dimension",
+        "$description": "12px font size",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "14": {
+        "$value": "14px",
+        "$type": "dimension",
+        "$description": "14px font size",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "16": {
+        "$value": "16px",
+        "$type": "dimension",
+        "$description": "16px font size",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "18": {
+        "$value": "18px",
+        "$type": "dimension",
+        "$description": "18px font size",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "20": {
+        "$value": "20px",
+        "$type": "dimension",
+        "$description": "20px font size",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "24": {
+        "$value": "24px",
+        "$type": "dimension",
+        "$description": "24px font size",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      }
+    },
+    "weight": {
+      "regular": {
+        "$value": "400",
+        "$type": "fontWeight",
+        "$description": "Regular 400 font weight",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "medium": {
+        "$value": "500",
+        "$type": "fontWeight",
+        "$description": "Medium 500 font weight",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "semibold": {
+        "$value": "600",
+        "$type": "fontWeight",
+        "$description": "Semibold 600 font weight",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      },
+      "bold": {
+        "$value": "700",
+        "$type": "fontWeight",
+        "$description": "Bold 700 font weight",
+        "$extensions": {
+          "ams": {
+            "provenance": "CONFIRMED"
+          }
+        }
+      }
+    }
+  }
+}

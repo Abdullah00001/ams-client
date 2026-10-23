@@ -1,0 +1,74 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --ams-color-base-black: #0d0e12;
+  --ams-color-base-white: #ffffff;
+  --ams-color-primary-100: #e8f3ff;
+  --ams-color-primary-200: #d1e6ff;
+  --ams-color-primary-300: #1b84ff;
+  --ams-color-grayscale-100: #f4f6fa;
+  --ams-color-grayscale-200: #eff1f4;
+  --ams-color-grayscale-300: #99a1b7;
+  --ams-color-grayscale-400: #071437;
+  --ams-color-status-success: #17c653;
+  --ams-color-status-warning: #f6c000;
+  --ams-color-status-error: #f8285a;
+  --ams-color-status-info: #009ffd;
+  --ams-color-sidebar-search-background: #2c2c41;
+  --ams-radius-4: 4px;
+  --ams-radius-5: 5px;
+  --ams-radius-6: 6px;
+  --ams-radius-8: 8px;
+  --ams-radius-15: 15px;
+  --ams-spacing-1: 4px;
+  --ams-spacing-2: 8px;
+  --ams-spacing-3: 12px;
+  --ams-spacing-4: 16px;
+  --ams-spacing-5: 20px;
+  --ams-spacing-6: 24px;
+  --ams-spacing-2-5: 10px;
+  --ams-font-family-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ams-font-size-12: 12px;
+  --ams-font-size-14: 14px;
+  --ams-font-size-16: 16px;
+  --ams-font-size-18: 18px;
+  --ams-font-size-20: 20px;
+  --ams-font-size-24: 24px;
+  --ams-font-weight-regular: 400;
+  --ams-font-weight-medium: 500;
+  --ams-font-weight-semibold: 600;
+  --ams-font-weight-bold: 700;
+  --ams-color-text-primary: var(--ams-color-base-black);
+  --ams-color-text-secondary: var(--ams-color-grayscale-400);
+  --ams-color-text-muted: var(--ams-color-grayscale-300);
+  --ams-color-text-inverse: var(--ams-color-base-white);
+  --ams-color-surface-page: var(--ams-color-grayscale-100);
+  --ams-color-surface-card: var(--ams-color-base-white);
+  --ams-color-surface-subtle: var(--ams-color-grayscale-200);
+  --ams-color-surface-sidebar: var(--ams-color-base-black);
+  --ams-color-border-subtle: var(--ams-color-grayscale-200);
+  --ams-color-border-default: var(--ams-color-grayscale-300);
+  --ams-color-action-primary-background: var(--ams-color-primary-300);
+  --ams-color-action-primary-foreground: var(--ams-color-base-white);
+  --ams-color-action-primary-subtle: var(--ams-color-primary-100);
+  --ams-color-feedback-success: var(--ams-color-status-success);
+  --ams-color-feedback-warning: var(--ams-color-status-warning);
+  --ams-color-feedback-error: var(--ams-color-status-error);
+  --ams-color-feedback-info: var(--ams-color-status-info);
+  --ams-color-focus-ring: var(--ams-color-primary-300);
+  --ams-typography-heading-h1-font-size: var(--ams-font-size-24);
+  --ams-typography-heading-h1-font-weight: var(--ams-font-weight-bold);
+  --ams-typography-heading-h2-font-size: var(--ams-font-size-20);
+  --ams-typography-heading-h2-font-weight: var(--ams-font-weight-bold);
+  --ams-typography-heading-h3-font-size: var(--ams-font-size-18);
+  --ams-typography-heading-h3-font-weight: var(--ams-font-weight-medium);
+  --ams-typography-heading-h4-font-size: var(--ams-font-size-16);
+  --ams-typography-body-large-font-size: var(--ams-font-size-16);
+  --ams-typography-body-large-font-weight: var(--ams-font-weight-regular);
+  --ams-typography-body-medium-font-size: var(--ams-font-size-14);
+  --ams-typography-body-medium-font-weight: var(--ams-font-weight-regular);
+  --ams-typography-body-normal-font-size: var(--ams-font-size-12);
+  --ams-typography-body-normal-font-weight: var(--ams-font-weight-regular);
+}

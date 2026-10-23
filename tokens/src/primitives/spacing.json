@@ -1,0 +1,74 @@
+{
+  "spacing": {
+    "1": {
+      "$value": "4px",
+      "$type": "dimension",
+      "$description": "Observed 4px spacing unit",
+      "$extensions": {
+        "ams": {
+          "provenance": "OBSERVED"
+        }
+      }
+    },
+    "2": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "Observed 8px spacing unit",
+      "$extensions": {
+        "ams": {
+          "provenance": "OBSERVED"
+        }
+      }
+    },
+    "2-5": {
+      "$value": "10px",
+      "$type": "dimension",
+      "$description": "Observed 10px spacing unit",
+      "$extensions": {
+        "ams": {
+          "provenance": "OBSERVED"
+        }
+      }
+    },
+    "3": {
+      "$value": "12px",
+      "$type": "dimension",
+      "$description": "Observed 12px spacing unit",
+      "$extensions": {
+        "ams": {
+          "provenance": "OBSERVED"
+        }
+      }
+    },
+    "4": {
+      "$value": "16px",
+      "$type": "dimension",
+      "$description": "Observed 16px spacing unit",
+      "$extensions": {
+        "ams": {
+          "provenance": "OBSERVED"
+        }
+      }
+    },
+    "5": {
+      "$value": "20px",
+      "$type": "dimension",
+      "$description": "Observed 20px spacing unit",
+      "$extensions": {
+        "ams": {
+          "provenance": "OBSERVED"
+        }
+      }
+    },
+    "6": {
+      "$value": "24px",
+      "$type": "dimension",
+      "$description": "Observed 24px spacing unit",
+      "$extensions": {
+        "ams": {
+          "provenance": "OBSERVED"
+        }
+      }
+    }
+  }
+}

@@ -9,7 +9,9 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "format:check": "prettier --check .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "tokens:build": "node tokens/config.mjs",
+    "tokens:check": "node tokens/check.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

@@ -1,0 +1,152 @@
+{
+  "typography": {
+    "heading": {
+      "h1": {
+        "font-size": {
+          "$value": "{font.size.24}",
+          "$type": "dimension",
+          "$description": "H1 font size",
+          "$extensions": {
+            "ams": {
+              "provenance": "CONFIRMED"
+            }
+          }
+        },
+        "font-weight": {
+          "$value": "{font.weight.bold}",
+          "$type": "fontWeight",
+          "$description": "H1 font weight",
+          "$extensions": {
+            "ams": {
+              "provenance": "CONFIRMED"
+            }
+          }
+        }
+      },
+      "h2": {
+        "font-size": {
+          "$value": "{font.size.20}",
+          "$type": "dimension",
+          "$description": "H2 font size",
+          "$extensions": {
+            "ams": {
+              "provenance": "CONFIRMED"
+            }
+          }
+        },
+        "font-weight": {
+          "$value": "{font.weight.bold}",
+          "$type": "fontWeight",
+          "$description": "H2 font weight",
+          "$extensions": {
+            "ams": {
+              "provenance": "CONFIRMED"
+            }
+          }
+        }
+      },
+      "h3": {
+        "font-size": {
+          "$value": "{font.size.18}",
+          "$type": "dimension",
+          "$description": "H3 font size",
+          "$extensions": {
+            "ams": {
+              "provenance": "CONFIRMED"
+            }
+          }
+        },
+        "font-weight": {
+          "$value": "{font.weight.medium}",
+          "$type": "fontWeight",
+          "$description": "H3 font weight",
+          "$extensions": {
+            "ams": {
+              "provenance": "CONFIRMED"
+            }
+          }
+        }
+      },
+      "h4": {
+        "font-size": {
+          "$value": "{font.size.16}",
+          "$type": "dimension",
+          "$description": "H4 font size; weight remains contextual",
+          "$extensions": {
+            "ams": {
+              "provenance": "CONFIRMED"
+            }
+          }
+        }
+      }
+    },
+    "body": {
+      "large": {
+        "font-size": {
+          "$value": "{font.size.16}",
+          "$type": "dimension",
+          "$description": "Large body font size",
+          "$extensions": {
+            "ams": {
+              "provenance": "CONFIRMED"
+            }
+          }
+        },
+        "font-weight": {
+          "$value": "{font.weight.regular}",
+          "$type": "fontWeight",
+          "$description": "Large body font weight",
+          "$extensions": {
+            "ams": {
+              "provenance": "CONFIRMED"
+            }
+          }
+        }
+      },
+      "medium": {
+        "font-size": {
+          "$value": "{font.size.14}",
+          "$type": "dimension",
+          "$description": "Medium body font size",
+          "$extensions": {
+            "ams": {
+              "provenance": "CONFIRMED"
+            }
+          }
+        },
+        "font-weight": {
+          "$value": "{font.weight.regular}",
+          "$type": "fontWeight",
+          "$description": "Medium body font weight",
+          "$extensions": {
+            "ams": {
+              "provenance": "CONFIRMED"
+            }
+          }
+        }
+      },
+      "normal": {
+        "font-size": {
+          "$value": "{font.size.12}",
+          "$type": "dimension",
+          "$description": "Normal body font size",
+          "$extensions": {
+            "ams": {
+              "provenance": "CONFIRMED"
+            }
+          }
+        },
+        "font-weight": {
+          "$value": "{font.weight.regular}",
+          "$type": "fontWeight",
+          "$description": "Normal body font weight",
+          "$extensions": {
+            "ams": {
+              "provenance": "CONFIRMED"
+            }
+          }
+        }
+      }
+    }
+  }
+}

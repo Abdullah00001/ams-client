@@ -1,0 +1,54 @@
+{
+  "radius": {
+    "4": {
+      "$value": "4px",
+      "$type": "dimension",
+      "$description": "Observed 4px corner radius",
+      "$extensions": {
+        "ams": {
+          "provenance": "OBSERVED"
+        }
+      }
+    },
+    "5": {
+      "$value": "5px",
+      "$type": "dimension",
+      "$description": "Observed 5px corner radius",
+      "$extensions": {
+        "ams": {
+          "provenance": "OBSERVED"
+        }
+      }
+    },
+    "6": {
+      "$value": "6px",
+      "$type": "dimension",
+      "$description": "Observed 6px corner radius",
+      "$extensions": {
+        "ams": {
+          "provenance": "OBSERVED"
+        }
+      }
+    },
+    "8": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "Observed 8px corner radius",
+      "$extensions": {
+        "ams": {
+          "provenance": "OBSERVED"
+        }
+      }
+    },
+    "15": {
+      "$value": "15px",
+      "$type": "dimension",
+      "$description": "Observed 15px corner radius",
+      "$extensions": {
+        "ams": {
+          "provenance": "OBSERVED"
+        }
+      }
+    }
+  }
+}
