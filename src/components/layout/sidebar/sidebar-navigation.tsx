@@ -34,8 +34,23 @@ export function SidebarNavigation({
     Partial<Record<SidebarNavigationGroupId, boolean>>
   >({});
   const [openFlyoutGroupId, setOpenFlyoutGroupId] = useState<SidebarNavigationGroupId | null>(null);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase();
   const isSearching = normalizedQuery.length > 0;
+
+  const allSuggestions = Array.from(
+    new Set(
+      navigationItems.flatMap((group) => [
+        group.label,
+        ...group.items.map((item) => item.label),
+      ]),
+    ),
+  );
+
+  const matchingSuggestions = isSearching
+    ? allSuggestions.filter((label) => label.toLocaleLowerCase().includes(normalizedQuery)).slice(0, 8)
+    : [];
+
   const visibleGroups = navigationItems
     .map((group) => ({
       ...group,
@@ -70,25 +85,65 @@ export function SidebarNavigation({
       >
         <Search aria-hidden="true" />
       </button>
-      <form
-        className={styles.searchForm}
-        onSubmit={(event) => event.preventDefault()}
-        role="search"
-      >
-        <label className={styles.visuallyHidden} htmlFor="sidebar-navigation-search">
-          Search sidebar navigation
-        </label>
-        <Search aria-hidden="true" className={styles.searchIcon} size={18} strokeWidth={2.5} />
-        <input
-          className={styles.searchInput}
-          id="sidebar-navigation-search"
-          onChange={(event) => onSearchQueryChange(event.target.value)}
-          placeholder="Quick Search"
-          ref={navigationSearchRef}
-          type="search"
-          value={searchQuery}
-        />
-      </form>
+      <div className={styles.searchContainer}>
+        <form
+          className={styles.searchForm}
+          onSubmit={(event) => event.preventDefault()}
+          role="search"
+        >
+          <label className={styles.visuallyHidden} htmlFor="sidebar-navigation-search">
+            Search sidebar navigation
+          </label>
+          <Search aria-hidden="true" className={styles.searchIcon} size={18} strokeWidth={2.5} />
+          <input
+            autoCapitalize="off"
+            autoComplete="off"
+            autoCorrect="off"
+            className={styles.searchInput}
+            id="sidebar-navigation-search"
+            onBlur={() => {
+              setTimeout(() => setIsSearchFocused(false), 200);
+            }}
+            onChange={(event) => onSearchQueryChange(event.target.value)}
+            onFocus={() => setIsSearchFocused(true)}
+            inputMode="search"
+            placeholder="Quick Search"
+            ref={navigationSearchRef}
+            spellCheck={false}
+            type="text"
+            value={searchQuery}
+          />
+        </form>
+
+        {isSearchFocused && matchingSuggestions.length > 0 ? (
+          <ul aria-label="Search suggestions" className={styles.searchSuggestionsDropdown} role="listbox">
+            {matchingSuggestions.map((suggestion) => {
+              const lower = suggestion.toLocaleLowerCase();
+              const matchIndex = lower.indexOf(normalizedQuery);
+              const before = suggestion.slice(0, matchIndex);
+              const match = suggestion.slice(matchIndex, matchIndex + normalizedQuery.length);
+              const after = suggestion.slice(matchIndex + normalizedQuery.length);
+
+              return (
+                <li key={suggestion} role="option">
+                  <button
+                    className={styles.searchSuggestionItem}
+                    onMouseDown={() => {
+                      onSearchQueryChange(suggestion);
+                      setIsSearchFocused(false);
+                    }}
+                    type="button"
+                  >
+                    {before}
+                    <span className={styles.searchSuggestionMatch}>{match}</span>
+                    {after}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
+      </div>
 
       <nav aria-label="Super Admin primary navigation" className={styles.navigation}>
         {isSidebarCollapsed ? (
