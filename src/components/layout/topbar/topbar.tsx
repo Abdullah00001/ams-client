@@ -1,7 +1,7 @@
 import Image from "next/image";
-import appearanceIcon from "../../../../design-reference/references/Vector(1).png";
-import notificationDefaultIcon from "../../../../design-reference/references/Group 1(1).png";
-import notificationUnreadIcon from "../../../../design-reference/references/Group 1 (1)(1).png";
+import appearanceIcon from "@/assets/icons/appearance-sun.png";
+import notificationDefaultIcon from "@/assets/icons/notification-default.png";
+import notificationUnreadIcon from "@/assets/icons/notification-unread.png";
 import { MaterialKeyboardArrowDownIcon } from "./material-icons";
 import styles from "./topbar.module.css";
 

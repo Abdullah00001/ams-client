@@ -50,7 +50,6 @@ export function SidebarNavigationItem({
         aria-label={`${item.label}, unavailable in this release`}
         className={itemClassName}
         tabIndex={tabbableWhenUnavailable ? 0 : undefined}
-        title="Unavailable in this release"
       >
         {itemContent}
       </span>

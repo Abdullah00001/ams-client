@@ -18,10 +18,11 @@ export function SidebarCategoryFlyout({ group, isOpen, onOpenChange }: SidebarCa
       <Popover.Trigger
         aria-label={group.label}
         className={styles.collapsedCategoryTrigger}
-        closeDelay={0}
+        closeDelay={120}
         delay={0}
         openOnHover
         title={group.label}
+        type="button"
       >
         <CategoryIcon aria-hidden="true" />
       </Popover.Trigger>

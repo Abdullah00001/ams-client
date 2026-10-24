@@ -207,9 +207,9 @@ function SidebarNavigationGroup({
               <span>{group.label}</span>
             </span>
             {isGroupExpanded ? (
-              <ChevronUp aria-hidden="true" />
-            ) : (
               <ChevronDown aria-hidden="true" />
+            ) : (
+              <ChevronUp aria-hidden="true" />
             )}
           </button>
         </h2>
