@@ -1,5 +1,5 @@
 import { type RefObject, useState } from "react";
-import { ChevronDown, ChevronUp, Search } from "lucide-react";
+import { ChevronDown, ChevronRight, Search } from "lucide-react";
 import {
   navigationItems,
   type SidebarNavigationGroup,
@@ -209,7 +209,7 @@ function SidebarNavigationGroup({
             {isGroupExpanded ? (
               <ChevronDown aria-hidden="true" />
             ) : (
-              <ChevronUp aria-hidden="true" />
+              <ChevronRight aria-hidden="true" />
             )}
           </button>
         </h2>

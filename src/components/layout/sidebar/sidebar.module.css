@@ -188,6 +188,15 @@
   text-align: start;
   text-transform: inherit;
   cursor: pointer;
+  transition: color 150ms ease, opacity 150ms ease;
+}
+
+.groupTrigger:hover {
+  color: var(--ams-color-text-inverse);
+}
+
+.groupTrigger:active {
+  opacity: 0.8;
 }
 
 .groupTriggerLabel {
@@ -218,52 +227,87 @@
 }
 
 .nestedNavigationList {
-  display: grid;
-  margin: 0 0 0 var(--ams-spacing-2);
-  padding: 0 0 0 var(--ams-spacing-3);
-  gap: var(--ams-spacing-1);
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0 0 0;
+  padding: 0;
+  gap: 0;
   list-style: none;
 }
 
 .nestedNavigationList > li {
   position: relative;
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
+  min-block-size: 38px;
 }
 
-.nestedNavigationList > li::before,
-.nestedNavigationList > li::after {
+/* Horizontal connector line from vertical stem to item */
+.nestedNavigationList > li::before {
   position: absolute;
-  inset-inline-start: calc(var(--ams-spacing-3) * -1);
-  background: rgba(255, 255, 255, 0.11);
+  inset-inline-start: 8px;
+  inset-block-start: 50%;
+  inline-size: 10px;
+  block-size: 1px;
+  background: rgba(255, 255, 255, 0.16);
   content: "";
 }
 
-.nestedNavigationList > li::before {
-  inset-block-start: 50%;
-  inline-size: var(--ams-spacing-3);
-  block-size: 1px;
-}
-
+/* Seamless vertical line running through all items */
 .nestedNavigationList > li::after {
-  inset-block: calc(var(--ams-spacing-1) * -1);
+  position: absolute;
+  inset-inline-start: 8px;
+  inset-block-start: 0;
+  inset-block-end: 0;
   inline-size: 1px;
+  background: rgba(255, 255, 255, 0.16);
+  content: "";
 }
 
+/* Vertical line segment extending upward toward the header icon */
 .nestedNavigationList > li:first-child::after {
-  inset-block-start: 50%;
+  inset-block-start: -8px;
 }
 
+/* Last item: vertical line stops at the horizontal branch connector (50%) */
 .nestedNavigationList > li:last-child::after {
   inset-block-end: 50%;
 }
 
 .nestedNavigationList .navigationItem {
-  min-block-size: var(--sidebar-navigation-row-height);
-  border-radius: var(--ams-radius-4);
-  padding: var(--ams-spacing-1) 0;
-  color: var(--ams-color-text-inverse);
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-block-size: 34px;
+  border-radius: var(--ams-radius-5);
+  margin-inline-start: 18px;
+  padding: 6px 12px;
+  box-sizing: border-box;
+  color: var(--ams-color-text-muted);
   font-size: var(--ams-typography-body-medium-font-size);
-  font-weight: var(--ams-typography-body-medium-font-weight);
+  font-weight: var(--ams-font-weight-regular);
   line-height: 1.5;
+  text-decoration: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.nestedNavigationList .navigationItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--ams-color-text-inverse);
+}
+
+.nestedNavigationList .navigationItem:active {
+  background: rgba(255, 255, 255, 0.16);
+  color: #FFFFFF;
+}
+
+.nestedNavigationList .navigationItem.currentItem {
+  background: var(--ams-color-action-primary-background);
+  color: var(--ams-color-action-primary-foreground);
+  font-weight: var(--ams-font-weight-medium);
 }
 
 .navigationItem {
@@ -382,9 +426,9 @@ a.currentItem:hover {
 
 .categoryFlyoutHeading {
   margin: 0 0 var(--ams-spacing-2);
-  color: var(--ams-color-text-secondary);
+  color: var(--ams-color-text-primary);
   font-size: var(--ams-typography-body-medium-font-size);
-  font-weight: var(--ams-font-weight-medium);
+  font-weight: var(--ams-font-weight-semibold);
   line-height: 1.3;
 }
 
@@ -392,9 +436,11 @@ a.currentItem:hover {
   min-block-size: 32px;
   border-radius: var(--ams-radius-5);
   padding: 7px var(--ams-spacing-2);
-  color: var(--ams-color-text-secondary);
+  color: #78829d;
   font-size: var(--ams-typography-body-medium-font-size);
   line-height: 18px;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
 }
 
 .categoryFlyoutItem:hover {
