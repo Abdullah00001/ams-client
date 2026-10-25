@@ -8,6 +8,7 @@
   --ams-color-primary-100: #e8f3ff;
   --ams-color-primary-200: #d1e6ff;
   --ams-color-primary-300: #1b84ff;
+  --ams-color-primary-400: #056ee9;
   --ams-color-grayscale-100: #f4f6fa;
   --ams-color-grayscale-200: #eff1f4;
   --ams-color-grayscale-300: #99a1b7;
@@ -51,6 +52,7 @@
   --ams-color-border-subtle: var(--ams-color-grayscale-200);
   --ams-color-border-default: var(--ams-color-grayscale-300);
   --ams-color-action-primary-background: var(--ams-color-primary-300);
+  --ams-color-action-primary-hover: var(--ams-color-primary-400);
   --ams-color-action-primary-foreground: var(--ams-color-base-white);
   --ams-color-action-primary-subtle: var(--ams-color-primary-100);
   --ams-color-feedback-success: var(--ams-color-status-success);

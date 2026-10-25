@@ -9,6 +9,7 @@
 
   position: sticky;
   inset-block-start: 0;
+  z-index: 30;
   display: grid;
   block-size: 100dvh;
   grid-template-rows: 70px auto minmax(0, 1fr);
@@ -35,9 +36,9 @@
 
 .brandMark {
   display: grid;
-  grid-template-columns: repeat(2, 7px);
-  grid-template-rows: repeat(2, 7px);
-  gap: 2px;
+  grid-template-columns: repeat(2, 9px);
+  grid-template-rows: repeat(2, 9px);
+  gap: 3px;
   flex: 0 0 auto;
   inline-size: 40px;
   block-size: 40px;
@@ -48,18 +49,27 @@
 
 .brandMark span {
   display: block;
-  inline-size: 7px;
-  block-size: 7px;
-  border-radius: 2px;
+  inline-size: 9px;
+  block-size: 9px;
   background: var(--ams-color-text-inverse);
 }
 
+.brandMark span:nth-child(1) {
+  border-radius: 9px 0 2px 9px;
+}
+
 .brandMark span:nth-child(2) {
-  border-radius: 7px 2px 2px;
+  border-radius: 50%;
+  opacity: 0.85;
 }
 
 .brandMark span:nth-child(3) {
-  border-radius: 2px 2px 7px;
+  border-radius: 9px 2px 0 9px;
+}
+
+.brandMark span:nth-child(4) {
+  border-radius: 50%;
+  opacity: 0.85;
 }
 
 .brandName {
@@ -74,25 +84,33 @@
 
 .sidebarToggle {
   position: absolute;
-  inset-inline-end: -10px;
-  inset-block-start: 50%;
+  inset-inline-end: -13px;
+  inset-block-start: 100%;
   display: grid;
-  inline-size: 20px;
-  block-size: 20px;
+  inline-size: 26px;
+  block-size: 26px;
   padding: 0;
-  border: 1px solid var(--ams-color-border-default);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 50%;
   place-items: center;
   transform: translateY(-50%);
-  background: var(--ams-color-surface-sidebar);
-  color: var(--ams-color-text-inverse);
+  background: #14151B;
+  color: #FFFFFF;
   cursor: pointer;
-  z-index: 1;
+  z-index: 50;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.sidebarToggle:hover {
+  background: #1e2029;
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 .sidebarToggle svg {
-  inline-size: 13px;
-  block-size: 13px;
+  inline-size: 14px;
+  block-size: 14px;
+  stroke-width: 2;
 }
 
 .sidebarToggle:focus-visible,
@@ -243,6 +261,8 @@
 }
 
 .groupTrigger {
+  position: relative;
+  overflow: hidden;
   display: flex;
   inline-size: 100%;
   min-block-size: var(--sidebar-navigation-row-height);
@@ -259,7 +279,7 @@
   text-transform: inherit;
   cursor: pointer;
   box-sizing: border-box;
-  transition: background-color 150ms ease, color 150ms ease, opacity 150ms ease;
+  transition: background-color 500ms cubic-bezier(0.4, 0, 0.2, 1), color 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .groupTrigger:hover {
@@ -272,6 +292,8 @@
 }
 
 .groupTriggerLabel {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   min-inline-size: 0;
   align-items: center;
@@ -285,9 +307,38 @@
 }
 
 .groupTrigger svg {
+  position: relative;
+  z-index: 1;
   flex: 0 0 auto;
   inline-size: var(--ams-font-size-16);
   block-size: var(--ams-font-size-16);
+}
+
+.groupChevron {
+  transition: transform 1000ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.groupChevronExpanded {
+  transform: rotate(90deg);
+}
+
+.submenuCollapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 1200ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 900ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.submenuCollapseExpanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.submenuInner {
+  min-height: 0;
+  overflow: hidden;
 }
 
 .navigationList {
@@ -365,7 +416,7 @@
   text-decoration: none;
   background: transparent;
   cursor: pointer;
-  transition: background-color 150ms ease, color 150ms ease;
+  transition: background-color 500ms cubic-bezier(0.4, 0, 0.2, 1), color 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nestedNavigationList .navigationItem:hover {
@@ -384,7 +435,13 @@
   font-weight: var(--ams-font-weight-medium);
 }
 
+.nestedNavigationList .navigationItem.currentItem:hover {
+  background: var(--ams-color-action-primary-hover);
+}
+
 .navigationItem {
+  position: relative;
+  overflow: hidden;
   display: flex;
   min-block-size: var(--sidebar-navigation-row-height);
   align-items: center;
@@ -396,6 +453,43 @@
   font-weight: var(--ams-font-weight-regular);
   line-height: 18px;
   text-decoration: none;
+  transition: background-color 500ms cubic-bezier(0.4, 0, 0.2, 1), color 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Material UI TouchRipple standard animation */
+@keyframes muiRipple {
+  0% {
+    transform: scale(0);
+    opacity: 0.45;
+  }
+  30% {
+    opacity: 0.35;
+  }
+  75% {
+    opacity: 0.16;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.ripple,
+.activeRipple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: scale(0);
+  animation: muiRipple 1250ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  z-index: 0;
+}
+
+.ripple {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.activeRipple {
+  background: rgba(255, 255, 255, 0.38);
 }
 
 .navigationItem:hover {
@@ -403,17 +497,22 @@
 }
 
 .currentItem {
+  position: relative;
+  overflow: hidden;
   background: var(--ams-color-action-primary-background);
   /* Figma requires white on blue here; this 3.63:1 pairing is a documented visual exception. */
   color: var(--ams-color-action-primary-foreground);
   font-weight: var(--ams-font-weight-medium);
 }
 
-a.currentItem:hover {
-  background: var(--ams-color-action-primary-background);
+a.currentItem:hover,
+.currentItem:hover {
+  background: var(--ams-color-action-primary-hover);
 }
 
 .navigationIcon {
+  position: relative;
+  z-index: 1;
   flex: 0 0 auto;
   color: var(--ams-color-text-muted);
 }
@@ -431,6 +530,8 @@ a.currentItem:hover {
 }
 
 .navigationLabel {
+  position: relative;
+  z-index: 1;
   min-inline-size: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -535,7 +636,7 @@ a.categoryFlyoutItem {
 
 .currentItem.categoryFlyoutItem:hover,
 .currentItem.categoryFlyoutItem:focus-visible {
-  background: var(--ams-color-action-primary-background);
+  background: var(--ams-color-action-primary-hover);
   color: var(--ams-color-action-primary-foreground);
   outline-color: var(--ams-color-text-inverse);
 }
@@ -696,5 +797,10 @@ a.categoryFlyoutItem {
 @media (prefers-reduced-motion: reduce) {
   .sidebar {
     transition: none;
+  }
+
+  .ripple,
+  .activeRipple {
+    display: none;
   }
 }

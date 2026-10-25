@@ -1,5 +1,6 @@
 import { type RefObject, useState } from "react";
-import { ChevronDown, ChevronRight, Search } from "lucide-react";
+import { ChevronRight, Search } from "lucide-react";
+import clsx from "clsx";
 import {
   navigationItems,
   type SidebarNavigationGroup,
@@ -7,6 +8,7 @@ import {
 } from "./navigation-data";
 import { SidebarCategoryFlyout } from "./sidebar-category-flyout";
 import { SidebarNavigationItem } from "./sidebar-navigation-item";
+import { createRipple } from "./sidebar-ripple";
 import styles from "./sidebar.module.css";
 
 type SidebarNavigationProps = {
@@ -40,15 +42,14 @@ export function SidebarNavigation({
 
   const allSuggestions = Array.from(
     new Set(
-      navigationItems.flatMap((group) => [
-        group.label,
-        ...group.items.map((item) => item.label),
-      ]),
+      navigationItems.flatMap((group) => [group.label, ...group.items.map((item) => item.label)]),
     ),
   );
 
   const matchingSuggestions = isSearching
-    ? allSuggestions.filter((label) => label.toLocaleLowerCase().includes(normalizedQuery)).slice(0, 8)
+    ? allSuggestions
+        .filter((label) => label.toLocaleLowerCase().includes(normalizedQuery))
+        .slice(0, 8)
     : [];
 
   const visibleGroups = navigationItems
@@ -116,7 +117,11 @@ export function SidebarNavigation({
         </form>
 
         {isSearchFocused && matchingSuggestions.length > 0 ? (
-          <ul aria-label="Search suggestions" className={styles.searchSuggestionsDropdown} role="listbox">
+          <ul
+            aria-label="Search suggestions"
+            className={styles.searchSuggestionsDropdown}
+            role="listbox"
+          >
             {matchingSuggestions.map((suggestion) => {
               const lower = suggestion.toLocaleLowerCase();
               const matchIndex = lower.indexOf(normalizedQuery);
@@ -254,31 +259,53 @@ function SidebarNavigationGroup({
             aria-controls={listId}
             aria-expanded={isGroupExpanded}
             className={styles.groupTrigger}
-            onClick={() => onExpandedChange(group.id)}
+            onClick={(e) => {
+              createRipple(e, false);
+              onExpandedChange(group.id);
+            }}
             type="button"
           >
             <span className={styles.groupTriggerLabel}>
               <GroupIcon aria-hidden="true" className={styles.groupIcon} />
               <span>{group.label}</span>
             </span>
-            {isGroupExpanded ? (
-              <ChevronDown aria-hidden="true" />
-            ) : (
-              <ChevronRight aria-hidden="true" />
-            )}
+            <ChevronRight
+              aria-hidden="true"
+              className={clsx(styles.groupChevron, isGroupExpanded && styles.groupChevronExpanded)}
+            />
           </button>
         </h2>
       )}
 
-      <ul
-        className={isDashboardGroup ? styles.navigationList : styles.nestedNavigationList}
-        hidden={group.collapsible && !isGroupExpanded}
-        id={listId}
-      >
-        {group.items.map((item) => (
-          <SidebarNavigationItem item={item} key={item.label} showIcon={isDashboardGroup} />
-        ))}
-      </ul>
+      {isDashboardGroup ? (
+        <ul className={styles.navigationList} id={listId}>
+          {group.items.map((item) => (
+            <SidebarNavigationItem item={item} key={item.label} showIcon={isDashboardGroup} />
+          ))}
+        </ul>
+      ) : (
+        <div
+          aria-hidden={!isGroupExpanded}
+          className={clsx(
+            styles.submenuCollapse,
+            isGroupExpanded && styles.submenuCollapseExpanded,
+          )}
+          id={listId}
+        >
+          <div className={styles.submenuInner}>
+            <ul className={styles.nestedNavigationList}>
+              {group.items.map((item) => (
+                <SidebarNavigationItem
+                  item={item}
+                  key={item.label}
+                  showIcon={false}
+                  tabbableWhenUnavailable={isGroupExpanded}
+                />
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

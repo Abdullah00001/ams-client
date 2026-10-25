@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import styles from "./sidebar.module.css";
 
 type SidebarToggleProps = {
@@ -18,9 +18,9 @@ export function SidebarToggle({ isSidebarCollapsed, onToggle }: SidebarTogglePro
       type="button"
     >
       {isSidebarCollapsed ? (
-        <ChevronRight aria-hidden="true" />
+        <ArrowRight aria-hidden="true" />
       ) : (
-        <ChevronLeft aria-hidden="true" />
+        <ArrowLeft aria-hidden="true" />
       )}
     </button>
   );

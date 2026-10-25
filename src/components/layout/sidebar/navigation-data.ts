@@ -36,7 +36,7 @@ type SidebarNavigationItemBase = {
 };
 
 export type ImplementedNavigationItem = SidebarNavigationItemBase & {
-  href: "/dashboard";
+  href: "/" | "/dashboard";
   kind: "implemented";
 };
 
@@ -82,7 +82,7 @@ export const navigationItems: SidebarNavigationGroup[] = [
     collapsible: false,
     icon: LayoutDashboard,
     id: "platform",
-    items: [{ href: "/dashboard", icon: LayoutDashboard, kind: "implemented", label: "Dashboard" }],
+    items: [{ href: "/", icon: LayoutDashboard, kind: "implemented", label: "Dashboard" }],
     label: "Platform",
   },
   {

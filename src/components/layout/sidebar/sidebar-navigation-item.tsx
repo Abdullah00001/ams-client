@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import type { SidebarNavigationItem as SidebarNavigationItemData } from "./navigation-data";
+import { createRipple } from "./sidebar-ripple";
 import styles from "./sidebar.module.css";
 
 type SidebarNavigationItemProps = {
@@ -16,8 +20,11 @@ export function SidebarNavigationItem({
   showIcon = true,
   tabbableWhenUnavailable = false,
 }: SidebarNavigationItemProps) {
+  const pathname = usePathname();
   const Icon = item.icon;
-  const isCurrentPage = item.kind === "implemented" && item.href === "/dashboard";
+  const isCurrentPage =
+    item.kind === "implemented" &&
+    (pathname === item.href || (item.href === "/" && pathname === "/dashboard"));
   const itemContent = (
     <>
       {showIcon ? (
@@ -36,6 +43,7 @@ export function SidebarNavigationItem({
           aria-label={item.label}
           className={itemClassName}
           href={item.href}
+          onClick={(e) => createRipple(e, isCurrentPage)}
         >
           {itemContent}
         </Link>
@@ -49,6 +57,7 @@ export function SidebarNavigationItem({
         aria-disabled="true"
         aria-label={`${item.label}, unavailable in this release`}
         className={itemClassName}
+        onClick={(e) => createRipple(e, false)}
         tabIndex={tabbableWhenUnavailable ? 0 : undefined}
       >
         {itemContent}
