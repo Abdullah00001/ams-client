@@ -315,36 +315,38 @@
   min-block-size: 38px;
 }
 
-/* Horizontal connector line from vertical stem to item */
+/* Curved connector branch from vertical stem into each item */
 .nestedNavigationList > li::before {
   position: absolute;
   inset-inline-start: 16px;
-  inset-block-start: 50%;
+  inset-block-start: 0;
+  block-size: 50%;
   inline-size: 10px;
-  block-size: 1px;
-  background: rgba(255, 255, 255, 0.16);
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.16);
+  border-block-end: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom-left-radius: 6px;
+  border-end-start-radius: 6px;
+  box-sizing: border-box;
+  pointer-events: none;
   content: "";
 }
 
-/* Seamless vertical line running through all items */
-.nestedNavigationList > li::after {
+/* Extension above the first item toward the header icon */
+.nestedNavigationList > li:first-child::before {
+  inset-block-start: -8px;
+  block-size: calc(50% + 8px);
+}
+
+/* Vertical stem continuing down for items that have subsequent items */
+.nestedNavigationList > li:not(:last-child)::after {
   position: absolute;
   inset-inline-start: 16px;
   inset-block-start: 0;
   inset-block-end: 0;
   inline-size: 1px;
   background: rgba(255, 255, 255, 0.16);
+  pointer-events: none;
   content: "";
-}
-
-/* Vertical line segment extending upward toward the header icon */
-.nestedNavigationList > li:first-child::after {
-  inset-block-start: -8px;
-}
-
-/* Last item: vertical line stops at the horizontal branch connector (50%) */
-.nestedNavigationList > li:last-child::after {
-  inset-block-end: 50%;
 }
 
 .nestedNavigationList .navigationItem {
