@@ -1,6 +1,9 @@
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 import { Popover } from "@base-ui/react/popover";
 import type { SidebarNavigationGroup } from "./navigation-data";
 import { SidebarNavigationItem } from "./sidebar-navigation-item";
+import { createRipple } from "./sidebar-ripple";
 import styles from "./sidebar.module.css";
 
 type SidebarCategoryFlyoutProps = {
@@ -10,18 +13,28 @@ type SidebarCategoryFlyoutProps = {
 };
 
 export function SidebarCategoryFlyout({ group, isOpen, onOpenChange }: SidebarCategoryFlyoutProps) {
+  const pathname = usePathname();
   const CategoryIcon = group.icon;
   const headingId = `sidebar-flyout-${group.id}-heading`;
+
+  const isGroupActive = group.items.some(
+    (item) =>
+      item.kind === "implemented" &&
+      (pathname === item.href || (item.href === "/" && pathname === "/dashboard")),
+  );
 
   return (
     <Popover.Root modal={false} onOpenChange={onOpenChange} open={isOpen}>
       <Popover.Trigger
         aria-label={group.label}
-        className={styles.collapsedCategoryTrigger}
+        className={clsx(
+          styles.collapsedCategoryTrigger,
+          isGroupActive && styles.currentItem,
+        )}
         closeDelay={200}
         delay={40}
+        onClick={(e) => createRipple(e, isGroupActive)}
         openOnHover
-        title={group.label}
         type="button"
       >
         <CategoryIcon aria-hidden="true" />

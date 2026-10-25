@@ -82,7 +82,10 @@ export function SidebarNavigation({
         <button
           aria-label="Search navigation"
           className={styles.collapsedSearchButton}
-          onClick={onCollapsedSearchActivate}
+          onClick={(e) => {
+            createRipple(e, false);
+            onCollapsedSearchActivate();
+          }}
           type="button"
         >
           <Search aria-hidden="true" size={19} />
