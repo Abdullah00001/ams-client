@@ -1,9 +1,4 @@
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
   margin-block-end: 24px;
 }
 
@@ -29,48 +24,4 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
-}
-
-.filterControls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.selectWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.branchSelect {
-  appearance: none;
-  background: var(--ams-color-surface-card, #ffffff);
-  border: 1px solid var(--ams-color-border-subtle, #e4e6ef);
-  border-radius: var(--ams-radius-6, 6px);
-  padding: 8px 36px 8px 14px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ams-color-text-primary, #071437);
-  cursor: pointer;
-  outline: none;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-  transition: border-color 150ms ease, box-shadow 150ms ease;
-}
-
-.branchSelect:hover {
-  border-color: var(--ams-color-border-default, #b5b5c3);
-}
-
-.branchSelect:focus {
-  border-color: var(--ams-color-primary-300, #1b84ff);
-  box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.15);
-}
-
-.selectIcon {
-  position: absolute;
-  inset-inline-end: 12px;
-  pointer-events: none;
-  color: var(--ams-color-text-muted, #99a1b7);
 }

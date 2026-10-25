@@ -1,4 +1,5 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import clsx from "clsx";
 import styles from "./sidebar.module.css";
 
 type SidebarToggleProps = {
@@ -13,15 +14,16 @@ export function SidebarToggle({ isSidebarCollapsed, onToggle }: SidebarTogglePro
     <button
       aria-label={accessibleName}
       aria-pressed={isSidebarCollapsed}
-      className={styles.sidebarToggle}
+      className={clsx(
+        styles.sidebarToggle,
+        isSidebarCollapsed && styles.sidebarToggleCollapsed
+      )}
       onClick={onToggle}
       type="button"
     >
-      {isSidebarCollapsed ? (
-        <ArrowRight aria-hidden="true" />
-      ) : (
-        <ArrowLeft aria-hidden="true" />
-      )}
+      <span className={styles.toggleArrow}>
+        <ArrowLeft aria-hidden="true" size={14} strokeWidth={2} />
+      </span>
     </button>
   );
 }

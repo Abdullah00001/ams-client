@@ -78,92 +78,99 @@ export function SidebarNavigation({
 
   return (
     <>
-      <button
-        aria-label="Search navigation"
-        className={styles.collapsedSearchButton}
-        onClick={onCollapsedSearchActivate}
-        type="button"
-      >
-        <Search aria-hidden="true" />
-      </button>
-      <div className={styles.searchContainer}>
-        <form
-          className={styles.searchForm}
-          onSubmit={(event) => event.preventDefault()}
-          role="search"
+      {isSidebarCollapsed ? (
+        <button
+          aria-label="Search navigation"
+          className={styles.collapsedSearchButton}
+          onClick={onCollapsedSearchActivate}
+          type="button"
         >
-          <label className={styles.visuallyHidden} htmlFor="sidebar-navigation-search">
-            Search sidebar navigation
-          </label>
-          <Search aria-hidden="true" className={styles.searchIcon} size={18} strokeWidth={2.5} />
-          <input
-            autoCapitalize="off"
-            autoComplete="off"
-            autoCorrect="off"
-            className={styles.searchInput}
-            id="sidebar-navigation-search"
-            onBlur={() => {
-              setTimeout(() => setIsSearchFocused(false), 200);
-            }}
-            onChange={(event) => onSearchQueryChange(event.target.value)}
-            onFocus={() => setIsSearchFocused(true)}
-            inputMode="search"
-            placeholder="Quick Search"
-            ref={navigationSearchRef}
-            spellCheck={false}
-            type="text"
-            value={searchQuery}
-          />
-        </form>
-
-        {isSearchFocused && matchingSuggestions.length > 0 ? (
-          <ul
-            aria-label="Search suggestions"
-            className={styles.searchSuggestionsDropdown}
-            role="listbox"
+          <Search aria-hidden="true" size={19} />
+        </button>
+      ) : (
+        <div className={styles.searchContainer}>
+          <form
+            className={styles.searchForm}
+            onSubmit={(event) => event.preventDefault()}
+            role="search"
           >
-            {matchingSuggestions.map((suggestion) => {
-              const lower = suggestion.toLocaleLowerCase();
-              const matchIndex = lower.indexOf(normalizedQuery);
-              const before = suggestion.slice(0, matchIndex);
-              const match = suggestion.slice(matchIndex, matchIndex + normalizedQuery.length);
-              const after = suggestion.slice(matchIndex + normalizedQuery.length);
+            <label className={styles.visuallyHidden} htmlFor="sidebar-navigation-search">
+              Search sidebar navigation
+            </label>
+            <Search aria-hidden="true" className={styles.searchIcon} size={18} strokeWidth={2.5} />
+            <input
+              autoCapitalize="off"
+              autoComplete="off"
+              autoCorrect="off"
+              className={styles.searchInput}
+              id="sidebar-navigation-search"
+              onBlur={() => {
+                setTimeout(() => setIsSearchFocused(false), 200);
+              }}
+              onChange={(event) => onSearchQueryChange(event.target.value)}
+              onFocus={() => setIsSearchFocused(true)}
+              inputMode="search"
+              placeholder="Quick Search"
+              ref={navigationSearchRef}
+              spellCheck={false}
+              type="text"
+              value={searchQuery}
+            />
+          </form>
 
-              return (
-                <li aria-selected={false} key={suggestion} role="option">
-                  <button
-                    className={styles.searchSuggestionItem}
-                    onMouseDown={() => {
-                      onSearchQueryChange(suggestion);
-                      setIsSearchFocused(false);
-                    }}
-                    type="button"
-                  >
-                    {before}
-                    <span className={styles.searchSuggestionMatch}>{match}</span>
-                    {after}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        ) : null}
-      </div>
+          {isSearchFocused && matchingSuggestions.length > 0 ? (
+            <ul
+              aria-label="Search suggestions"
+              className={styles.searchSuggestionsDropdown}
+              role="listbox"
+            >
+              {matchingSuggestions.map((suggestion) => {
+                const lower = suggestion.toLocaleLowerCase();
+                const matchIndex = lower.indexOf(normalizedQuery);
+                const before = suggestion.slice(0, matchIndex);
+                const match = suggestion.slice(matchIndex, matchIndex + normalizedQuery.length);
+                const after = suggestion.slice(matchIndex + normalizedQuery.length);
+
+                return (
+                  <li aria-selected={false} key={suggestion} role="option">
+                    <button
+                      className={styles.searchSuggestionItem}
+                      onMouseDown={() => {
+                        onSearchQueryChange(suggestion);
+                        setIsSearchFocused(false);
+                      }}
+                      type="button"
+                    >
+                      {before}
+                      <span className={styles.searchSuggestionMatch}>{match}</span>
+                      {after}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : null}
+        </div>
+      )}
 
       <nav aria-label="Super Admin primary navigation" className={styles.navigation}>
         {isSidebarCollapsed ? (
-          <CollapsedSidebarNavigation
-            groups={visibleGroups}
-            onFlyoutOpenChange={handleFlyoutOpenChange}
-            openFlyoutGroupId={openFlyoutGroupId}
-          />
+          <div className={styles.collapsedFadeIn}>
+            <CollapsedSidebarNavigation
+              groups={visibleGroups}
+              onFlyoutOpenChange={handleFlyoutOpenChange}
+              openFlyoutGroupId={openFlyoutGroupId}
+            />
+          </div>
         ) : (
-          <ExpandedSidebarNavigation
-            expandedGroups={expandedGroups}
-            groups={visibleGroups}
-            isSearching={isSearching}
-            onExpandedChange={toggleNavigationGroup}
-          />
+          <div className={styles.expandedFadeIn}>
+            <ExpandedSidebarNavigation
+              expandedGroups={expandedGroups}
+              groups={visibleGroups}
+              isSearching={isSearching}
+              onExpandedChange={toggleNavigationGroup}
+            />
+          </div>
         )}
 
         {visibleGroups.length === 0 ? (

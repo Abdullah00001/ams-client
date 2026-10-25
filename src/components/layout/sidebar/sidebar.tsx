@@ -55,24 +55,27 @@ export function Sidebar() {
         isSidebarCollapsed === false && styles.sidebarExpanded,
       )}
     >
-      <div className={styles.branding}>
-        <div aria-hidden="true" className={styles.brandMark}>
-          <span />
-          <span />
-          <span />
-          <span />
+      <div className={styles.sidebarContent}>
+        <div className={styles.branding}>
+          <div aria-hidden="true" className={styles.brandMark}>
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+          <span className={styles.brandName}>AMS</span>
         </div>
-        <span className={styles.brandName}>AMS</span>
-        <SidebarToggle isSidebarCollapsed={isSidebarCollapsed ?? false} onToggle={toggleSidebar} />
+
+        <SidebarNavigation
+          isSidebarCollapsed={isSidebarCollapsed ?? false}
+          navigationSearchRef={navigationSearchRef}
+          onCollapsedSearchActivate={expandSidebarForSearch}
+          onSearchQueryChange={setSearchQuery}
+          searchQuery={searchQuery}
+        />
       </div>
 
-      <SidebarNavigation
-        isSidebarCollapsed={isSidebarCollapsed ?? false}
-        navigationSearchRef={navigationSearchRef}
-        onCollapsedSearchActivate={expandSidebarForSearch}
-        onSearchQueryChange={setSearchQuery}
-        searchQuery={searchQuery}
-      />
+      <SidebarToggle isSidebarCollapsed={isSidebarCollapsed ?? false} onToggle={toggleSidebar} />
     </aside>
   );
 }

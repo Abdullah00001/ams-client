@@ -18,8 +18,8 @@ export function SidebarCategoryFlyout({ group, isOpen, onOpenChange }: SidebarCa
       <Popover.Trigger
         aria-label={group.label}
         className={styles.collapsedCategoryTrigger}
-        closeDelay={120}
-        delay={0}
+        closeDelay={200}
+        delay={40}
         openOnHover
         title={group.label}
         type="button"
@@ -34,8 +34,7 @@ export function SidebarCategoryFlyout({ group, isOpen, onOpenChange }: SidebarCa
           collisionPadding={12}
           positionMethod="fixed"
           side="right"
-          // The compact trigger ends 12px before the rail edge; this aligns the panel to that edge.
-          sideOffset={12}
+          sideOffset={8}
         >
           <Popover.Popup
             aria-labelledby={headingId}

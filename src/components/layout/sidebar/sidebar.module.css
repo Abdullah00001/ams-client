@@ -10,18 +10,29 @@
   position: sticky;
   inset-block-start: 0;
   z-index: 30;
-  display: grid;
   block-size: 100dvh;
-  grid-template-rows: 70px auto minmax(0, 1fr);
   inline-size: var(--sidebar-expanded-width);
+  min-inline-size: 0;
+  max-inline-size: var(--sidebar-expanded-width);
   flex: 0 0 var(--sidebar-expanded-width);
   overflow: visible;
   border-inline-end: 1px solid rgba(255, 255, 255, 0.06);
   background: var(--ams-color-surface-sidebar);
   color: var(--ams-color-text-inverse);
   transition:
-    inline-size 160ms ease,
-    flex-basis 160ms ease;
+    inline-size 320ms cubic-bezier(0.4, 0, 0.2, 1),
+    max-inline-size 320ms cubic-bezier(0.4, 0, 0.2, 1),
+    flex-basis 320ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: inline-size, max-inline-size, flex-basis;
+}
+
+.sidebarContent {
+  display: grid;
+  grid-template-rows: 70px auto minmax(0, 1fr);
+  inline-size: 100%;
+  block-size: 100%;
+  min-inline-size: 0;
+  overflow: hidden;
 }
 
 .branding {
@@ -80,12 +91,18 @@
   letter-spacing: -0.03em;
   line-height: 1;
   white-space: nowrap;
+  max-inline-size: 140px;
+  opacity: 1;
+  transition:
+    opacity 250ms ease,
+    max-inline-size 320ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebarToggle {
   position: absolute;
   inset-inline-end: -13px;
-  inset-block-start: 100%;
+  top: 70px;
+  transform: translateY(-50%);
   display: grid;
   inline-size: 26px;
   block-size: 26px;
@@ -93,18 +110,28 @@
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 50%;
   place-items: center;
-  transform: translateY(-50%);
   background: #14151B;
   color: #FFFFFF;
   cursor: pointer;
   z-index: 50;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.25);
-  transition: background-color 150ms ease, border-color 150ms ease;
+  transition: background-color 200ms ease, border-color 200ms ease;
 }
 
 .sidebarToggle:hover {
   background: #1e2029;
   border-color: rgba(255, 255, 255, 0.6);
+}
+
+.toggleArrow {
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebarToggleCollapsed .toggleArrow {
+  transform: rotate(180deg);
 }
 
 .sidebarToggle svg {
@@ -122,10 +149,26 @@
   outline-offset: 2px;
 }
 
+@keyframes sidebarFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.collapsedFadeIn,
+.expandedFadeIn {
+  inline-size: 100%;
+  animation: sidebarFadeIn 250ms ease;
+}
+
 .searchContainer {
   position: relative;
   inline-size: 229px;
   margin: 14px var(--sidebar-expanded-inset) 12px;
+  animation: sidebarFadeIn 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .searchForm {
@@ -148,7 +191,17 @@
 }
 
 .collapsedSearchButton {
-  display: none;
+  display: grid;
+  inline-size: 40px;
+  block-size: 40px;
+  margin: 14px auto 12px;
+  border: 1px solid var(--ams-color-sidebar-search-background);
+  border-radius: var(--ams-radius-5);
+  place-items: center;
+  background: var(--ams-color-sidebar-search-background);
+  color: var(--ams-color-text-inverse);
+  cursor: pointer;
+  animation: sidebarFadeIn 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .searchIcon {
@@ -232,11 +285,13 @@
 }
 
 .navigation {
+  position: relative;
   min-block-size: 0;
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
   padding: 4px var(--sidebar-expanded-inset) 24px;
+  transition: padding 500ms cubic-bezier(0.4, 0, 0.2, 1);
   /* Figma has no visible gutter; retain native scrolling without its indicator. */
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -245,6 +300,7 @@
 .navigation::-webkit-scrollbar {
   display: none;
 }
+
 
 .group + .group {
   margin-block-start: var(--ams-spacing-5);
@@ -559,6 +615,25 @@ a.currentItem:hover,
   list-style: none;
 }
 
+.collapsedDashboardList .navigationItem {
+  inline-size: 40px;
+  block-size: 40px;
+  min-block-size: 40px;
+  padding: 0;
+  margin: 0 auto;
+  justify-content: center;
+  border-radius: var(--ams-radius-5);
+}
+
+.collapsedDashboardList .navigationIcon {
+  inline-size: 19px;
+  block-size: 19px;
+}
+
+.collapsedDashboardList .navigationLabel {
+  display: none;
+}
+
 .collapsedCategoryList {
   display: grid;
   gap: 6px;
@@ -575,12 +650,20 @@ a.currentItem:hover,
   background: transparent;
   color: var(--ams-color-text-muted);
   cursor: pointer;
+  transition:
+    background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .collapsedCategoryTrigger:hover,
 .collapsedCategoryTrigger[data-open] {
   background: rgba(255, 255, 255, 0.1);
   color: var(--ams-color-text-inverse);
+}
+
+.collapsedCategoryTrigger:active {
+  transform: scale(0.92);
 }
 
 .collapsedCategoryTrigger svg {
@@ -595,8 +678,19 @@ a.currentItem:hover,
   border: 1px solid var(--ams-color-border-subtle);
   border-radius: var(--ams-radius-8);
   padding: var(--ams-spacing-3);
-  background: var(--ams-color-surface-card);
-  box-shadow: 0 12px 24px rgb(13 14 18 / 16%);
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.04);
+  transform-origin: var(--transform-origin, left top);
+  transition:
+    transform 160ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.categoryFlyout[data-starting-style],
+.categoryFlyout[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.96) translateX(-4px);
 }
 
 .categoryFlyoutHeading {
@@ -615,12 +709,20 @@ a.currentItem:hover,
   font-size: var(--ams-typography-body-medium-font-size);
   line-height: 18px;
   cursor: pointer;
-  transition: background-color 150ms ease, color 150ms ease;
+  transition:
+    background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .categoryFlyoutItem:hover {
   background: rgba(13, 14, 18, 0.06);
   color: var(--ams-color-text-primary);
+  transform: translateX(3px);
+}
+
+.categoryFlyoutItem:active {
+  transform: scale(0.98);
 }
 
 a.categoryFlyoutItem {
@@ -662,37 +764,19 @@ a.categoryFlyoutItem {
 }
 
 .sidebarCollapsed .branding {
-  justify-content: center;
+  justify-content: flex-start;
   padding-inline: 18px;
 }
 
-.sidebarCollapsed .brandName,
-.sidebarCollapsed .searchContainer,
-.sidebarCollapsed .searchForm,
-.sidebarCollapsed .groupHeading {
-  display: none;
+.sidebarCollapsed .brandName {
+  max-inline-size: 0;
+  opacity: 0;
+  transform: translateX(-12px);
+  pointer-events: none;
 }
 
 .sidebarCollapsed .navigation {
   padding-inline: var(--sidebar-collapsed-inset);
-}
-
-.sidebarCollapsed .collapsedSearchButton {
-  display: grid;
-  inline-size: calc(100% - (var(--sidebar-collapsed-inset) * 2));
-  block-size: var(--sidebar-icon-row-height);
-  margin: 14px var(--sidebar-collapsed-inset) 12px;
-  border: 1px solid var(--ams-color-sidebar-search-background);
-  border-radius: var(--ams-radius-5);
-  place-items: center;
-  background: var(--ams-color-sidebar-search-background);
-  color: var(--ams-color-text-inverse);
-  cursor: pointer;
-}
-
-.sidebarCollapsed .collapsedSearchButton svg {
-  inline-size: 19px;
-  block-size: 19px;
 }
 
 .sidebarCollapsed .group + .group {
@@ -731,37 +815,19 @@ a.categoryFlyoutItem {
   }
 
   .sidebar:not(.sidebarExpanded) .branding {
-    justify-content: center;
+    justify-content: flex-start;
     padding-inline: 18px;
   }
 
-  .sidebar:not(.sidebarExpanded) .brandName,
-  .sidebar:not(.sidebarExpanded) .searchContainer,
-  .sidebar:not(.sidebarExpanded) .searchForm,
-  .sidebar:not(.sidebarExpanded) .groupHeading {
-    display: none;
+  .sidebar:not(.sidebarExpanded) .brandName {
+    max-inline-size: 0;
+    opacity: 0;
+    transform: translateX(-12px);
+    pointer-events: none;
   }
 
   .sidebar:not(.sidebarExpanded) .navigation {
     padding-inline: var(--sidebar-collapsed-inset);
-  }
-
-  .sidebar:not(.sidebarExpanded) .collapsedSearchButton {
-    display: grid;
-    inline-size: calc(100% - (var(--sidebar-collapsed-inset) * 2));
-    block-size: var(--sidebar-icon-row-height);
-    margin: 14px var(--sidebar-collapsed-inset) 12px;
-    border: 1px solid var(--ams-color-sidebar-search-background);
-    border-radius: var(--ams-radius-5);
-    place-items: center;
-    background: var(--ams-color-sidebar-search-background);
-    color: var(--ams-color-text-inverse);
-    cursor: pointer;
-  }
-
-  .sidebar:not(.sidebarExpanded) .collapsedSearchButton svg {
-    inline-size: 19px;
-    block-size: 19px;
   }
 
   .sidebar:not(.sidebarExpanded) .group + .group {
