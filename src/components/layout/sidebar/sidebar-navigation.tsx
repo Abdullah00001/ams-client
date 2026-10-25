@@ -125,7 +125,7 @@ export function SidebarNavigation({
               const after = suggestion.slice(matchIndex + normalizedQuery.length);
 
               return (
-                <li key={suggestion} role="option">
+                <li aria-selected={false} key={suggestion} role="option">
                   <button
                     className={styles.searchSuggestionItem}
                     onMouseDown={() => {

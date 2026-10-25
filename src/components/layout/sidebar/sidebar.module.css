@@ -233,7 +233,7 @@
 }
 
 .groupHeading {
-  margin: 0 0 var(--ams-spacing-2);
+  margin: 0;
   color: var(--ams-color-text-muted);
   font-size: var(--ams-typography-body-normal-font-size);
   font-weight: var(--ams-font-weight-semibold);
@@ -245,21 +245,25 @@
 .groupTrigger {
   display: flex;
   inline-size: 100%;
+  min-block-size: var(--sidebar-navigation-row-height);
   align-items: center;
   justify-content: space-between;
   gap: var(--ams-spacing-2);
   border: 0;
-  padding: 0;
+  border-radius: var(--ams-radius-5);
+  padding: 7px 8px;
   background: transparent;
   color: inherit;
   font: inherit;
   text-align: start;
   text-transform: inherit;
   cursor: pointer;
-  transition: color 150ms ease, opacity 150ms ease;
+  box-sizing: border-box;
+  transition: background-color 150ms ease, color 150ms ease, opacity 150ms ease;
 }
 
 .groupTrigger:hover {
+  background: rgba(255, 255, 255, 0.08);
   color: var(--ams-color-text-inverse);
 }
 
@@ -271,7 +275,7 @@
   display: inline-flex;
   min-inline-size: 0;
   align-items: center;
-  gap: var(--ams-spacing-2-5);
+  gap: var(--sidebar-item-gap);
 }
 
 .groupIcon {
@@ -297,7 +301,7 @@
 .nestedNavigationList {
   display: flex;
   flex-direction: column;
-  margin: 10px 0 0 0;
+  margin: 6px 0 0 0;
   padding: 0;
   gap: 0;
   list-style: none;
@@ -314,7 +318,7 @@
 /* Horizontal connector line from vertical stem to item */
 .nestedNavigationList > li::before {
   position: absolute;
-  inset-inline-start: 8px;
+  inset-inline-start: 16px;
   inset-block-start: 50%;
   inline-size: 10px;
   block-size: 1px;
@@ -325,7 +329,7 @@
 /* Seamless vertical line running through all items */
 .nestedNavigationList > li::after {
   position: absolute;
-  inset-inline-start: 8px;
+  inset-inline-start: 16px;
   inset-block-start: 0;
   inset-block-end: 0;
   inline-size: 1px;
@@ -349,7 +353,7 @@
   align-items: center;
   min-block-size: 34px;
   border-radius: var(--ams-radius-5);
-  margin-inline-start: 18px;
+  margin-inline-start: 26px;
   padding: 6px 12px;
   box-sizing: border-box;
   color: var(--ams-color-text-muted);
