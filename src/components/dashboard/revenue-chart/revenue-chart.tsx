@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import { Popover } from "@base-ui/react/popover";
 import { ChevronDown } from "lucide-react";
 import {
@@ -12,10 +12,38 @@ import styles from "./revenue-chart.module.css";
 const MAX_CHART_VALUE = 150000;
 const CHART_HEIGHT_PX = 250;
 
+/**
+ * Universal Material UI TouchRipple
+ */
+function createRipple(event: MouseEvent<HTMLElement>) {
+  const container = event.currentTarget;
+  const rect = container.getBoundingClientRect();
+  const isKeyboard = event.clientX === 0 && event.clientY === 0;
+  const x = isKeyboard ? rect.width / 2 : event.clientX - rect.left;
+  const y = isKeyboard ? rect.height / 2 : event.clientY - rect.top;
+  const diameter = Math.sqrt(rect.width ** 2 + rect.height ** 2) * 2;
+
+  const ripple = document.createElement("span");
+  ripple.className = styles.ripple;
+  ripple.style.width = `${diameter}px`;
+  ripple.style.height = `${diameter}px`;
+  ripple.style.left = `${Math.round(x - diameter / 2)}px`;
+  ripple.style.top = `${Math.round(y - diameter / 2)}px`;
+
+  container.appendChild(ripple);
+
+  window.setTimeout(() => {
+    ripple.remove();
+  }, 1300);
+}
+
 export function RevenueChart() {
   const [selectedYear, setSelectedYear] = useState<number>(2024);
   const [isYearOpen, setIsYearOpen] = useState<boolean>(false);
-  const [hoveredMonthIndex, setHoveredMonthIndex] = useState<number | null>(6); // Default: Jul (matching Figma)
+  const [hoveredState, setHoveredState] = useState<{
+    monthIndex: number;
+    series: "dsca" | "gbta";
+  } | null>(null);
 
   const currentYearData =
     REVENUE_CHART_YEARS[selectedYear] ?? REVENUE_CHART_YEARS[2024];
@@ -31,15 +59,17 @@ export function RevenueChart() {
           </p>
         </div>
 
-        {/* Year Filter Dropdown (Replaces View All Transactions) */}
+        {/* Year Filter Dropdown with TouchRipple */}
         <Popover.Root
           modal={false}
           onOpenChange={setIsYearOpen}
           open={isYearOpen}
         >
           <Popover.Trigger
+            aria-expanded={isYearOpen}
             aria-label={`Select Year. Currently: ${selectedYear}`}
             className={styles.yearTrigger}
+            onMouseDown={createRipple}
             type="button"
           >
             <span>{selectedYear}</span>
@@ -62,9 +92,12 @@ export function RevenueChart() {
                   <button
                     className={`${styles.yearOption} ${yr === selectedYear ? styles.yearOptionSelected : ""}`}
                     key={yr}
+                    onMouseDown={createRipple}
                     onClick={() => {
                       setSelectedYear(yr);
-                      setIsYearOpen(false);
+                      window.setTimeout(() => {
+                        setIsYearOpen(false);
+                      }, 180);
                     }}
                     type="button"
                   >
@@ -110,21 +143,50 @@ export function RevenueChart() {
               const orangePx = Math.round(
                 (m.gbta / MAX_CHART_VALUE) * CHART_HEIGHT_PX,
               );
-              const isHovered = hoveredMonthIndex === idx;
+
+              const isCurrentMonthHovered = hoveredState?.monthIndex === idx;
+              const activeSeries = hoveredState?.series ?? "gbta";
+
+              // Sits right above the hovered segment (not at the top of the chart!)
+              const tooltipBottomPx =
+                activeSeries === "dsca"
+                  ? bluePx + 8
+                  : bluePx + orangePx + 8;
 
               return (
                 <div
                   className={styles.barColumn}
                   key={m.month}
-                  onMouseEnter={() => setHoveredMonthIndex(idx)}
+                  onMouseLeave={() => setHoveredState(null)}
                 >
-                  {/* Tooltip (Matching Figma Screenshot 1, 2, 4) */}
-                  {isHovered && (
-                    <div className={styles.tooltip}>
-                      <span className={styles.tooltipDate}>{m.tooltipDate}</span>
-                      <div className={styles.tooltipRow}>
-                        <span className={styles.tooltipDot} />
-                        <span>{m.tooltipAmount}</span>
+                  {/* MUI Column Highlight Overlay on hover */}
+                  <div className={styles.columnHighlight} />
+
+                  {/* MUI Style Floating Tooltip right above hovered segment */}
+                  {isCurrentMonthHovered && (
+                    <div
+                      className={styles.tooltip}
+                      style={{ bottom: `${tooltipBottomPx}px` }}
+                    >
+                      <div className={styles.tooltipHeader}>{m.month}</div>
+                      <div className={styles.tooltipBody}>
+                        {activeSeries === "gbta" ? (
+                          <>
+                            <span className={styles.tooltipDotOrange} />
+                            <span>GBTA:</span>
+                            <span className={styles.tooltipValue}>
+                              ${m.gbta.toLocaleString("en-US")}
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            <span className={styles.tooltipDotBlue} />
+                            <span>DSCA:</span>
+                            <span className={styles.tooltipValue}>
+                              ${m.dsca.toLocaleString("en-US")}
+                            </span>
+                          </>
+                        )}
                       </div>
                       <div className={styles.tooltipCaret} />
                     </div>
@@ -132,12 +194,23 @@ export function RevenueChart() {
 
                   {/* Stacked Bar (30px wide) */}
                   <div className={styles.stackedBar}>
+                    {/* Blue bottom bar: DSCA */}
                     <div
                       className={styles.barBlue}
+                      onMouseEnter={(e) => {
+                        e.stopPropagation();
+                        setHoveredState({ monthIndex: idx, series: "dsca" });
+                      }}
                       style={{ height: `${bluePx}px` }}
                     />
+
+                    {/* Orange top bar: GBTA */}
                     <div
                       className={styles.barOrange}
+                      onMouseEnter={(e) => {
+                        e.stopPropagation();
+                        setHoveredState({ monthIndex: idx, series: "gbta" });
+                      }}
                       style={{ height: `${orangePx}px` }}
                     />
                   </div>

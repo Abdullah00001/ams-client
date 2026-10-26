@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   Building2,
@@ -8,6 +10,7 @@ import {
   ArrowDownRight,
   type LucideIcon,
 } from "lucide-react";
+import { createTouchRipple } from "@/lib/touch-ripple";
 import styles from "./stat-cards.module.css";
 
 export type StatCardData = {
@@ -85,6 +88,7 @@ export function StatCards({ stats = defaultStats }: StatCardsProps) {
             className={`${styles.card} ${styles[stat.variant]}`}
             href={stat.href}
             key={stat.id}
+            onClick={(e) => createTouchRipple(e, "light")}
           >
             <div className={styles.iconWrapper}>
               <Icon aria-hidden="true" className={styles.icon} />

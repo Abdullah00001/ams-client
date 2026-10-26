@@ -10,6 +10,34 @@
   flex-direction: column;
 }
 
+/* Material UI TouchRipple Standard Animation */
+@keyframes muiRipple {
+  0% {
+    transform: scale(0);
+    opacity: 0.45;
+  }
+  30% {
+    opacity: 0.35;
+  }
+  75% {
+    opacity: 0.16;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: scale(0);
+  animation: muiRipple 1250ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  z-index: 10;
+  background: rgba(7, 20, 55, 0.2);
+}
+
 /* Header */
 .header {
   display: flex;
@@ -46,10 +74,12 @@
 
 /* Year Filter Trigger (Replaces View All Transactions) */
 .yearTrigger {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 12px;
+  padding: 6px 14px;
   background: #ffffff;
   border: 1px solid #e4e7eb;
   border-radius: 6px;
@@ -59,7 +89,11 @@
   font-style: normal;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 150ms ease, border-color 150ms ease;
+  transition:
+    background-color 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .yearTrigger:hover {
@@ -67,29 +101,41 @@
   border-color: #cbd5e1;
 }
 
-.yearChevron {
-  color: #99a1b7;
-  transition: transform 150ms ease;
+.yearTrigger:active {
+  transform: scale(0.97);
 }
 
-.yearTrigger[data-open] .yearChevron {
+.yearTrigger:focus-visible {
+  outline: 2px solid var(--ams-color-focus-ring, #1b84ff);
+  outline-offset: 2px;
+}
+
+.yearChevron {
+  color: #99a1b7;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.yearTrigger[data-open] .yearChevron,
+.yearTrigger[aria-expanded="true"] .yearChevron {
   transform: rotate(180deg);
 }
 
 /* Year Filter Popup (From Figma Screenshot 2 & 3) */
 .yearPopup {
   z-index: 50;
-  min-width: 116px;
+  min-width: 120px;
   background: #ffffff;
   border: 1px solid #f1f3f7;
   border-radius: 8px;
   padding: 4px;
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08), 0px 2px 6px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
   gap: 2px;
   transform-origin: var(--transform-origin, top right);
-  transition: opacity 150ms ease, transform 150ms ease;
+  transition:
+    opacity 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .yearPopup[data-starting-style],
@@ -99,10 +145,12 @@
 }
 
 .yearOption {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  padding: 5px 20px 5px 10px;
-  gap: 10px;
+  justify-content: space-between;
+  padding: 6px 14px;
   width: 100%;
   border: none;
   background: transparent;
@@ -113,8 +161,10 @@
   font-style: normal;
   font-weight: 400;
   color: #99a1b7;
-  border-radius: 4px;
-  transition: background-color 150ms ease, color 150ms ease;
+  border-radius: 6px;
+  transition:
+    background-color 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .yearOption:hover {
@@ -206,25 +256,47 @@
   justify-content: flex-end;
 }
 
+/* MUI Style Column Highlight overlay on hover */
+.columnHighlight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 44px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(7, 20, 55, 0.035);
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.barColumn:hover .columnHighlight {
+  opacity: 1;
+}
+
 /* The 30px Stacked Bar Wrapper */
 .stackedBar {
+  position: relative;
+  z-index: 1;
   width: 30px;
   display: flex;
   flex-direction: column-reverse;
-  cursor: pointer;
   border-radius: 2px 2px 0 0;
-  transition: opacity 150ms ease;
-}
-
-.stackedBar:hover {
-  opacity: 0.9;
 }
 
 /* Blue bottom bar: Primary Blue */
 .barBlue {
   width: 30px;
   background: #1b84ff;
-  transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  transition:
+    height 350ms cubic-bezier(0.4, 0, 0.2, 1),
+    filter 180ms ease;
+}
+
+.barBlue:hover {
+  filter: brightness(1.12);
 }
 
 /* Orange top bar: #FFA500 with top rounded 2px */
@@ -232,7 +304,14 @@
   width: 30px;
   background: #ffa500;
   border-radius: 2px 2px 0 0;
-  transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  transition:
+    height 350ms cubic-bezier(0.4, 0, 0.2, 1),
+    filter 180ms ease;
+}
+
+.barOrange:hover {
+  filter: brightness(1.12);
 }
 
 /* Month label below bar */
@@ -249,56 +328,89 @@
   line-height: 16px;
   color: #7891b0;
   user-select: none;
+  transition: color 200ms ease;
 }
 
-/* Tooltip (From Figma Screenshot 1, 2, 4) */
+.barColumn:hover .monthLabel {
+  color: #071437;
+  font-weight: 500;
+}
+
+/* MUI Style Floating Tooltip that sits directly above the hovered segment */
+@keyframes muiTooltipPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 4px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
 .tooltip {
   position: absolute;
-  bottom: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 8px;
-  border-radius: 5px;
+  border-radius: 6px;
   background: #ffffff;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.08);
-  border: 1px solid #f1f3f7;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.12), 0px 2px 6px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   pointer-events: none;
-  z-index: 20;
+  z-index: 30;
   white-space: nowrap;
+  animation: muiTooltipPop 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: bottom 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.tooltipDate {
+.tooltipHeader {
   font-family: var(--ams-font-family-sans, Inter, sans-serif);
-  font-size: 12px;
+  font-size: 11px;
   font-style: normal;
-  font-weight: 400;
-  color: #99a1b7;
+  font-weight: 600;
+  color: #475569;
   text-align: center;
+  padding: 5px 12px 4px;
+  background: #f8fafc;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: 1px solid #f1f3f7;
 }
 
-.tooltipRow {
+.tooltipBody {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  padding: 6px 12px 7px;
   font-family: var(--ams-font-family-sans, Inter, sans-serif);
   font-size: 12px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 16px;
   color: #071437;
 }
 
-.tooltipDot {
+.tooltipDotBlue {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1b84ff;
+  flex-shrink: 0;
+}
+
+.tooltipDotOrange {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: #ffa500;
   flex-shrink: 0;
+}
+
+.tooltipValue {
+  font-weight: 600;
+  color: #071437;
 }
 
 .tooltipCaret {
@@ -309,8 +421,8 @@
   width: 8px;
   height: 8px;
   background: #ffffff;
-  border-right: 1px solid #f1f3f7;
-  border-bottom: 1px solid #f1f3f7;
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 /* Bottom Legend (Centered) */
