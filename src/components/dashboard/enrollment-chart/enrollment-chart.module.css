@@ -1,0 +1,381 @@
+.card {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-8, 8px);
+  padding: 24px;
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Material UI TouchRipple Standard Animation */
+@keyframes muiRipple {
+  0% {
+    transform: scale(0);
+    opacity: 0.45;
+  }
+  30% {
+    opacity: 0.35;
+  }
+  75% {
+    opacity: 0.16;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: scale(0);
+  animation: muiRipple 1250ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  z-index: 10;
+  background: rgba(7, 20, 55, 0.2);
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0;
+  color: #071437;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.subtitle {
+  margin: 4px 0 0 0;
+  color: #99a1b7;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px;
+}
+
+/* Year Filter Trigger */
+.yearTrigger {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #ffffff;
+  border: 1px solid #e4e7eb;
+  border-radius: 6px;
+  color: #071437;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.yearTrigger:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.yearTrigger:active {
+  transform: scale(0.97);
+}
+
+.yearTrigger:focus-visible {
+  outline: 2px solid var(--ams-color-focus-ring, #1b84ff);
+  outline-offset: 2px;
+}
+
+.yearChevron {
+  color: #99a1b7;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.yearTrigger[data-open] .yearChevron,
+.yearTrigger[aria-expanded="true"] .yearChevron {
+  transform: rotate(180deg);
+}
+
+/* Year Filter Popup */
+.yearPopup {
+  z-index: 50;
+  min-width: 120px;
+  background: #ffffff;
+  border: 1px solid #f1f3f7;
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08), 0px 2px 6px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transform-origin: var(--transform-origin, top right);
+  transition:
+    opacity 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.yearPopup[data-starting-style],
+.yearPopup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+.yearOption {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  color: #99a1b7;
+  border-radius: 6px;
+  transition:
+    background-color 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.yearOption:hover {
+  background: #f4f6fa;
+  color: #071437;
+}
+
+.yearOptionSelected {
+  background: #eef4ff;
+  color: #071437;
+  font-weight: 600;
+}
+
+.yearOptionSelected:hover {
+  background: #e5efff;
+}
+
+/* Metric summary row (From Reference Image 1) */
+.metricsRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 24px;
+}
+
+.metricItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metricHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  color: #637381;
+}
+
+.metricDotPrimary {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #1b84ff;
+}
+
+.metricDotSecondary {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffa500;
+}
+
+.metricValue {
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+  color: #071437;
+}
+
+/* Chart Canvas Area */
+.chartContainer {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  display: flex;
+}
+
+/* Left Y-Axis */
+.yAxis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40px;
+  height: 220px;
+  padding-right: 12px;
+  user-select: none;
+}
+
+.yLabel {
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  color: #99a1b7;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* SVG Plot Area */
+.plotArea {
+  position: relative;
+  flex: 1;
+  height: 220px;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* X-Axis Month Labels */
+.xAxis {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+
+.xLabel {
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  color: #99a1b7;
+  text-align: center;
+  flex: 1;
+  user-select: none;
+}
+
+.xLabelActive {
+  color: #071437;
+  font-weight: 600;
+}
+
+/* MUI Floating Tooltip */
+@keyframes muiTooltipPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 4px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.tooltip {
+  position: absolute;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.12), 0px 2px 6px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  pointer-events: none;
+  z-index: 30;
+  white-space: nowrap;
+  animation: muiTooltipPop 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition:
+    left 120ms cubic-bezier(0.4, 0, 0.2, 1),
+    top 120ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tooltipHeader {
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  color: #475569;
+  text-align: center;
+  padding: 5px 12px 4px;
+  background: #f8fafc;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  border-bottom: 1px solid #f1f3f7;
+}
+
+.tooltipBody {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 7px;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  color: #071437;
+}
+
+.tooltipDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1b84ff;
+  flex-shrink: 0;
+}
+
+.tooltipValue {
+  font-weight: 700;
+  color: #071437;
+}
+
+.tooltipCaret {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}

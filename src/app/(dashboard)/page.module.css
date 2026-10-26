@@ -2,3 +2,17 @@
   min-block-size: calc(100dvh - 70px);
   padding: clamp(20px, 3vw, 36px);
 }
+
+.rowTwoColumns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.2fr);
+  gap: var(--ams-spacing-5, 24px);
+  margin-block-start: var(--ams-spacing-5, 24px);
+  align-items: stretch;
+}
+
+@media (max-width: 1080px) {
+  .rowTwoColumns {
+    grid-template-columns: 1fr;
+  }
+}
