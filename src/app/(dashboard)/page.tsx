@@ -1,5 +1,6 @@
 import { DashboardHeader } from "@/components/dashboard/dashboard-header/dashboard-header";
 import { StatCards } from "@/components/dashboard/stat-cards/stat-cards";
+import { RevenueChart } from "@/components/dashboard/revenue-chart/revenue-chart";
 import styles from "@/app/(dashboard)/page.module.css";
 
 export default function DashboardPage() {
@@ -7,6 +8,7 @@ export default function DashboardPage() {
     <div className={styles.page}>
       <DashboardHeader userName="Admin" />
       <StatCards />
+      <RevenueChart />
     </div>
   );
 }

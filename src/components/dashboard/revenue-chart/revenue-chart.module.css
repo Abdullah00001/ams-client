@@ -1,0 +1,360 @@
+.card {
+  width: 100%;
+  margin-block-start: var(--ams-spacing-5, 24px);
+  background: #ffffff;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-8, 8px);
+  padding: 24px;
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0;
+  color: #071437;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.subtitle {
+  margin: 4px 0 0 0;
+  color: #99a1b7;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px;
+}
+
+/* Year Filter Trigger (Replaces View All Transactions) */
+.yearTrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: #ffffff;
+  border: 1px solid #e4e7eb;
+  border-radius: 6px;
+  color: #071437;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.yearTrigger:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.yearChevron {
+  color: #99a1b7;
+  transition: transform 150ms ease;
+}
+
+.yearTrigger[data-open] .yearChevron {
+  transform: rotate(180deg);
+}
+
+/* Year Filter Popup (From Figma Screenshot 2 & 3) */
+.yearPopup {
+  z-index: 50;
+  min-width: 116px;
+  background: #ffffff;
+  border: 1px solid #f1f3f7;
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transform-origin: var(--transform-origin, top right);
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.yearPopup[data-starting-style],
+.yearPopup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+.yearOption {
+  display: flex;
+  align-items: center;
+  padding: 5px 20px 5px 10px;
+  gap: 10px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  color: #99a1b7;
+  border-radius: 4px;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.yearOption:hover {
+  background: #f4f6fa;
+  color: #071437;
+}
+
+.yearOptionSelected {
+  background: #eef4ff;
+  color: #071437;
+  font-weight: 600;
+}
+
+.yearOptionSelected:hover {
+  background: #e5efff;
+}
+
+/* Chart Canvas Area */
+.chartArea {
+  position: relative;
+  width: 100%;
+  height: 290px;
+  display: flex;
+}
+
+/* Left Y-Axis */
+.yAxis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 48px;
+  height: 250px;
+  padding-right: 12px;
+  user-select: none;
+}
+
+.yLabel {
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  color: #99a1b7;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Plot Area containing gridlines and bars */
+.plotArea {
+  position: relative;
+  flex: 1;
+  height: 250px;
+}
+
+/* Background Grid Lines */
+.gridLines {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.gridLine {
+  width: 100%;
+  height: 1px;
+  background: #f1f3f7;
+}
+
+/* Bars Flex Container (gap: 42px or space-between) */
+.barsContainer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+
+/* Single Month Column */
+.barColumn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 45px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+/* The 30px Stacked Bar Wrapper */
+.stackedBar {
+  width: 30px;
+  display: flex;
+  flex-direction: column-reverse;
+  cursor: pointer;
+  border-radius: 2px 2px 0 0;
+  transition: opacity 150ms ease;
+}
+
+.stackedBar:hover {
+  opacity: 0.9;
+}
+
+/* Blue bottom bar: Primary Blue */
+.barBlue {
+  width: 30px;
+  background: #1b84ff;
+  transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Orange top bar: #FFA500 with top rounded 2px */
+.barOrange {
+  width: 30px;
+  background: #ffa500;
+  border-radius: 2px 2px 0 0;
+  transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Month label below bar */
+.monthLabel {
+  position: absolute;
+  top: 100%;
+  margin-top: 10px;
+  width: 45px;
+  text-align: center;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  color: #7891b0;
+  user-select: none;
+}
+
+/* Tooltip (From Figma Screenshot 1, 2, 4) */
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f1f3f7;
+  pointer-events: none;
+  z-index: 20;
+  white-space: nowrap;
+}
+
+.tooltipDate {
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  color: #99a1b7;
+  text-align: center;
+}
+
+.tooltipRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  color: #071437;
+}
+
+.tooltipDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffa500;
+  flex-shrink: 0;
+}
+
+.tooltipCaret {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+  border-right: 1px solid #f1f3f7;
+  border-bottom: 1px solid #f1f3f7;
+}
+
+/* Bottom Legend (Centered) */
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  color: #071437;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legendDotBlue {
+  background: #1b84ff;
+}
+
+.legendDotOrange {
+  background: #ffa500;
+}
+
+@media (max-width: 768px) {
+  .chartArea {
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .plotArea {
+    min-width: 600px;
+  }
+}
