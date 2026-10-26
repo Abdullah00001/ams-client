@@ -36,7 +36,7 @@ type SidebarNavigationItemBase = {
 };
 
 export type ImplementedNavigationItem = SidebarNavigationItemBase & {
-  href: "/" | "/dashboard";
+  href: "/";
   kind: "implemented";
 };
 

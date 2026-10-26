@@ -24,7 +24,7 @@ export function SidebarNavigationItem({
   const Icon = item.icon;
   const isCurrentPage =
     item.kind === "implemented" &&
-    (pathname === item.href || (item.href === "/" && pathname === "/dashboard"));
+    (pathname === item.href || (item.href === "/"));
   const itemContent = (
     <>
       {showIcon ? (
