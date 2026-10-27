@@ -494,12 +494,14 @@
   cursor: pointer;
   transition:
     background-color 150ms ease,
-    color 150ms ease;
+    color 150ms ease,
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nestedNavigationList .navigationItem:hover {
   background: rgba(255, 255, 255, 0.1);
   color: var(--ams-color-text-inverse);
+  transform: translateX(4px);
 }
 
 .nestedNavigationList .navigationItem:active {
@@ -749,12 +751,14 @@ a.currentItem:hover,
   cursor: pointer;
   transition:
     background-color 150ms ease,
-    color 150ms ease;
+    color 150ms ease,
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .categoryFlyoutItem:hover {
   background: rgba(13, 14, 18, 0.06);
   color: var(--ams-color-text-primary);
+  transform: translateX(4px);
 }
 
 .categoryFlyoutItem .navigationLabel {
