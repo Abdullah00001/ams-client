@@ -59,14 +59,11 @@ export function LatestEnrollments({
               <th className={styles.th}>Branch</th>
               <th className={styles.th}>Amount Paid</th>
               <th className={styles.th}>Date</th>
-              <th className={styles.thStatus}>Status</th>
             </tr>
           </thead>
           <tbody>
             {data.map((enrollment) => {
               const isDsca = enrollment.branch === "DSCA";
-              const isCompleted = enrollment.status === "Completed";
-              const isPending = enrollment.status === "Pending";
 
               return (
                 <tr
@@ -119,21 +116,6 @@ export function LatestEnrollments({
                   {/* Date */}
                   <td className={styles.td}>
                     <span className={styles.dateText}>{enrollment.date}</span>
-                  </td>
-
-                  {/* Status Pill (matching screenshot) */}
-                  <td className={styles.tdStatus}>
-                    <span
-                      className={`${styles.statusBadge} ${
-                        isCompleted
-                          ? styles.statusCompleted
-                          : isPending
-                            ? styles.statusPending
-                            : styles.statusProcessing
-                      }`}
-                    >
-                      {enrollment.status}
-                    </span>
                   </td>
                 </tr>
               );
