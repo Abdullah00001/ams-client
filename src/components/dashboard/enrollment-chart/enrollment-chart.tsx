@@ -320,7 +320,7 @@ export function EnrollmentChart() {
             width={viewWidth}
           >
             <defs>
-              {/* Primary Blue Gradient (DSCA) - Light, airy MUI aesthetic */}
+              {/* Emerald Green Gradient (DSCA) - Light, airy MUI aesthetic */}
               <linearGradient
                 id={`${gradientId}-blue`}
                 x1="0"
@@ -328,9 +328,9 @@ export function EnrollmentChart() {
                 y1="0"
                 y2="1"
               >
-                <stop offset="0%" stopColor="#1b84ff" stopOpacity="0.16" />
-                <stop offset="70%" stopColor="#1b84ff" stopOpacity="0.02" />
-                <stop offset="100%" stopColor="#1b84ff" stopOpacity="0.0" />
+                <stop offset="0%" stopColor="#028c4a" stopOpacity="0.16" />
+                <stop offset="70%" stopColor="#028c4a" stopOpacity="0.02" />
+                <stop offset="100%" stopColor="#028c4a" stopOpacity="0.0" />
               </linearGradient>
 
               {/* Orange Gradient (GBTA) - Light, airy MUI aesthetic */}
@@ -341,9 +341,9 @@ export function EnrollmentChart() {
                 y1="0"
                 y2="1"
               >
-                <stop offset="0%" stopColor="#ffa500" stopOpacity="0.14" />
-                <stop offset="70%" stopColor="#ffa500" stopOpacity="0.02" />
-                <stop offset="100%" stopColor="#ffa500" stopOpacity="0.0" />
+                <stop offset="0%" stopColor="#ff7724" stopOpacity="0.14" />
+                <stop offset="70%" stopColor="#ff7724" stopOpacity="0.02" />
+                <stop offset="100%" stopColor="#ff7724" stopOpacity="0.0" />
               </linearGradient>
             </defs>
 
@@ -376,7 +376,7 @@ export function EnrollmentChart() {
               d={gbtaSplineLinePath}
               fill="none"
               opacity={isGbtaProminent ? 1 : 0.3}
-              stroke="#ffa500"
+              stroke="#ff7724"
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={
@@ -387,7 +387,7 @@ export function EnrollmentChart() {
               vectorEffect="non-scaling-stroke"
             />
 
-            {/* DSCA Area & Line (Primary Blue) - Thin crisp 2px line */}
+            {/* DSCA Area & Line (Emerald Green) - Thin crisp 2px line */}
             <path
               className={styles.pathTransition}
               d={dscaSplineAreaPath}
@@ -399,7 +399,7 @@ export function EnrollmentChart() {
               d={dscaSplineLinePath}
               fill="none"
               opacity={isDscaProminent ? 1 : 0.3}
-              stroke="#1b84ff"
+              stroke="#028c4a"
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={
@@ -428,7 +428,7 @@ export function EnrollmentChart() {
                 <circle
                   cx={activePoint.x}
                   cy={activePoint.y}
-                  fill={hoveredState.series === "dsca" ? "#1b84ff" : "#ffa500"}
+                  fill={hoveredState.series === "dsca" ? "#028c4a" : "#ff7724"}
                   fillOpacity="0.2"
                   r="8"
                 />
@@ -437,7 +437,7 @@ export function EnrollmentChart() {
                 <circle
                   cx={activePoint.x}
                   cy={activePoint.y}
-                  fill={hoveredState.series === "dsca" ? "#1b84ff" : "#ffa500"}
+                  fill={hoveredState.series === "dsca" ? "#028c4a" : "#ff7724"}
                   r="4.5"
                   stroke="#ffffff"
                   strokeWidth="2"

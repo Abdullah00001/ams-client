@@ -1,3 +1,4 @@
+import { DashboardAutoRefresh } from "@/components/dashboard/dashboard-auto-refresh/dashboard-auto-refresh";
 import styles from "./dashboard-header.module.css";
 
 type DashboardHeaderProps = {
@@ -13,6 +14,7 @@ export function DashboardHeader({ userName = "Admin" }: DashboardHeaderProps) {
           Track real-time school statistics and key performance metrics.
         </p>
       </div>
+      <DashboardAutoRefresh />
     </header>
   );
 }

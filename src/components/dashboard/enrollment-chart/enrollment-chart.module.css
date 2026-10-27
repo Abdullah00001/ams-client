@@ -348,7 +348,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #1b84ff;
+  background: #028c4a;
   flex-shrink: 0;
 }
 
@@ -356,7 +356,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #ffa500;
+  background: #ff7724;
   flex-shrink: 0;
 }
 
@@ -411,9 +411,9 @@
 }
 
 .legendDotBlue {
-  background: #1b84ff;
+  background: #028c4a;
 }
 
 .legendDotOrange {
-  background: #ffa500;
+  background: #ff7724;
 }

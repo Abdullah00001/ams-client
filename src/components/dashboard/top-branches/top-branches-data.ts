@@ -20,7 +20,7 @@ export const TOP_BRANCHES_DATA: BranchPerformance[] = [
     revenueMonthly: 260000,
     revenueFormatted: "৳ 260,000",
     percentage: 58,
-    color: "#1b84ff", // Primary Blue (matching DSCA everywhere)
+    color: "#028c4a", // DSCA Emerald Green
   },
   {
     id: "gbta",
@@ -31,7 +31,7 @@ export const TOP_BRANCHES_DATA: BranchPerformance[] = [
     revenueMonthly: 190000,
     revenueFormatted: "৳ 190,000",
     percentage: 42,
-    color: "#ffa500", // Amber / Orange (matching GBTA everywhere)
+    color: "#ff7724", // GBTA Vibrant Orange
   },
 ];
 

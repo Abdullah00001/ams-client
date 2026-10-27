@@ -285,10 +285,10 @@
   border-radius: 2px 2px 0 0;
 }
 
-/* Blue bottom bar: Primary Blue */
+/* DSCA bottom bar: #028c4a */
 .barBlue {
   width: 30px;
-  background: #1b84ff;
+  background: #028c4a;
   cursor: pointer;
   transition:
     height 350ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -299,10 +299,10 @@
   filter: brightness(1.12);
 }
 
-/* Orange top bar: #FFA500 with top rounded 2px */
+/* GBTA top bar: #ff7724 with top rounded 2px */
 .barOrange {
   width: 30px;
-  background: #ffa500;
+  background: #ff7724;
   border-radius: 2px 2px 0 0;
   cursor: pointer;
   transition:
@@ -396,7 +396,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #1b84ff;
+  background: #028c4a;
   flex-shrink: 0;
 }
 
@@ -404,7 +404,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #ffa500;
+  background: #ff7724;
   flex-shrink: 0;
 }
 
@@ -453,11 +453,11 @@
 }
 
 .legendDotBlue {
-  background: #1b84ff;
+  background: #028c4a;
 }
 
 .legendDotOrange {
-  background: #ffa500;
+  background: #ff7724;
 }
 
 @media (max-width: 768px) {

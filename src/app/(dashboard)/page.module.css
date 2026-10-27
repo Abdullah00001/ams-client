@@ -11,8 +11,27 @@
   align-items: stretch;
 }
 
-@media (max-width: 1080px) {
-  .rowTwoColumns {
+.rowFourColumns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--ams-spacing-5, 24px);
+  margin-block-start: var(--ams-spacing-5, 24px);
+  align-items: stretch;
+}
+
+.rowFourColumns > :last-child {
+  height: 0;
+  min-height: 100%;
+}
+
+@media (max-width: 1180px) {
+  .rowTwoColumns,
+  .rowFourColumns {
     grid-template-columns: 1fr;
+  }
+
+  .rowFourColumns > :last-child {
+    height: auto;
+    min-height: 0;
   }
 }

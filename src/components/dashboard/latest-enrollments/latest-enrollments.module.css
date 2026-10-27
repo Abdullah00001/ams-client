@@ -1,0 +1,295 @@
+.card {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-12, 12px);
+  padding: 24px;
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header matching the design screenshot */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0;
+  color: #071437;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.subtitle {
+  margin: 6px 0 0 0;
+  color: #99a1b7;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+/* View All Link */
+.viewAllLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #8590a5;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+}
+
+.viewAllLink:hover {
+  color: #071437;
+  background-color: #f8fafc;
+}
+
+.viewAllIcon {
+  width: 14px;
+  height: 14px;
+  transition: transform 150ms ease;
+}
+
+.viewAllLink:hover .viewAllIcon {
+  transform: translateX(2px);
+}
+
+/* Table Container */
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+}
+
+/* Table Header Bar matching screenshot */
+.tableHeaderRow {
+  background: #f8fafc;
+}
+
+.th {
+  padding: 12px 14px;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  color: #475569;
+  border: none;
+  white-space: nowrap;
+}
+
+.th:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding-left: 16px;
+}
+
+.th:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding-right: 16px;
+}
+
+.thStatus {
+  padding: 12px 14px;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  color: #475569;
+  border: none;
+  white-space: nowrap;
+  text-align: right;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding-right: 16px;
+}
+
+/* Rows */
+.tableRow {
+  position: relative;
+  cursor: pointer;
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.tableRow:hover {
+  background-color: #f8fafc;
+}
+
+.td {
+  padding: 14px 14px;
+  border-bottom: 1px solid #f1f3f7;
+  vertical-align: middle;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+}
+
+.td:first-child {
+  padding-left: 16px;
+}
+
+.tdStatus {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f3f7;
+  vertical-align: middle;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.tableRow:last-child .td,
+.tableRow:last-child .tdStatus {
+  border-bottom: none;
+}
+
+/* Student Info Cell */
+.studentCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #eff1f4;
+  color: #071437;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.studentMeta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.studentName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #071437;
+  line-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.courseName {
+  font-size: 11px;
+  font-weight: 500;
+  color: #99a1b7;
+  line-height: 14px;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Branch Badge */
+.branchBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 14px;
+  white-space: nowrap;
+}
+
+.branchDsca {
+  background: #e6f5ee;
+  color: #028c4a;
+}
+
+.branchGbta {
+  background: #fff2e8;
+  color: #ff7724;
+}
+
+/* Amount Paid Cell */
+.amountCell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #071437;
+  white-space: nowrap;
+}
+
+/* Date Cell */
+.dateText {
+  font-size: 13px;
+  font-weight: 400;
+  color: #475569;
+  white-space: nowrap;
+}
+
+/* Status Badges using AMS Design Tokens */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: var(--ams-radius-6, 6px);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.statusCompleted {
+  background: rgba(23, 198, 83, 0.12);
+  color: var(--ams-color-feedback-success, var(--ams-color-status-success, #17c653));
+  border: 1px solid rgba(23, 198, 83, 0.25);
+}
+
+.statusPending {
+  background: rgba(246, 192, 0, 0.14);
+  color: var(--ams-color-feedback-warning, var(--ams-color-status-warning, #f6c000));
+  border: 1px solid rgba(246, 192, 0, 0.3);
+}
+
+.statusProcessing {
+  background: rgba(0, 159, 253, 0.12);
+  color: var(--ams-color-feedback-info, var(--ams-color-status-info, #009ffd));
+  border: 1px solid rgba(0, 159, 253, 0.25);
+}
