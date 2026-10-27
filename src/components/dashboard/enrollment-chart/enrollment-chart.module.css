@@ -196,8 +196,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 40px;
+  width: 36px;
   height: 220px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-right: 12px;
   user-select: none;
 }
@@ -218,6 +220,7 @@
   position: relative;
   flex: 1;
   height: 220px;
+  cursor: crosshair;
 }
 
 .svg {
@@ -226,27 +229,37 @@
   overflow: visible;
 }
 
+/* Smooth opacity and width transitions for line chart paths */
+.pathTransition {
+  transition:
+    opacity 220ms cubic-bezier(0.4, 0, 0.2, 1),
+    stroke-width 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* X-Axis Month Labels */
 .xAxis {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  display: flex;
-  justify-content: space-between;
+  height: 24px;
   padding-top: 10px;
+  pointer-events: none;
 }
 
 .xLabel {
+  position: absolute;
   font-family: var(--ams-font-family-sans, Inter, sans-serif);
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 16px;
   color: #99a1b7;
-  text-align: center;
-  flex: 1;
   user-select: none;
+  transition:
+    color 150ms ease,
+    font-weight 150ms ease;
+  white-space: nowrap;
 }
 
 .xLabelActive {
@@ -258,17 +271,16 @@
 @keyframes muiTooltipPop {
   0% {
     opacity: 0;
-    transform: translate(-50%, 4px) scale(0.96);
+    transform: scale(0.96);
   }
   100% {
     opacity: 1;
-    transform: translate(-50%, 0) scale(1);
+    transform: scale(1);
   }
 }
 
 .tooltip {
   position: absolute;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   border-radius: 8px;
@@ -280,8 +292,8 @@
   white-space: nowrap;
   animation: muiTooltipPop 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   transition:
-    left 120ms cubic-bezier(0.4, 0, 0.2, 1),
-    top 120ms cubic-bezier(0.4, 0, 0.2, 1);
+    left 80ms linear,
+    top 80ms linear;
 }
 
 .tooltipHeader {
@@ -342,8 +354,6 @@
 .tooltipCaret {
   position: absolute;
   bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
   width: 8px;
   height: 8px;
   background: #ffffff;
@@ -368,8 +378,22 @@
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
-  color: #071437;
+  color: #4b5675;
+  cursor: pointer;
   user-select: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition:
+    color 200ms ease,
+    background-color 200ms ease,
+    opacity 200ms ease;
+}
+
+.legendItem:hover,
+.legendItemActive {
+  color: #071437;
+  background-color: #f8fafc;
+  font-weight: 600;
 }
 
 .legendDot {
