@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useId, type MouseEvent } from "react";
+import { useState, useId, useRef, useEffect, type MouseEvent } from "react";
 import { Popover } from "@base-ui/react/popover";
 import { ChevronDown } from "lucide-react";
 import {
@@ -10,9 +10,6 @@ import {
 import styles from "./enrollment-chart.module.css";
 
 const MAX_VALUE = 250;
-const VIEW_WIDTH = 560;
-const VIEW_HEIGHT = 200;
-const PADDING_X = 0;
 const PADDING_Y = 16;
 
 /**
@@ -41,17 +38,19 @@ function createRipple(event: MouseEvent<HTMLElement>) {
 }
 
 /**
- * Creates smooth cubic bezier path through data points (Catmull-Rom spline)
+ * Creates smooth cubic bezier path through data points (tension = 0.28 for natural curves)
  */
 function buildSmoothSplinePath(
   points: { x: number; y: number }[],
   isArea = false,
-  baselineY = VIEW_HEIGHT - PADDING_Y,
+  baselineY = 200,
 ): string {
   if (points.length === 0) return "";
   if (points.length === 1) return `M ${points[0].x} ${points[0].y}`;
 
-  let d = `M ${points[0].x} ${points[0].y}`;
+  let d = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+
+  const tension = 0.28;
 
   for (let i = 0; i < points.length - 1; i++) {
     const p0 = points[i === 0 ? 0 : i - 1];
@@ -59,10 +58,10 @@ function buildSmoothSplinePath(
     const p2 = points[i + 1];
     const p3 = points[i + 2 < points.length ? i + 2 : i + 1];
 
-    const cp1x = p1.x + (p2.x - p0.x) / 6;
-    const cp1y = p1.y + (p2.y - p0.y) / 6;
-    const cp2x = p2.x - (p3.x - p1.x) / 6;
-    const cp2y = p2.y - (p3.y - p1.y) / 6;
+    const cp1x = p1.x + (p2.x - p0.x) * tension;
+    const cp1y = p1.y + (p2.y - p0.y) * tension;
+    const cp2x = p2.x - (p3.x - p1.x) * tension;
+    const cp2y = p2.y - (p3.y - p1.y) * tension;
 
     d += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
   }
@@ -70,7 +69,7 @@ function buildSmoothSplinePath(
   if (isArea) {
     const lastX = points[points.length - 1].x;
     const firstX = points[0].x;
-    d += ` L ${lastX.toFixed(1)} ${baselineY} L ${firstX.toFixed(1)} ${baselineY} Z`;
+    d += ` L ${lastX.toFixed(1)} ${baselineY.toFixed(1)} L ${firstX.toFixed(1)} ${baselineY.toFixed(1)} Z`;
   }
 
   return d;
@@ -79,36 +78,37 @@ function buildSmoothSplinePath(
 function getTooltipStyle(
   monthIndex: number,
   point: { x: number; y: number },
+  viewWidth: number,
 ): React.CSSProperties {
-  const topPercent = (point.y / VIEW_HEIGHT) * 100;
+  const topPx = point.y;
 
   if (monthIndex === 0) {
     return {
-      left: "0%",
-      top: `${topPercent}%`,
-      transform: "translate(0, calc(-100% - 14px))",
+      left: "0px",
+      top: `${topPx}px`,
+      transform: "translate(0, calc(-100% - 12px))",
     };
   }
 
   if (monthIndex === 11) {
     return {
-      left: "100%",
-      top: `${topPercent}%`,
-      transform: "translate(-100%, calc(-100% - 14px))",
+      left: `${viewWidth}px`,
+      top: `${topPx}px`,
+      transform: "translate(-100%, calc(-100% - 12px))",
     };
   }
 
   return {
-    left: `${(point.x / VIEW_WIDTH) * 100}%`,
-    top: `${topPercent}%`,
-    transform: "translate(-50%, calc(-100% - 14px))",
+    left: `${point.x}px`,
+    top: `${topPx}px`,
+    transform: "translate(-50%, calc(-100% - 12px))",
   };
 }
 
 function getCaretStyle(monthIndex: number): React.CSSProperties {
   if (monthIndex === 0) {
     return {
-      left: "16px",
+      left: "14px",
       right: "auto",
       transform: "rotate(45deg)",
     };
@@ -117,7 +117,7 @@ function getCaretStyle(monthIndex: number): React.CSSProperties {
   if (monthIndex === 11) {
     return {
       left: "auto",
-      right: "16px",
+      right: "14px",
       transform: "rotate(45deg)",
     };
   }
@@ -131,6 +131,7 @@ function getCaretStyle(monthIndex: number): React.CSSProperties {
 
 export function EnrollmentChart() {
   const gradientId = useId();
+  const plotAreaRef = useRef<HTMLDivElement>(null);
   const [selectedYear, setSelectedYear] = useState<number>(2024);
   const [isYearOpen, setIsYearOpen] = useState<boolean>(false);
   const [hoveredState, setHoveredState] = useState<{
@@ -141,18 +142,46 @@ export function EnrollmentChart() {
     "dsca" | "gbta" | null
   >(null);
 
+  // Exact 1:1 screen pixel dimensions (no stretching, perfect circles)
+  const [dimensions, setDimensions] = useState<{ width: number; height: number }>({
+    width: 600,
+    height: 220,
+  });
+
+  useEffect(() => {
+    if (!plotAreaRef.current) return;
+    const updateSize = () => {
+      if (!plotAreaRef.current) return;
+      const rect = plotAreaRef.current.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        setDimensions({
+          width: Math.round(rect.width),
+          height: Math.round(rect.height),
+        });
+      }
+    };
+
+    updateSize();
+    const ro = new ResizeObserver(updateSize);
+    ro.observe(plotAreaRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  const viewWidth = dimensions.width;
+  const viewHeight = dimensions.height;
+
   const yearData =
     ENROLLMENT_CHART_YEARS[selectedYear] ?? ENROLLMENT_CHART_YEARS[2024];
 
-  // Calculate coordinates for points (edge-to-edge spanning from x=0 to x=VIEW_WIDTH)
-  const usableWidth = VIEW_WIDTH - PADDING_X * 2;
-  const usableHeight = VIEW_HEIGHT - PADDING_Y * 2;
+  // Calculate coordinates in 1:1 physical pixels (edge-to-edge from 0 to viewWidth)
+  const usableWidth = viewWidth;
+  const usableHeight = viewHeight - PADDING_Y * 2;
 
   // Blue line: DSCA
   const dscaPoints = yearData.months.map((m, idx) => {
-    const x = PADDING_X + (idx / (yearData.months.length - 1)) * usableWidth;
+    const x = (idx / (yearData.months.length - 1)) * usableWidth;
     const y =
-      VIEW_HEIGHT -
+      viewHeight -
       PADDING_Y -
       (Math.min(m.dsca, MAX_VALUE) / MAX_VALUE) * usableHeight;
     return { x, y, month: m.month, dsca: m.dsca, gbta: m.gbta };
@@ -160,19 +189,20 @@ export function EnrollmentChart() {
 
   // Orange line: GBTA
   const gbtaPoints = yearData.months.map((m, idx) => {
-    const x = PADDING_X + (idx / (yearData.months.length - 1)) * usableWidth;
+    const x = (idx / (yearData.months.length - 1)) * usableWidth;
     const y =
-      VIEW_HEIGHT -
+      viewHeight -
       PADDING_Y -
       (Math.min(m.gbta, MAX_VALUE) / MAX_VALUE) * usableHeight;
     return { x, y, month: m.month, dsca: m.dsca, gbta: m.gbta };
   });
 
-  const dscaSplineLinePath = buildSmoothSplinePath(dscaPoints);
-  const dscaSplineAreaPath = buildSmoothSplinePath(dscaPoints, true);
+  const baselineY = viewHeight - PADDING_Y;
+  const dscaSplineLinePath = buildSmoothSplinePath(dscaPoints, false, baselineY);
+  const dscaSplineAreaPath = buildSmoothSplinePath(dscaPoints, true, baselineY);
 
-  const gbtaSplineLinePath = buildSmoothSplinePath(gbtaPoints);
-  const gbtaSplineAreaPath = buildSmoothSplinePath(gbtaPoints, true);
+  const gbtaSplineLinePath = buildSmoothSplinePath(gbtaPoints, false, baselineY);
+  const gbtaSplineAreaPath = buildSmoothSplinePath(gbtaPoints, true, baselineY);
 
   // Active series resolution
   const activeSeries =
@@ -182,41 +212,22 @@ export function EnrollmentChart() {
   const isDscaProminent = !isAnyActive || activeSeries === "dsca";
   const isGbtaProminent = !isAnyActive || activeSeries === "gbta";
 
-  // Active hover point for tooltip & single circle
+  // Active hover points for tooltip & circles
+  const activeDscaPoint =
+    hoveredState !== null ? dscaPoints[hoveredState.monthIndex] : null;
+  const activeGbtaPoint =
+    hoveredState !== null ? gbtaPoints[hoveredState.monthIndex] : null;
+
   const activePoint =
     hoveredState !== null
       ? hoveredState.series === "dsca"
-        ? dscaPoints[hoveredState.monthIndex]
-        : gbtaPoints[hoveredState.monthIndex]
+        ? activeDscaPoint
+        : activeGbtaPoint
       : null;
 
   const activeMonth =
     hoveredState !== null ? yearData.months[hoveredState.monthIndex] : null;
 
-  const handlePlotMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const rawX = e.clientX - rect.left;
-    const rawY = e.clientY - rect.top;
-
-    const ratioX = Math.max(0, Math.min(1, rawX / rect.width));
-    const monthIdx = Math.round(ratioX * (yearData.months.length - 1));
-
-    const svgY = (rawY / rect.height) * VIEW_HEIGHT;
-
-    const dscaY = dscaPoints[monthIdx].y;
-    const gbtaY = gbtaPoints[monthIdx].y;
-
-    const distDsca = Math.abs(svgY - dscaY);
-    const distGbta = Math.abs(svgY - gbtaY);
-
-    const series: "dsca" | "gbta" = distDsca <= distGbta ? "dsca" : "gbta";
-
-    setHoveredState({ monthIndex: monthIdx, series });
-  };
-
-  const handlePlotMouseLeave = () => {
-    setHoveredState(null);
-  };
 
   return (
     <section aria-label="New Enrollments Per Month" className={styles.card}>
@@ -256,18 +267,23 @@ export function EnrollmentChart() {
               positionMethod="fixed"
               side="bottom"
               sideOffset={4}
+              style={{ zIndex: 9999 }}
             >
               <Popover.Popup className={styles.yearPopup}>
                 {ENROLLMENT_YEAR_OPTIONS.map((yr) => (
                   <button
                     className={`${styles.yearOption} ${yr === selectedYear ? styles.yearOptionSelected : ""}`}
                     key={yr}
-                    onMouseDown={createRipple}
                     onClick={() => {
+                      setSelectedYear(yr);
+                      setIsYearOpen(false);
+                    }}
+                    onMouseDown={(e) => {
+                      createRipple(e);
                       setSelectedYear(yr);
                       window.setTimeout(() => {
                         setIsYearOpen(false);
-                      }, 180);
+                      }, 120);
                     }}
                     type="button"
                   >
@@ -295,16 +311,16 @@ export function EnrollmentChart() {
         {/* Plot Area */}
         <div
           className={styles.plotArea}
-          onMouseLeave={handlePlotMouseLeave}
-          onMouseMove={handlePlotMouseMove}
+          ref={plotAreaRef}
         >
           <svg
             className={styles.svg}
-            preserveAspectRatio="none"
-            viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`}
+            height={viewHeight}
+            viewBox={`0 0 ${viewWidth} ${viewHeight}`}
+            width={viewWidth}
           >
             <defs>
-              {/* Primary Blue Gradient (DSCA) */}
+              {/* Primary Blue Gradient (DSCA) - Light, airy MUI aesthetic */}
               <linearGradient
                 id={`${gradientId}-blue`}
                 x1="0"
@@ -312,12 +328,12 @@ export function EnrollmentChart() {
                 y1="0"
                 y2="1"
               >
-                <stop offset="0%" stopColor="#1b84ff" stopOpacity="0.25" />
-                <stop offset="85%" stopColor="#1b84ff" stopOpacity="0.03" />
+                <stop offset="0%" stopColor="#1b84ff" stopOpacity="0.16" />
+                <stop offset="70%" stopColor="#1b84ff" stopOpacity="0.02" />
                 <stop offset="100%" stopColor="#1b84ff" stopOpacity="0.0" />
               </linearGradient>
 
-              {/* Orange Gradient (GBTA) */}
+              {/* Orange Gradient (GBTA) - Light, airy MUI aesthetic */}
               <linearGradient
                 id={`${gradientId}-orange`}
                 x1="0"
@@ -325,15 +341,15 @@ export function EnrollmentChart() {
                 y1="0"
                 y2="1"
               >
-                <stop offset="0%" stopColor="#ffa500" stopOpacity="0.20" />
-                <stop offset="85%" stopColor="#ffa500" stopOpacity="0.03" />
+                <stop offset="0%" stopColor="#ffa500" stopOpacity="0.14" />
+                <stop offset="70%" stopColor="#ffa500" stopOpacity="0.02" />
                 <stop offset="100%" stopColor="#ffa500" stopOpacity="0.0" />
               </linearGradient>
             </defs>
 
             {/* Horizontal Dashed Gridlines spanning edge-to-edge */}
             {[0, 1, 2, 3, 4, 5].map((lvl) => {
-              const y = PADDING_Y + (lvl / 5) * (VIEW_HEIGHT - PADDING_Y * 2);
+              const y = PADDING_Y + (lvl / 5) * (viewHeight - PADDING_Y * 2);
               return (
                 <line
                   key={lvl}
@@ -341,87 +357,135 @@ export function EnrollmentChart() {
                   strokeDasharray="4 4"
                   strokeWidth="1"
                   x1={0}
-                  x2={VIEW_WIDTH}
+                  x2={viewWidth}
                   y1={y}
                   y2={y}
                 />
               );
             })}
 
-            {/* GBTA Area & Line (Orange) */}
+            {/* GBTA Area & Line (Orange) - Thin crisp 2px line */}
             <path
               className={styles.pathTransition}
               d={gbtaSplineAreaPath}
               fill={`url(#${gradientId}-orange)`}
-              opacity={isGbtaProminent ? 1 : 0.1}
+              opacity={isGbtaProminent ? 1 : 0.08}
             />
             <path
               className={styles.pathTransition}
               d={gbtaSplineLinePath}
               fill="none"
-              opacity={isGbtaProminent ? 1 : 0.25}
+              opacity={isGbtaProminent ? 1 : 0.3}
               stroke="#ffa500"
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={
                 hoveredState?.series === "gbta" || hoveredLegendSeries === "gbta"
-                  ? 3.5
-                  : 2.5
+                  ? 2.25
+                  : 1.85
               }
+              vectorEffect="non-scaling-stroke"
             />
 
-            {/* DSCA Area & Line (Primary Blue) */}
+            {/* DSCA Area & Line (Primary Blue) - Thin crisp 2px line */}
             <path
               className={styles.pathTransition}
               d={dscaSplineAreaPath}
               fill={`url(#${gradientId}-blue)`}
-              opacity={isDscaProminent ? 1 : 0.1}
+              opacity={isDscaProminent ? 1 : 0.08}
             />
             <path
               className={styles.pathTransition}
               d={dscaSplineLinePath}
               fill="none"
-              opacity={isDscaProminent ? 1 : 0.25}
+              opacity={isDscaProminent ? 1 : 0.3}
               stroke="#1b84ff"
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={
                 hoveredState?.series === "dsca" || hoveredLegendSeries === "dsca"
-                  ? 3.75
-                  : 2.75
+                  ? 2.5
+                  : 2.0
               }
+              vectorEffect="non-scaling-stroke"
             />
 
-            {/* Hover Vertical Guide Line & Single Glowing Circle on Hovered Line */}
+            {/* Vertical Guide Line & Crisp Circle for the hovered series ONLY */}
             {hoveredState && activePoint && (
               <>
+                {/* Thin, crisp dashed vertical guide */}
                 <line
-                  stroke="#99a1b7"
+                  stroke="#cbd5e1"
                   strokeDasharray="3 3"
-                  strokeWidth="1"
+                  strokeWidth="1.2"
                   x1={activePoint.x}
                   x2={activePoint.x}
                   y1={PADDING_Y}
-                  y2={VIEW_HEIGHT - PADDING_Y}
+                  y2={viewHeight - PADDING_Y}
                 />
-                {/* Single Glowing Circle matching the hovered line */}
+
+                {/* Soft Glowing Halo around the hovered point */}
                 <circle
                   cx={activePoint.x}
                   cy={activePoint.y}
-                  fill="#ffffff"
-                  r="6"
-                  stroke={hoveredState.series === "dsca" ? "#1b84ff" : "#ffa500"}
-                  strokeWidth="3.5"
+                  fill={hoveredState.series === "dsca" ? "#1b84ff" : "#ffa500"}
+                  fillOpacity="0.2"
+                  r="8"
+                />
+
+                {/* Single Crisp Point Circle on the hovered line */}
+                <circle
+                  cx={activePoint.x}
+                  cy={activePoint.y}
+                  fill={hoveredState.series === "dsca" ? "#1b84ff" : "#ffa500"}
+                  r="4.5"
+                  stroke="#ffffff"
+                  strokeWidth="2"
                 />
               </>
             )}
           </svg>
 
+          {/* HTML Flex Overlay for 100% bulletproof mouse hover across all browsers */}
+          <div
+            className={styles.hoverOverlay}
+            onMouseLeave={() => setHoveredState(null)}
+          >
+            {yearData.months.map((m, idx) => (
+              <div
+                className={styles.hoverColumn}
+                key={m.month}
+                onMouseEnter={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const rawY = e.clientY - rect.top;
+                  const dscaY = dscaPoints[idx].y;
+                  const gbtaY = gbtaPoints[idx].y;
+                  const series: "dsca" | "gbta" =
+                    Math.abs(rawY - dscaY) <= Math.abs(rawY - gbtaY)
+                      ? "dsca"
+                      : "gbta";
+                  setHoveredState({ monthIndex: idx, series });
+                }}
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const rawY = e.clientY - rect.top;
+                  const dscaY = dscaPoints[idx].y;
+                  const gbtaY = gbtaPoints[idx].y;
+                  const series: "dsca" | "gbta" =
+                    Math.abs(rawY - dscaY) <= Math.abs(rawY - gbtaY)
+                      ? "dsca"
+                      : "gbta";
+                  setHoveredState({ monthIndex: idx, series });
+                }}
+              />
+            ))}
+          </div>
+
           {/* Floating MUI Tooltip - Only displays data for the hovered branch line */}
           {hoveredState && activePoint && activeMonth && (
             <div
               className={styles.tooltip}
-              style={getTooltipStyle(hoveredState.monthIndex, activePoint)}
+              style={getTooltipStyle(hoveredState.monthIndex, activePoint, viewWidth)}
             >
               <div className={styles.tooltipHeader}>
                 {activeMonth.month} {selectedYear}
@@ -459,14 +523,15 @@ export function EnrollmentChart() {
               let positionStyle: React.CSSProperties;
               if (idx === 0) {
                 positionStyle = {
-                  left: "0%",
+                  left: "0px",
                   transform: "none",
                   textAlign: "left",
                 };
               } else if (idx === yearData.months.length - 1) {
                 positionStyle = {
-                  left: "100%",
-                  transform: "translateX(-100%)",
+                  right: "0px",
+                  left: "auto",
+                  transform: "none",
                   textAlign: "right",
                 };
               } else {
@@ -493,10 +558,10 @@ export function EnrollmentChart() {
         </div>
       </div>
 
-      {/* Bottom Legend (Centered - matching RevenueChart with interactive hover) */}
+      {/* Bottom Legend (Centered - matching RevenueChart) */}
       <div className={styles.legend}>
         <div
-          className={`${styles.legendItem} ${hoveredLegendSeries === "dsca" || hoveredState?.series === "dsca" ? styles.legendItemActive : ""}`}
+          className={styles.legendItem}
           onMouseEnter={() => setHoveredLegendSeries("dsca")}
           onMouseLeave={() => setHoveredLegendSeries(null)}
         >
@@ -504,7 +569,7 @@ export function EnrollmentChart() {
           <span>DSCA</span>
         </div>
         <div
-          className={`${styles.legendItem} ${hoveredLegendSeries === "gbta" || hoveredState?.series === "gbta" ? styles.legendItemActive : ""}`}
+          className={styles.legendItem}
           onMouseEnter={() => setHoveredLegendSeries("gbta")}
           onMouseLeave={() => setHoveredLegendSeries(null)}
         >

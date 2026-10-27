@@ -86,18 +86,23 @@ export function RevenueChart() {
               positionMethod="fixed"
               side="bottom"
               sideOffset={4}
+              style={{ zIndex: 9999 }}
             >
               <Popover.Popup className={styles.yearPopup}>
                 {AVAILABLE_YEAR_OPTIONS.map((yr) => (
                   <button
                     className={`${styles.yearOption} ${yr === selectedYear ? styles.yearOptionSelected : ""}`}
                     key={yr}
-                    onMouseDown={createRipple}
                     onClick={() => {
+                      setSelectedYear(yr);
+                      setIsYearOpen(false);
+                    }}
+                    onMouseDown={(e) => {
+                      createRipple(e);
                       setSelectedYear(yr);
                       window.setTimeout(() => {
                         setIsYearOpen(false);
-                      }, 180);
+                      }, 120);
                     }}
                     type="button"
                   >
