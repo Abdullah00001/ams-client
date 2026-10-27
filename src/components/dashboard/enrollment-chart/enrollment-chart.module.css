@@ -181,51 +181,7 @@
   background: #e5efff;
 }
 
-/* Metric summary row (From Reference Image 1) */
-.metricsRow {
-  display: flex;
-  align-items: flex-start;
-  gap: 40px;
-  margin-bottom: 24px;
-}
 
-.metricItem {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.metricHeader {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--ams-font-family-sans, Inter, sans-serif);
-  font-size: 13px;
-  font-weight: 500;
-  color: #637381;
-}
-
-.metricDotPrimary {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #1b84ff;
-}
-
-.metricDotSecondary {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #ffa500;
-}
-
-.metricValue {
-  font-family: var(--ams-font-family-sans, Inter, sans-serif);
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 28px;
-  color: #071437;
-}
 
 /* Chart Canvas Area */
 .chartContainer {
@@ -344,9 +300,9 @@
 
 .tooltipBody {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px 7px;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 12px;
   font-family: var(--ams-font-family-sans, Inter, sans-serif);
   font-size: 12px;
   font-style: normal;
@@ -355,7 +311,13 @@
   color: #071437;
 }
 
-.tooltipDot {
+.tooltipRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tooltipDotBlue {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -363,9 +325,18 @@
   flex-shrink: 0;
 }
 
+.tooltipDotOrange {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffa500;
+  flex-shrink: 0;
+}
+
 .tooltipValue {
   font-weight: 700;
   color: #071437;
+  margin-left: auto;
 }
 
 .tooltipCaret {
@@ -378,4 +349,40 @@
   background: #ffffff;
   border-right: 1px solid rgba(0, 0, 0, 0.06);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Bottom Legend (Centered - matching RevenueChart) */
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  color: #071437;
+  user-select: none;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legendDotBlue {
+  background: #1b84ff;
+}
+
+.legendDotOrange {
+  background: #ffa500;
 }

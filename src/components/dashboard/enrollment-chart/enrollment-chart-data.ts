@@ -1,68 +1,68 @@
 export interface MonthlyEnrollmentData {
   month: string;
-  count: number;
-  lastYearCount: number;
+  dsca: number;
+  gbta: number;
 }
 
 export interface YearEnrollmentData {
-  total: number;
+  year: number;
   growthPercentage: number;
   months: MonthlyEnrollmentData[];
 }
 
 export const ENROLLMENT_CHART_YEARS: Record<number, YearEnrollmentData> = {
   2024: {
-    total: 2150,
+    year: 2024,
     growthPercentage: 14.2,
     months: [
-      { month: "Jan", count: 35, lastYearCount: 20 },
-      { month: "Feb", count: 65, lastYearCount: 45 },
-      { month: "Mar", count: 50, lastYearCount: 40 },
-      { month: "Apr", count: 85, lastYearCount: 70 },
-      { month: "May", count: 110, lastYearCount: 95 },
-      { month: "Jun", count: 135, lastYearCount: 115 },
-      { month: "Jul", count: 155, lastYearCount: 130 },
-      { month: "Aug", count: 180, lastYearCount: 140 },
-      { month: "Sep", count: 245, lastYearCount: 165 },
-      { month: "Oct", count: 120, lastYearCount: 95 },
-      { month: "Nov", count: 160, lastYearCount: 130 },
-      { month: "Dec", count: 195, lastYearCount: 155 },
+      { month: "Jan", dsca: 22, gbta: 13 },
+      { month: "Feb", dsca: 38, gbta: 27 },
+      { month: "Mar", dsca: 30, gbta: 20 },
+      { month: "Apr", dsca: 48, gbta: 37 },
+      { month: "May", dsca: 62, gbta: 48 },
+      { month: "Jun", dsca: 74, gbta: 61 },
+      { month: "Jul", dsca: 85, gbta: 70 },
+      { month: "Aug", dsca: 98, gbta: 82 },
+      { month: "Sep", dsca: 145, gbta: 100 },
+      { month: "Oct", dsca: 68, gbta: 52 },
+      { month: "Nov", dsca: 90, gbta: 70 },
+      { month: "Dec", dsca: 108, gbta: 87 },
     ],
   },
   2025: {
-    total: 2480,
+    year: 2025,
     growthPercentage: 15.3,
     months: [
-      { month: "Jan", count: 45, lastYearCount: 35 },
-      { month: "Feb", count: 75, lastYearCount: 65 },
-      { month: "Mar", count: 60, lastYearCount: 50 },
-      { month: "Apr", count: 95, lastYearCount: 85 },
-      { month: "May", count: 130, lastYearCount: 110 },
-      { month: "Jun", count: 160, lastYearCount: 135 },
-      { month: "Jul", count: 185, lastYearCount: 155 },
-      { month: "Aug", count: 210, lastYearCount: 180 },
-      { month: "Sep", count: 270, lastYearCount: 245 },
-      { month: "Oct", count: 140, lastYearCount: 120 },
-      { month: "Nov", count: 180, lastYearCount: 160 },
-      { month: "Dec", count: 220, lastYearCount: 195 },
+      { month: "Jan", dsca: 26, gbta: 19 },
+      { month: "Feb", dsca: 44, gbta: 31 },
+      { month: "Mar", dsca: 35, gbta: 25 },
+      { month: "Apr", dsca: 54, gbta: 41 },
+      { month: "May", dsca: 72, gbta: 58 },
+      { month: "Jun", dsca: 88, gbta: 72 },
+      { month: "Jul", dsca: 102, gbta: 83 },
+      { month: "Aug", dsca: 115, gbta: 95 },
+      { month: "Sep", dsca: 158, gbta: 112 },
+      { month: "Oct", dsca: 78, gbta: 62 },
+      { month: "Nov", dsca: 102, gbta: 78 },
+      { month: "Dec", dsca: 122, gbta: 98 },
     ],
   },
   2026: {
-    total: 2850,
+    year: 2026,
     growthPercentage: 14.9,
     months: [
-      { month: "Jan", count: 55, lastYearCount: 45 },
-      { month: "Feb", count: 90, lastYearCount: 75 },
-      { month: "Mar", count: 75, lastYearCount: 60 },
-      { month: "Apr", count: 115, lastYearCount: 95 },
-      { month: "May", count: 150, lastYearCount: 130 },
-      { month: "Jun", count: 190, lastYearCount: 160 },
-      { month: "Jul", count: 220, lastYearCount: 185 },
-      { month: "Aug", count: 250, lastYearCount: 210 },
-      { month: "Sep", count: 310, lastYearCount: 270 },
-      { month: "Oct", count: 170, lastYearCount: 140 },
-      { month: "Nov", count: 210, lastYearCount: 180 },
-      { month: "Dec", count: 260, lastYearCount: 220 },
+      { month: "Jan", dsca: 32, gbta: 23 },
+      { month: "Feb", dsca: 52, gbta: 38 },
+      { month: "Mar", dsca: 42, gbta: 33 },
+      { month: "Apr", dsca: 65, gbta: 50 },
+      { month: "May", dsca: 85, gbta: 65 },
+      { month: "Jun", dsca: 105, gbta: 85 },
+      { month: "Jul", dsca: 120, gbta: 100 },
+      { month: "Aug", dsca: 135, gbta: 115 },
+      { month: "Sep", dsca: 175, gbta: 135 },
+      { month: "Oct", dsca: 95, gbta: 75 },
+      { month: "Nov", dsca: 118, gbta: 92 },
+      { month: "Dec", dsca: 145, gbta: 115 },
     ],
   },
 };

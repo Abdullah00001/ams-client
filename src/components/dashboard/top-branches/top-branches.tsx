@@ -45,15 +45,17 @@ export function TopBranches() {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   // Calculate slice geometry and offsets (ordered as in AMS data)
-  let accumulatedPercent = 0;
-  const segments = TOP_BRANCHES_DATA.map((branch) => {
+  const segments = TOP_BRANCHES_DATA.map((branch, idx) => {
+    const priorPercent = TOP_BRANCHES_DATA.slice(0, idx).reduce(
+      (sum, b) => sum + b.percentage,
+      0,
+    );
     const strokeDasharray = `${(branch.percentage / 100) * CIRCUMFERENCE} ${CIRCUMFERENCE}`;
-    const strokeDashoffset = -((accumulatedPercent / 100) * CIRCUMFERENCE);
+    const strokeDashoffset = -((priorPercent / 100) * CIRCUMFERENCE);
 
     // Midpoint angle for default positioning
-    const startAngle = (accumulatedPercent / 100) * 360;
+    const startAngle = (priorPercent / 100) * 360;
     const midAngle = startAngle + (branch.percentage / 100) * 180;
-    accumulatedPercent += branch.percentage;
 
     const rad = ((midAngle - 90) * Math.PI) / 180;
     const defaultX = 115 + (RADIUS + 15) * Math.cos(rad);

@@ -9,7 +9,7 @@ import {
 } from "./enrollment-chart-data";
 import styles from "./enrollment-chart.module.css";
 
-const MAX_VALUE = 250;
+const MAX_VALUE = 200;
 const VIEW_WIDTH = 560;
 const VIEW_HEIGHT = 200;
 const PADDING_X = 24;
@@ -89,32 +89,35 @@ export function EnrollmentChart() {
   const usableWidth = VIEW_WIDTH - PADDING_X * 2;
   const usableHeight = VIEW_HEIGHT - PADDING_Y * 2;
 
-  const points = yearData.months.map((m, idx) => {
+  // Blue line: DSCA
+  const dscaPoints = yearData.months.map((m, idx) => {
     const x = PADDING_X + (idx / (yearData.months.length - 1)) * usableWidth;
     const y =
       VIEW_HEIGHT -
       PADDING_Y -
-      (Math.min(m.count, MAX_VALUE) / MAX_VALUE) * usableHeight;
-    return { x, y, month: m.month, count: m.count };
+      (Math.min(m.dsca, MAX_VALUE) / MAX_VALUE) * usableHeight;
+    return { x, y, month: m.month, dsca: m.dsca, gbta: m.gbta };
   });
 
-  const lastYearPoints = yearData.months.map((m, idx) => {
+  // Orange line: GBTA
+  const gbtaPoints = yearData.months.map((m, idx) => {
     const x = PADDING_X + (idx / (yearData.months.length - 1)) * usableWidth;
     const y =
       VIEW_HEIGHT -
       PADDING_Y -
-      (Math.min(m.lastYearCount, MAX_VALUE) / MAX_VALUE) * usableHeight;
+      (Math.min(m.gbta, MAX_VALUE) / MAX_VALUE) * usableHeight;
     return { x, y };
   });
 
-  const splineLinePath = buildSmoothSplinePath(points);
-  const splineAreaPath = buildSmoothSplinePath(points, true);
+  const dscaSplineLinePath = buildSmoothSplinePath(dscaPoints);
+  const dscaSplineAreaPath = buildSmoothSplinePath(dscaPoints, true);
 
-  const lastYearSplineLinePath = buildSmoothSplinePath(lastYearPoints);
-  const lastYearSplineAreaPath = buildSmoothSplinePath(lastYearPoints, true);
+  const gbtaSplineLinePath = buildSmoothSplinePath(gbtaPoints);
+  const gbtaSplineAreaPath = buildSmoothSplinePath(gbtaPoints, true);
 
   // Active hover point for tooltip
-  const activePoint = hoveredIndex !== null ? points[hoveredIndex] : null;
+  const activePoint = hoveredIndex !== null ? dscaPoints[hoveredIndex] : null;
+  const activeGbtaPoint = hoveredIndex !== null ? gbtaPoints[hoveredIndex] : null;
 
   return (
     <section aria-label="New Enrollments Per Month" className={styles.card}>
@@ -127,7 +130,7 @@ export function EnrollmentChart() {
           </p>
         </div>
 
-        {/* Year Dropdown */}
+        {/* Year Dropdown with TouchRipple */}
         <Popover.Root
           modal={false}
           onOpenChange={setIsYearOpen}
@@ -178,34 +181,10 @@ export function EnrollmentChart() {
         </Popover.Root>
       </div>
 
-      {/* Metric Summary Row (Exact Image 1 layout) */}
-      <div className={styles.metricsRow}>
-        <div className={styles.metricItem}>
-          <div className={styles.metricHeader}>
-            <span className={styles.metricDotPrimary} />
-            <span>This year</span>
-          </div>
-          <span className={styles.metricValue}>
-            {yearData.total.toLocaleString("en-US")}
-          </span>
-        </div>
-
-        <div className={styles.metricItem}>
-          <div className={styles.metricHeader}>
-            <span className={styles.metricDotSecondary} />
-            <span>Last year</span>
-          </div>
-          <span className={styles.metricValue}>
-            {(yearData.total * 0.86).toFixed(0)}
-          </span>
-        </div>
-      </div>
-
       {/* Chart Canvas Area */}
       <div className={styles.chartContainer}>
         {/* Y-Axis */}
         <div className={styles.yAxis}>
-          <span className={styles.yLabel}>250</span>
           <span className={styles.yLabel}>200</span>
           <span className={styles.yLabel}>150</span>
           <span className={styles.yLabel}>100</span>
@@ -221,7 +200,7 @@ export function EnrollmentChart() {
             viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`}
           >
             <defs>
-              {/* Primary Blue Gradient (AMS Primary 300) */}
+              {/* Primary Blue Gradient (DSCA) */}
               <linearGradient
                 id={`${gradientId}-blue`}
                 x1="0"
@@ -234,7 +213,7 @@ export function EnrollmentChart() {
                 <stop offset="100%" stopColor="#1b84ff" stopOpacity="0.0" />
               </linearGradient>
 
-              {/* Secondary Amber/Orange Gradient (AMS Status Warning / GBTA Orange) */}
+              {/* Orange Gradient (GBTA) */}
               <linearGradient
                 id={`${gradientId}-orange`}
                 x1="0"
@@ -248,9 +227,9 @@ export function EnrollmentChart() {
               </linearGradient>
             </defs>
 
-            {/* Horizontal Dashed Gridlines (5 levels) */}
-            {[0, 1, 2, 3, 4, 5].map((lvl) => {
-              const y = PADDING_Y + (lvl / 5) * (VIEW_HEIGHT - PADDING_Y * 2);
+            {/* Horizontal Dashed Gridlines */}
+            {[0, 1, 2, 3, 4].map((lvl) => {
+              const y = PADDING_Y + (lvl / 4) * (VIEW_HEIGHT - PADDING_Y * 2);
               return (
                 <line
                   key={lvl}
@@ -265,13 +244,13 @@ export function EnrollmentChart() {
               );
             })}
 
-            {/* Last Year Area & Line (AMS Orange) */}
+            {/* GBTA Area & Line (Orange) */}
             <path
-              d={lastYearSplineAreaPath}
+              d={gbtaSplineAreaPath}
               fill={`url(#${gradientId}-orange)`}
             />
             <path
-              d={lastYearSplineLinePath}
+              d={gbtaSplineLinePath}
               fill="none"
               stroke="#ffa500"
               strokeLinecap="round"
@@ -279,10 +258,10 @@ export function EnrollmentChart() {
               strokeWidth="2.5"
             />
 
-            {/* This Year Area & Line (AMS Primary Blue) */}
-            <path d={splineAreaPath} fill={`url(#${gradientId}-blue)`} />
+            {/* DSCA Area & Line (Primary Blue) */}
+            <path d={dscaSplineAreaPath} fill={`url(#${gradientId}-blue)`} />
             <path
-              d={splineLinePath}
+              d={dscaSplineLinePath}
               fill="none"
               stroke="#1b84ff"
               strokeLinecap="round"
@@ -290,8 +269,8 @@ export function EnrollmentChart() {
               strokeWidth="2.75"
             />
 
-            {/* Hover Vertical Guide Line & Glow Circle */}
-            {activePoint && (
+            {/* Hover Vertical Guide Line & Glow Circles */}
+            {activePoint && activeGbtaPoint && (
               <>
                 <line
                   stroke="#99a1b7"
@@ -302,6 +281,7 @@ export function EnrollmentChart() {
                   y1={PADDING_Y}
                   y2={VIEW_HEIGHT - PADDING_Y}
                 />
+                {/* DSCA glowing circle */}
                 <circle
                   cx={activePoint.x}
                   cy={activePoint.y}
@@ -310,12 +290,21 @@ export function EnrollmentChart() {
                   stroke="#1b84ff"
                   strokeWidth="3"
                 />
+                {/* GBTA glowing circle */}
+                <circle
+                  cx={activeGbtaPoint.x}
+                  cy={activeGbtaPoint.y}
+                  fill="#ffffff"
+                  r="6"
+                  stroke="#ffa500"
+                  strokeWidth="3"
+                />
               </>
             )}
 
             {/* Transparent Vertical Hover Columns */}
-            {points.map((p, idx) => {
-              const colWidth = usableWidth / points.length;
+            {dscaPoints.map((p, idx) => {
+              const colWidth = usableWidth / dscaPoints.length;
               const colX = p.x - colWidth / 2;
               return (
                 <rect
@@ -339,18 +328,27 @@ export function EnrollmentChart() {
               className={styles.tooltip}
               style={{
                 left: `${(activePoint.x / VIEW_WIDTH) * 100}%`,
-                top: `${(activePoint.y / VIEW_HEIGHT) * 100 - 18}%`,
+                top: `${(Math.min(activePoint.y, activeGbtaPoint ? activeGbtaPoint.y : activePoint.y) / VIEW_HEIGHT) * 100 - 18}%`,
               }}
             >
               <div className={styles.tooltipHeader}>
                 {activePoint.month} {selectedYear}
               </div>
               <div className={styles.tooltipBody}>
-                <span className={styles.tooltipDot} />
-                <span>Enrolled:</span>
-                <span className={styles.tooltipValue}>
-                  {activePoint.count} students
-                </span>
+                <div className={styles.tooltipRow}>
+                  <span className={styles.tooltipDotBlue} />
+                  <span>DSCA:</span>
+                  <span className={styles.tooltipValue}>
+                    {activePoint.dsca} students
+                  </span>
+                </div>
+                <div className={styles.tooltipRow}>
+                  <span className={styles.tooltipDotOrange} />
+                  <span>GBTA:</span>
+                  <span className={styles.tooltipValue}>
+                    {activePoint.gbta} students
+                  </span>
+                </div>
               </div>
               <div className={styles.tooltipCaret} />
             </div>
@@ -367,6 +365,18 @@ export function EnrollmentChart() {
               </span>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Bottom Legend (Centered - matching RevenueChart) */}
+      <div className={styles.legend}>
+        <div className={styles.legendItem}>
+          <span className={`${styles.legendDot} ${styles.legendDotBlue}`} />
+          <span>DSCA</span>
+        </div>
+        <div className={styles.legendItem}>
+          <span className={`${styles.legendDot} ${styles.legendDotOrange}`} />
+          <span>GBTA</span>
         </div>
       </div>
     </section>
