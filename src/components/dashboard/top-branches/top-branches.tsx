@@ -9,9 +9,6 @@ import {
 } from "./top-branches-data";
 import styles from "./top-branches.module.css";
 
-const RADIUS = 80;
-const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
-
 /**
  * Universal Material UI TouchRipple
  */
@@ -37,34 +34,74 @@ function createRipple(event: MouseEvent<HTMLElement>) {
   }, 1300);
 }
 
+/**
+ * Computes the exact SVG path for an annular sector (donut slice).
+ * Uses standard Cartesian coordinates with 12 o'clock as -Math.PI / 2.
+ */
+function describeArc(
+  cx: number,
+  cy: number,
+  rInner: number,
+  rOuter: number,
+  startAngle: number,
+  endAngle: number,
+): string {
+  const x1 = cx + rOuter * Math.cos(startAngle);
+  const y1 = cy + rOuter * Math.sin(startAngle);
+  const x2 = cx + rOuter * Math.cos(endAngle);
+  const y2 = cy + rOuter * Math.sin(endAngle);
+
+  const x3 = cx + rInner * Math.cos(endAngle);
+  const y3 = cy + rInner * Math.sin(endAngle);
+  const x4 = cx + rInner * Math.cos(startAngle);
+  const y4 = cy + rInner * Math.sin(startAngle);
+
+  const largeArcFlag = endAngle - startAngle > Math.PI ? 1 : 0;
+
+  return [
+    `M ${x1.toFixed(2)} ${y1.toFixed(2)}`,
+    `A ${rOuter} ${rOuter} 0 ${largeArcFlag} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`,
+    `L ${x3.toFixed(2)} ${y3.toFixed(2)}`,
+    `A ${rInner} ${rInner} 0 ${largeArcFlag} 0 ${x4.toFixed(2)} ${y4.toFixed(2)}`,
+    "Z",
+  ].join(" ");
+}
+
 export function TopBranches() {
   const [hoveredBranchId, setHoveredBranchId] = useState<string | null>(null);
-  const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(
-    null,
-  );
+  const [tooltipPos, setTooltipPos] = useState<{
+    x: number;
+    y: number;
+    align: "left" | "right";
+  } | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // Calculate slice geometry and offsets (ordered as in AMS data)
+  // Exact Donut Geometry (Zero Gap / Continuous Ring matching MUI exactly)
   const segments = TOP_BRANCHES_DATA.map((branch, idx) => {
     const priorPercent = TOP_BRANCHES_DATA.slice(0, idx).reduce(
       (sum, b) => sum + b.percentage,
       0,
     );
-    const strokeDasharray = `${(branch.percentage / 100) * CIRCUMFERENCE} ${CIRCUMFERENCE}`;
-    const strokeDashoffset = -((priorPercent / 100) * CIRCUMFERENCE);
+    const startAngle =
+      -Math.PI / 2 + (priorPercent / 100) * 2 * Math.PI;
+    const endAngle =
+      -Math.PI / 2 +
+      ((priorPercent + branch.percentage) / 100) * 2 * Math.PI;
 
-    // Midpoint angle for default positioning
-    const startAngle = (priorPercent / 100) * 360;
-    const midAngle = startAngle + (branch.percentage / 100) * 180;
+    const normalPath = describeArc(115, 115, 70, 92, startAngle, endAngle);
+    const hoveredPath = describeArc(115, 115, 68, 97, startAngle, endAngle);
 
-    const rad = ((midAngle - 90) * Math.PI) / 180;
-    const defaultX = 115 + (RADIUS + 15) * Math.cos(rad);
-    const defaultY = 115 + (RADIUS + 15) * Math.sin(rad);
+    // Mid-angle on outer perimeter for default tooltip anchoring on legend hover
+    const midAngle = (startAngle + endAngle) / 2;
+    const defaultX = 115 + 104 * Math.cos(midAngle);
+    const defaultY = 115 + 104 * Math.sin(midAngle);
 
     return {
       ...branch,
-      strokeDasharray,
-      strokeDashoffset,
+      startAngle,
+      endAngle,
+      normalPath,
+      hoveredPath,
       defaultX,
       defaultY,
     };
@@ -73,18 +110,23 @@ export function TopBranches() {
   const activeSegment = segments.find((b) => b.id === hoveredBranchId);
   const activeBranch: BranchPerformance | null = activeSegment ?? null;
 
-  const handleSliceMouseMove = (e: MouseEvent<SVGCircleElement>) => {
+  const handleSliceMouseMove = (e: MouseEvent<SVGPathElement>) => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
     const rect = wrapper.getBoundingClientRect();
     const rawX = e.clientX - rect.left;
     const rawY = e.clientY - rect.top;
 
-    // Clamp within wrapper so tooltip never overflows outside card bounds
-    const clampedX = Math.max(65, Math.min(rect.width - 65, rawX));
-    const clampedY = Math.max(25, Math.min(rect.height - 25, rawY - 14));
+    // Center of donut in wrapper pixels
+    const centerX = rect.width / 2;
+    const isRightSide = rawX >= centerX;
 
-    setTooltipPos({ x: clampedX, y: clampedY });
+    // Tooltip placed with offset away from the center hole, NEVER obscuring the number!
+    setTooltipPos({
+      x: isRightSide ? rawX + 14 : rawX - 14,
+      y: rawY - 10,
+      align: isRightSide ? "left" : "right",
+    });
   };
 
   const handleLegendHover = (branchId: string | null) => {
@@ -96,12 +138,23 @@ export function TopBranches() {
     const seg = segments.find((s) => s.id === branchId);
     if (seg && wrapperRef.current) {
       const rect = wrapperRef.current.getBoundingClientRect();
-      const scale = rect.width / 230;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const segX = centerX + (seg.defaultX - 115);
+      const segY = centerY + (seg.defaultY - 115);
+      const isRightSide = segX >= centerX;
+
       setTooltipPos({
-        x: Math.max(65, Math.min(rect.width - 65, seg.defaultX * scale)),
-        y: Math.max(25, Math.min(rect.height - 25, seg.defaultY * scale - 12)),
+        x: isRightSide ? segX + 8 : segX - 8,
+        y: segY,
+        align: isRightSide ? "left" : "right",
       });
     }
+  };
+
+  const resetSelection = () => {
+    setHoveredBranchId(null);
+    setTooltipPos(null);
   };
 
   return (
@@ -113,41 +166,69 @@ export function TopBranches() {
       </div>
 
       {/* Donut Chart (Exact MUI Style & AMS Theme) */}
-      <div className={styles.donutWrapper} ref={wrapperRef}>
-        <svg className={styles.donutSvg} viewBox="0 0 230 230">
+      <div
+        className={styles.donutWrapper}
+        onClick={(e) => {
+          if (
+            e.target === wrapperRef.current ||
+            (e.target as HTMLElement).tagName === "svg"
+          ) {
+            resetSelection();
+          }
+        }}
+        ref={wrapperRef}
+      >
+        <svg
+          className={styles.donutSvg}
+          style={{ overflow: "visible" }}
+          viewBox="0 0 230 230"
+        >
           {segments.map((s) => {
             const isHovered = hoveredBranchId === s.id;
             const isDimmed =
               hoveredBranchId !== null && hoveredBranchId !== s.id;
 
             return (
-              <circle
-                className={`${styles.donutSegment} ${isHovered ? styles.donutSegmentHovered : ""} ${isDimmed ? styles.donutSegmentDimmed : ""}`}
-                cx="115"
-                cy="115"
-                fill="transparent"
+              <path
+                className={`${styles.donutSlice} ${isHovered ? styles.donutSliceHovered : ""} ${isDimmed ? styles.donutSliceDimmed : ""}`}
+                d={isHovered ? s.hoveredPath : s.normalPath}
+                fill={s.color}
                 key={s.id}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (hoveredBranchId === s.id) {
+                    resetSelection();
+                  } else {
+                    setHoveredBranchId(s.id);
+                    handleSliceMouseMove(e);
+                  }
+                }}
                 onMouseEnter={(e) => {
                   setHoveredBranchId(s.id);
                   handleSliceMouseMove(e);
                 }}
-                onMouseLeave={() => {
-                  setHoveredBranchId(null);
-                  setTooltipPos(null);
-                }}
+                onMouseLeave={resetSelection}
                 onMouseMove={handleSliceMouseMove}
-                r={RADIUS}
-                stroke={s.color}
-                strokeDasharray={s.strokeDasharray}
-                strokeDashoffset={s.strokeDashoffset}
-                strokeWidth={isHovered ? 29 : 24}
               />
             );
           })}
         </svg>
 
-        {/* Donut Center Display (MUI Dynamic Swap) */}
-        <div className={styles.donutCenter}>
+        {/* Donut Center Display (Clickable & hoverable to reset to Total) */}
+        <div
+          aria-label="Reset selection to total"
+          className={styles.donutCenter}
+          onClick={resetSelection}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              resetSelection();
+            }
+          }}
+          onMouseEnter={resetSelection}
+          role="button"
+          tabIndex={0}
+          title="Click to reset to total"
+        >
           <span
             className={styles.donutCenterLabel}
             style={{
@@ -161,10 +242,10 @@ export function TopBranches() {
           </span>
         </div>
 
-        {/* Floating Pill Tooltip (Clamped inside card, tracks mouse) */}
+        {/* Floating Pill Tooltip (Positioned safely away from the center hole) */}
         {activeSegment && tooltipPos && (
           <div
-            className={styles.tooltip}
+            className={`${styles.tooltip} ${tooltipPos.align === "right" ? styles.tooltipAlignRight : styles.tooltipAlignLeft}`}
             style={{
               left: `${tooltipPos.x}px`,
               top: `${tooltipPos.y}px`,
@@ -191,10 +272,12 @@ export function TopBranches() {
       <div className={styles.legend}>
         {TOP_BRANCHES_DATA.map((branch) => {
           const isActive = hoveredBranchId === branch.id;
+          const isDimmed =
+            hoveredBranchId !== null && hoveredBranchId !== branch.id;
 
           return (
             <Link
-              className={`${styles.legendItem} ${isActive ? styles.legendItemActive : ""}`}
+              className={`${styles.legendItem} ${isActive ? styles.legendItemActive : ""} ${isDimmed ? styles.legendItemDimmed : ""}`}
               href={`/admin/branches/${branch.slug}`}
               key={branch.id}
               onMouseDown={createRipple}

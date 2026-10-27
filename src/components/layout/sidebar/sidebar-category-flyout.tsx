@@ -48,6 +48,7 @@ export function SidebarCategoryFlyout({ group, isOpen, onOpenChange }: SidebarCa
           positionMethod="fixed"
           side="right"
           sideOffset={8}
+          style={{ zIndex: 9999 }}
         >
           <Popover.Popup
             aria-labelledby={headingId}
