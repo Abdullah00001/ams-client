@@ -1,0 +1,2 @@
+// Global application stores
+export {};

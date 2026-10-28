@@ -1,10 +1,12 @@
-import { DashboardHeader } from "@/components/dashboard/dashboard-header/dashboard-header";
-import { StatCards } from "@/components/dashboard/stat-cards/stat-cards";
-import { RevenueChart } from "@/components/dashboard/revenue-chart/revenue-chart";
-import { EnrollmentChart } from "@/components/dashboard/enrollment-chart/enrollment-chart";
-import { TopBranches } from "@/components/dashboard/top-branches/top-branches";
-import { LatestEnrollments } from "@/components/dashboard/latest-enrollments/latest-enrollments";
-import { RecentActivityFeed } from "@/components/dashboard/recent-activity/recent-activity";
+import {
+  DashboardHeader,
+  StatCards,
+  RevenueChart,
+  EnrollmentChart,
+  TopBranches,
+  LatestEnrollments,
+  RecentActivityFeed,
+} from "@/features/dashboard";
 import styles from "@/app/(dashboard)/page.module.css";
 
 export default function DashboardPage() {

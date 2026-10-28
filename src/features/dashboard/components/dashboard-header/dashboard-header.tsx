@@ -1,4 +1,4 @@
-import { DashboardAutoRefresh } from "@/components/dashboard/dashboard-auto-refresh/dashboard-auto-refresh";
+import { DashboardAutoRefresh } from "../dashboard-auto-refresh/dashboard-auto-refresh";
 import styles from "./dashboard-header.module.css";
 
 type DashboardHeaderProps = {
