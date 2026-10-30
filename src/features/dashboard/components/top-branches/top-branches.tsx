@@ -1,3 +1,15 @@
+/**
+ * @fileoverview Top Branches Donut Chart (Row 3 Right)
+ * @module features/dashboard/components/top-branches
+ *
+ * Visualizes revenue and student distribution across branches via an interactive
+ * SVG annular donut chart with:
+ *  - Dynamic slice expansion and elevation on hover.
+ *  - Floating tooltip displaying active students and revenue contribution.
+ *  - Synchronized bidirectional hover highlighting with bottom legend list.
+ *  - Equal bottom padding to match Row 3 Left Enrollment chart.
+ */
+
 "use client";
 
 import { useState, useRef, type MouseEvent } from "react";
@@ -10,7 +22,9 @@ import {
 import styles from "./top-branches.module.css";
 
 /**
- * Universal Material UI TouchRipple
+ * Universal Material UI TouchRipple event handler.
+ *
+ * @param {MouseEvent<HTMLElement>} event - Mouse or pointer event
  */
 function createRipple(event: MouseEvent<HTMLElement>) {
   const container = event.currentTarget;
@@ -37,6 +51,14 @@ function createRipple(event: MouseEvent<HTMLElement>) {
 /**
  * Computes the exact SVG path for an annular sector (donut slice).
  * Uses standard Cartesian coordinates with 12 o'clock as -Math.PI / 2.
+ *
+ * @param {number} cx - Center x coordinate
+ * @param {number} cy - Center y coordinate
+ * @param {number} rInner - Inner radius (donut hole)
+ * @param {number} rOuter - Outer radius of the donut
+ * @param {number} startAngle - Start angle in radians
+ * @param {number} endAngle - End angle in radians
+ * @returns {string} SVG path d attribute string
  */
 function describeArc(
   cx: number,

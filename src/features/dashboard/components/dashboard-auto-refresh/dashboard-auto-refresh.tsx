@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Dashboard Auto-Refresh Timer Component
+ * @module features/dashboard/components/dashboard-auto-refresh
+ *
+ * Implements a 5-minute background auto-refresh cycle that triggers
+ * Next.js server component / router revalidation (`router.refresh()`),
+ * displaying spinning feedback and the last-updated timestamp.
+ */
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -5,20 +14,29 @@ import { useRouter } from "next/navigation";
 import { RefreshCw } from "lucide-react";
 import styles from "./dashboard-auto-refresh.module.css";
 
-const REFRESH_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
+/** Auto-refresh interval constant: 5 minutes in milliseconds */
+const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
 
+/**
+ * Status indicator and auto-refresh timer badge.
+ *
+ * @component
+ * @returns {JSX.Element} Auto-refresh status badge with animated sync icon
+ */
 export function DashboardAutoRefresh() {
   const router = useRouter();
   const [lastRefreshed, setLastRefreshed] = useState<string>("");
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
+    // Record initial load timestamp
     const initialTimer = window.setTimeout(() => {
       setLastRefreshed(
         new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       );
     }, 0);
 
+    // Setup periodic 5-minute refresh interval
     const interval = window.setInterval(() => {
       setIsRefreshing(true);
       router.refresh();

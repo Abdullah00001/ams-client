@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Latest Enrollments Table Component (Row 4 Left)
+ * @module features/dashboard/components/latest-enrollments
+ *
+ * Renders the last 10 enrollments table across all branches, showing:
+ *  - Student Name & Avatar
+ *  - Branch Badge (DSCA / GBTA)
+ *  - Amount Paid
+ *  - Enrollment Date
+ *
+ * Each row is clickable with Material UI touch ripple feedback and
+ * deep-links to `/admin/students/{id}`.
+ */
+
 "use client";
 
 import Link from "next/link";
@@ -11,10 +25,21 @@ import {
 } from "./latest-enrollments-data";
 import styles from "./latest-enrollments.module.css";
 
+/**
+ * Props for LatestEnrollments.
+ */
 type LatestEnrollmentsProps = {
+  /** Optional custom enrollment records (defaults to mock log) */
   data?: EnrollmentItem[];
 };
 
+/**
+ * Latest Enrollments table card component.
+ *
+ * @component
+ * @param {LatestEnrollmentsProps} props - Component props
+ * @returns {JSX.Element} Interactive enrollment table card
+ */
 export function LatestEnrollments({
   data = LATEST_ENROLLMENTS_DATA,
 }: LatestEnrollmentsProps) {

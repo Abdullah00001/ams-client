@@ -1,3 +1,10 @@
+/**
+ * ============================================================================
+ * Dashboard Header Styles
+ * ============================================================================
+ * Flex layout for greeting title, subtitle description, and the refresh badge.
+ */
+
 .header {
   display: flex;
   align-items: flex-start;

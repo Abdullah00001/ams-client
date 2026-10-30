@@ -1,3 +1,15 @@
+/**
+ * @fileoverview Recent Activity Feed Component (Row 4 Right)
+ * @module features/dashboard/components/recent-activity
+ *
+ * Displays the live chronological feed of the last 15 actions platform-wise:
+ *  - Origin tag badge (GBTA, DSCA, ADMIN).
+ *  - Formatted multi-token activity sentence.
+ *  - Relative timestamp.
+ *  - "View All Activity" action button in the top right.
+ *  - Each row is interactive and deep-links to the associated record.
+ */
+
 "use client";
 
 import Link from "next/link";
@@ -9,10 +21,21 @@ import {
 } from "./recent-activity-data";
 import styles from "./recent-activity.module.css";
 
+/**
+ * Props for RecentActivityFeed.
+ */
 type RecentActivityFeedProps = {
+  /** Optional custom activity items list */
   data?: ActivityItem[];
 };
 
+/**
+ * Recent Activity Feed component.
+ *
+ * @component
+ * @param {RecentActivityFeedProps} props - Component props
+ * @returns {JSX.Element} Activity feed card
+ */
 export function RecentActivityFeed({
   data = RECENT_ACTIVITIES_DATA,
 }: RecentActivityFeedProps) {

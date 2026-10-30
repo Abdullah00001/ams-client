@@ -1,3 +1,11 @@
+/**
+ * ============================================================================
+ * Row 4 Left: Latest Enrollments Table Styles
+ * ============================================================================
+ * Styles the 4-column enrollment data table, student avatar badges,
+ * branch color chips (DSCA/GBTA), row hover states, and touch ripple feedback.
+ */
+
 .card {
   width: 100%;
   background: #ffffff;

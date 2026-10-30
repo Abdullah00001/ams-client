@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Dashboard Stat Cards (Row 1)
+ * @module features/dashboard/components/stat-cards
+ *
+ * Displays the 4 primary key performance indicator (KPI) metric cards:
+ *  1. Total Branches (Blue card)
+ *  2. Active Students (Purple card)
+ *  3. Revenue This Month (Sky blue card)
+ *  4. Pending Dues (Green card)
+ *
+ * Each card features delta vs last month with ↑ / ↓ indicators, deep links
+ * to administrative sections, and Material UI touch ripple feedback.
+ */
+
 "use client";
 
 import Link from "next/link";
@@ -13,18 +27,31 @@ import {
 import { createTouchRipple } from "@/lib/touch-ripple";
 import styles from "./stat-cards.module.css";
 
+/**
+ * Data structure defining an individual KPI stat card.
+ */
 export type StatCardData = {
+  /** Unique metric identifier */
   id: string;
+  /** Primary card label / metric title */
   title: string;
+  /** Primary numeric display value (e.g. "12+", "৳ 450K+") */
   value: string;
+  /** Comparison text vs previous month */
   subtext: string;
+  /** Formatted delta percentage badge (e.g. "28.4%") */
   badge: string;
+  /** Trend direction indicator */
   badgeTrend: "up" | "down";
+  /** Deep-link URL destination */
   href: string;
+  /** Lucide icon component */
   icon: LucideIcon;
+  /** Color theme variant class from Figma */
   variant: "blueCard" | "purpleCard" | "skyCard" | "greenCard";
 };
 
+/** Default KPI dataset for AMS */
 const defaultStats: StatCardData[] = [
   {
     id: "branches",
@@ -72,10 +99,21 @@ const defaultStats: StatCardData[] = [
   },
 ];
 
+/**
+ * Props for StatCards.
+ */
 type StatCardsProps = {
+  /** Optional custom metric items (defaults to standard AMS metrics) */
   stats?: StatCardData[];
 };
 
+/**
+ * Row 1 Stat Cards component rendering 4 key metric tiles.
+ *
+ * @component
+ * @param {StatCardsProps} props - Component props
+ * @returns {JSX.Element} 4-column metric cards grid
+ */
 export function StatCards({ stats = defaultStats }: StatCardsProps) {
   return (
     <section aria-label="Key Performance Statistics" className={styles.grid}>

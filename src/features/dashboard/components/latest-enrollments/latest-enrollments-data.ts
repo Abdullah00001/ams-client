@@ -1,14 +1,36 @@
+/**
+ * @fileoverview Latest Enrollments Dataset (Row 4 Left)
+ * @module features/dashboard/components/latest-enrollments/latest-enrollments-data
+ *
+ * Provides the mock transaction log of the last 10 enrollments across all academy
+ * branches, with deep-link record identifiers, amounts, and dates.
+ */
+
+/**
+ * Single student enrollment record model.
+ */
 export interface EnrollmentItem {
+  /** Unique student id */
   id: string;
+  /** Enrolled student's full name */
   studentName: string;
+  /** Primary contact email */
   email: string;
+  /** Initials for circular avatar fallback */
   initials: string;
+  /** Course / workshop title */
   course: string;
+  /** Academy branch */
   branch: "DSCA" | "GBTA";
+  /** Payment value in BDT */
   amountPaid: number;
+  /** Formatted currency string */
   amountFormatted: string;
+  /** Enrollment date */
   date: string;
+  /** Relative time */
   timeAgo: string;
+  /** Processing status */
   status: "Completed" | "Pending" | "Processing";
 }
 

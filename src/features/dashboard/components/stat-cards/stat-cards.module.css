@@ -1,3 +1,14 @@
+/**
+ * ============================================================================
+ * Row 1: KPI Stat Cards Styles
+ * ============================================================================
+ * 4-column responsive grid layout with solid card colorways (Blue, Purple,
+ * Sky, Green), hover lift micro-animations, and touch ripple containers.
+ */
+
+/* ----------------------------------------------------------------------------
+ * 1. Grid Container (4 columns on desktop, 2 on tablet, 1 on mobile)
+ * ------------------------------------------------------------------------- */
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -5,6 +16,9 @@
   margin-block-end: 24px;
 }
 
+/* ----------------------------------------------------------------------------
+ * 2. Card Base & Elevation Transitions
+ * ------------------------------------------------------------------------- */
 .card {
   position: relative;
   overflow: hidden;
@@ -33,7 +47,9 @@
   outline-offset: 2px;
 }
 
-/* Card Themes from Figma */
+/* ----------------------------------------------------------------------------
+ * 3. Card Colorway Themes (from Figma tokens)
+ * ------------------------------------------------------------------------- */
 .blueCard {
   background: #1b84ff;
 }
@@ -50,6 +66,9 @@
   background: #17c653;
 }
 
+/* ----------------------------------------------------------------------------
+ * 4. Internal Typography, Badges & Icons
+ * ------------------------------------------------------------------------- */
 .iconWrapper {
   display: flex;
   align-items: center;
@@ -118,6 +137,9 @@
   opacity: 0.85;
 }
 
+/* ----------------------------------------------------------------------------
+ * 5. Responsive Breakpoints
+ * ------------------------------------------------------------------------- */
 @media (max-width: 1200px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);

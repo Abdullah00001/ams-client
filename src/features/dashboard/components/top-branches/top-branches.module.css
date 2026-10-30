@@ -1,3 +1,11 @@
+/**
+ * ============================================================================
+ * Row 3 Right: Top Branches Donut Chart Styles
+ * ============================================================================
+ * Layout and animation rules for the interactive SVG donut chart, center
+ * summary statistics, hovering slice pop-out effects, and bottom branch legends.
+ */
+
 .card {
   width: 100%;
   height: 100%;

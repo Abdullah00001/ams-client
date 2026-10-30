@@ -1,14 +1,36 @@
+/**
+ * @fileoverview Recent Activity Feed Dataset (Row 4 Right)
+ * @module features/dashboard/components/recent-activity/recent-activity-data
+ *
+ * Provides the stream of the last 15 platform-wide actions, chronological updates,
+ * certificate issuances, and branch creation logs.
+ */
+
+/**
+ * Text fragment for formatted multi-token activity sentences.
+ */
 export interface ActivityPart {
+  /** Text content */
   text: string;
+  /** Whether to render with bold font weight */
   bold?: boolean;
 }
 
+/**
+ * Activity log record model.
+ */
 export interface ActivityItem {
+  /** Unique activity identifier */
   id: string;
+  /** Originating platform or branch tag */
   tag: "GBTA" | "DSCA" | "ADMIN";
+  /** Full text description */
   description: string;
+  /** Rich formatting parts */
   parts: ActivityPart[];
+  /** Relative time elapsed */
   timestamp: string;
+  /** Deep-link URL */
   targetUrl: string;
 }
 

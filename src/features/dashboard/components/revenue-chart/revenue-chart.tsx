@@ -1,3 +1,14 @@
+/**
+ * @fileoverview Fees Collection Overview Bar Chart (Row 2)
+ * @module features/dashboard/components/revenue-chart
+ *
+ * Implements the interactive monthly fees collection bar chart:
+ *  - Segregated by DSCA (#028c4a) and GBTA (#ff7724) branches.
+ *  - Year selection dropdown powered by Base-UI Popover.
+ *  - Interactive bar hover states with tooltips displaying exact amounts.
+ *  - Material UI touch ripple feedback on interactive elements.
+ */
+
 "use client";
 
 import { useState, type MouseEvent } from "react";
@@ -13,7 +24,10 @@ const MAX_CHART_VALUE = 150000;
 const CHART_HEIGHT_PX = 250;
 
 /**
- * Universal Material UI TouchRipple
+ * Universal Material UI TouchRipple event handler.
+ * Generates an animated ripple centered on click or keyboard activation.
+ *
+ * @param {MouseEvent<HTMLElement>} event - Mouse or pointer event
  */
 function createRipple(event: MouseEvent<HTMLElement>) {
   const container = event.currentTarget;
@@ -37,6 +51,12 @@ function createRipple(event: MouseEvent<HTMLElement>) {
   }, 1300);
 }
 
+/**
+ * Row 2 Fees Collection Overview Bar Chart component.
+ *
+ * @component
+ * @returns {JSX.Element} Interactive bar chart card
+ */
 export function RevenueChart() {
   const [selectedYear, setSelectedYear] = useState<number>(2024);
   const [isYearOpen, setIsYearOpen] = useState<boolean>(false);

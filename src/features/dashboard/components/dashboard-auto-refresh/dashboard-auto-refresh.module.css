@@ -1,3 +1,11 @@
+/**
+ * ============================================================================
+ * Dashboard Auto-Refresh Indicator Styles
+ * ============================================================================
+ * Provides styling for the live sync timer indicator and CSS keyframe
+ * spin animation during active data revalidation.
+ */
+
 .refreshIndicator {
   display: inline-flex;
   align-items: center;
@@ -16,6 +24,7 @@
   transition: transform 300ms ease;
 }
 
+/* Active revalidation state: continuously spins the sync icon */
 .refreshIconSpin {
   animation: spin 1000ms linear infinite;
 }

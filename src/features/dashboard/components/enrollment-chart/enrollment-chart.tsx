@@ -1,3 +1,15 @@
+/**
+ * @fileoverview Student Enrollment Trends Line Chart (Row 3 Left)
+ * @module features/dashboard/components/enrollment-chart
+ *
+ * Renders the multi-branch dual-spline area chart comparing monthly
+ * enrollments between DSCA (#028c4a) and GBTA (#ff7724) with:
+ *  - Smooth Catmull-Rom cubic bezier curves and gradient fills.
+ *  - Responsive Year Filter popover via Base-UI.
+ *  - Precise interactive tooltip tracking data points on mouse hover.
+ *  - Annual growth delta percentage pill badge.
+ */
+
 "use client";
 
 import { useState, useId, useRef, useEffect, type MouseEvent } from "react";
@@ -5,7 +17,7 @@ import { Popover } from "@base-ui/react/popover";
 import { ChevronDown } from "lucide-react";
 import {
   ENROLLMENT_CHART_YEARS,
-  ENROLLMENT_YEAR_OPTIONS,
+  AVAILABLE_YEAR_OPTIONS as ENROLLMENT_YEAR_OPTIONS,
 } from "./enrollment-chart-data";
 import styles from "./enrollment-chart.module.css";
 
@@ -13,7 +25,9 @@ const MAX_VALUE = 250;
 const PADDING_Y = 16;
 
 /**
- * Universal Material UI TouchRipple
+ * Universal Material UI TouchRipple event handler.
+ *
+ * @param {MouseEvent<HTMLElement>} event - Mouse or pointer event
  */
 function createRipple(event: MouseEvent<HTMLElement>) {
   const container = event.currentTarget;
@@ -38,7 +52,12 @@ function createRipple(event: MouseEvent<HTMLElement>) {
 }
 
 /**
- * Creates smooth cubic bezier path through data points (tension = 0.28 for natural curves)
+ * Creates smooth cubic bezier path through data points (tension = 0.28 for natural curves).
+ *
+ * @param {{ x: number; y: number }[]} points - Coordinates of data points
+ * @param {boolean} [isArea=false] - Whether to close the path into an area fill
+ * @param {number} [bottomY=100] - Baseline y-coordinate for the area fill
+ * @returns {string} SVG path d-string
  */
 function buildSmoothSplinePath(
   points: { x: number; y: number }[],

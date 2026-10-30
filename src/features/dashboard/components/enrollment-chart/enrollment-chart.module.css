@@ -1,3 +1,11 @@
+/**
+ * ============================================================================
+ * Row 3 Left: Student Enrollment Line Chart Styles
+ * ============================================================================
+ * Provides styles for SVG spline area charts, gridlines, interactive flex
+ * hover overlay columns, tooltips, and bottom aligned legends.
+ */
+
 .card {
   width: 100%;
   height: 100%;

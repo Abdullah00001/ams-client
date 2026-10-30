@@ -1,8 +1,23 @@
+/**
+ * ============================================================================
+ * Dashboard Main Page Layout Styles
+ * ============================================================================
+ * Provides the overarching container layout and responsive multi-column grid
+ * structures for the 4 dashboard rows.
+ */
+
+/* ----------------------------------------------------------------------------
+ * 1. Base Page Container
+ * ------------------------------------------------------------------------- */
 .page {
   min-block-size: calc(100dvh - 70px);
   padding: clamp(20px, 3vw, 36px);
 }
 
+/* ----------------------------------------------------------------------------
+ * 2. Row 3: 2-Column Asymmetric Grid (Enrollment Line Chart + Donut Chart)
+ * Ratio: 1.8fr (Line Chart) to 1.2fr (Donut Chart) for optimal chart clarity.
+ * ------------------------------------------------------------------------- */
 .rowTwoColumns {
   display: grid;
   grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.2fr);
@@ -11,6 +26,10 @@
   align-items: stretch;
 }
 
+/* ----------------------------------------------------------------------------
+ * 3. Row 4: 50/50 Symmetrical Grid (Latest Enrollments + Recent Activity)
+ * Both cards take equal 1fr space with matching bottom boundaries.
+ * ------------------------------------------------------------------------- */
 .rowFourColumns {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -19,11 +38,20 @@
   align-items: stretch;
 }
 
+/**
+ * Height Matching Constraint:
+ * Forces the right column (Recent Activity) to match the exact height of the
+ * left column (Latest Enrollments table) without white space overflow.
+ */
 .rowFourColumns > :last-child {
   height: 0;
   min-height: 100%;
 }
 
+/* ----------------------------------------------------------------------------
+ * 4. Responsive Layout (Tablets & Mobile Viewports <= 1180px)
+ * Stacks two-column rows vertically into a single fluid column.
+ * ------------------------------------------------------------------------- */
 @media (max-width: 1180px) {
   .rowTwoColumns,
   .rowFourColumns {
