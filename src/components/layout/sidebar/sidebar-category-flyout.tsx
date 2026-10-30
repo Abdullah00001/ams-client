@@ -20,7 +20,9 @@ export function SidebarCategoryFlyout({ group, isOpen, onOpenChange }: SidebarCa
   const isGroupActive = group.items.some(
     (item) =>
       item.kind === "implemented" &&
-      (pathname === item.href || (item.href === "/" && pathname === "/dashboard")),
+      (item.href === "/"
+        ? pathname === "/"
+        : pathname === item.href || pathname.startsWith(item.href + "/")),
   );
 
   return (

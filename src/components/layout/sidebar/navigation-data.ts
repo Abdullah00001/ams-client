@@ -36,7 +36,7 @@ type SidebarNavigationItemBase = {
 };
 
 export type ImplementedNavigationItem = SidebarNavigationItemBase & {
-  href: "/";
+  href: "/" | "/branches" | string;
   kind: "implemented";
 };
 
@@ -90,7 +90,7 @@ export const navigationItems: SidebarNavigationGroup[] = [
     icon: Building2,
     id: "branch-management",
     items: [
-      { icon: Building2, kind: "unimplemented", label: "All Branches" },
+      { href: "/branches", icon: Building2, kind: "implemented", label: "All Branches" },
       { icon: ShieldCheck, kind: "unimplemented", label: "Permissions" },
       { icon: KeyRound, kind: "unimplemented", label: "Roles & Access" },
     ],

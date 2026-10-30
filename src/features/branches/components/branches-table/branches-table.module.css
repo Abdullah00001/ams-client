@@ -1,0 +1,232 @@
+.tableCard {
+  width: 100%;
+  background: var(--ams-color-base-white, #ffffff);
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-8, 8px);
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+}
+
+.headerRow {
+  background-color: var(--ams-color-grayscale-100, #f8f9fb);
+  border-bottom: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.th {
+  padding: 14px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ams-color-text-secondary, #4b5563);
+  white-space: nowrap;
+}
+
+.thAction {
+  text-align: center;
+}
+
+.row {
+  background-color: var(--ams-color-base-white, #ffffff);
+  border-bottom: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  transition: background-color 150ms ease;
+  cursor: pointer;
+}
+
+.row:hover {
+  background-color: #fbfcfe;
+}
+
+.td {
+  padding: 18px 20px;
+  font-size: 14px;
+  color: var(--ams-color-grayscale-400, #071437);
+  vertical-align: middle;
+}
+
+/* Branch Identity Cell */
+.branchCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.branchAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.dscaAvatar {
+  background-color: #e8f5e9;
+  color: #028c4a;
+  border: 1px solid rgba(2, 140, 74, 0.2);
+}
+
+.gbtaAvatar {
+  background-color: #fff3e0;
+  color: #ff7724;
+  border: 1px solid rgba(255, 119, 36, 0.2);
+}
+
+.otherAvatar {
+  background-color: var(--ams-color-primary-100, #e8f3ff);
+  color: var(--ams-color-primary-300, #1b84ff);
+  border: 1px solid rgba(27, 132, 255, 0.2);
+}
+
+.branchInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.branchName {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ams-color-grayscale-400, #071437);
+  line-height: 1.3;
+}
+
+.branchCode {
+  font-size: 12px;
+  color: var(--ams-color-text-muted, #99a1b7);
+  line-height: 1.2;
+}
+
+.locationText {
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 260px;
+}
+
+.metricValue {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.metricSub {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ams-color-text-muted, #99a1b7);
+  margin-inline-start: 4px;
+}
+
+/* Status Badges */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.statusActive {
+  background-color: rgba(23, 198, 83, 0.1);
+  color: #17c653;
+  border: 1px solid rgba(23, 198, 83, 0.2);
+}
+
+.statusActive .statusDot {
+  background-color: #17c653;
+}
+
+.statusInactive {
+  background-color: rgba(120, 130, 157, 0.1);
+  color: #78829d;
+  border: 1px solid rgba(120, 130, 157, 0.2);
+}
+
+.statusInactive .statusDot {
+  background-color: #78829d;
+}
+
+/* Actions Cell from Figma Inspect */
+.actionsCell {
+  display: flex;
+  padding: 20px 14px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.actionButton {
+  position: relative;
+  overflow: hidden;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ams-radius-6, 6px);
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  background-color: #ffffff;
+  color: #64748b;
+  cursor: pointer;
+  outline: none;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease,
+    transform 150ms ease;
+}
+
+.actionButton:hover {
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+  color: var(--ams-color-primary-300, #1b84ff);
+  border-color: #d1e6ff;
+  transform: translateY(-1px);
+}
+
+.actionButtonDanger:hover {
+  background-color: #fff1f2;
+  color: #f8285a;
+  border-color: #fecdd3;
+}
+
+.actionIcon {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2;
+}
+
+@media (max-width: 900px) {
+  .td,
+  .th {
+    padding: 14px 12px;
+  }
+}

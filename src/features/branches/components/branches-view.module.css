@@ -1,0 +1,45 @@
+.pageWrapper {
+  min-block-size: calc(100dvh - 70px);
+  padding: clamp(20px, 3vw, 36px);
+}
+
+.tableCard {
+  width: 100%;
+  background: var(--ams-color-base-white, #ffffff);
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-8, 8px);
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.actionToast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--ams-color-grayscale-400, #071437);
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: slideIn 200ms ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
