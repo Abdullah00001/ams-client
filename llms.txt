@@ -1,0 +1,25 @@
+# Academy Management System (AMS) — Client
+
+> Frontend client for the Academy Management System (AMS) dashboard. Built with Next.js 16 (App Router), React 19, TypeScript 5, CSS Modules, Base UI, and Style Dictionary design tokens.
+
+## Architecture & Codebase Map
+- `src/app/`: Next.js 16 App Router pages and layouts. Minimal route handlers only; no CSS modules.
+- `src/features/dashboard/`: Dashboard feature slice containing components, services, types, and index export.
+- `src/components/ui/`: Shared headless and styled UI primitives (badge, button, card, input).
+- `src/components/layout/`: Global layout components (sidebar, topbar, dashboard shell).
+- `src/components/not-found/`: Modular 404 page component with animated SVG.
+- `src/styles/tokens.css`: Generated design token custom properties (`--ams-*`).
+- `src/lib/touch-ripple.ts`: Material UI style touch ripple generator.
+
+## Key Development Commands
+- `pnpm dev`: Run local dev server on http://localhost:3000
+- `pnpm typecheck`: Run TypeScript compiler type checking (`tsc --noEmit`)
+- `pnpm lint`: Run ESLint checks
+- `pnpm build`: Next.js production build
+
+## Brand Colors & Themes
+- Dhaka Specialty Coffee Academy (DSCA): `#028c4a`
+- Global Barista Training Academy (GBTA): `#ff7724`
+- Primary Brand Blue: `#1b84ff`
+- Text Primary: `#071437`
+- Text Muted: `#99a1b7`

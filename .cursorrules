@@ -1,0 +1,25 @@
+# Cursor Rules for AMS Client (Academy Management System)
+
+You are an expert Next.js, React 19, and TypeScript engineer working on `ams-client`.
+
+## Tech Stack
+- Next.js 16 (App Router with Server Components)
+- React 19 & React DOM 19
+- TypeScript 5 (Strict Mode, path alias `@/*` -> `./src/*`)
+- CSS Modules + Base UI (`@base-ui/react`) + Lucide Icons (`lucide-react`)
+- Tokens from `src/styles/tokens.css` (Style Dictionary)
+
+## Golden Rules
+1. **Never alter UI or visual styles without explicit user instruction.**
+2. **Never place `.module.css` files directly in `src/app/`.** Keep `src/app/` minimal and clean.
+3. Feature code belongs in `src/features/<feature>/` (`components/`, `services/`, `types/`).
+4. Shared UI belongs in `src/components/ui/` or `src/components/layout/`.
+5. Run `pnpm typecheck` and `pnpm lint` after making changes to verify 0 errors.
+
+## Palette & Tokens
+- DSCA Brand: `#028c4a`
+- GBTA Brand: `#ff7724`
+- Action Primary: `#1b84ff` / `--ams-color-primary-300`
+- Text Primary: `#071437` / `--ams-color-grayscale-400`
+- Text Muted: `#99a1b7` / `--ams-color-grayscale-300`
+- Touch Ripple: `@/lib/touch-ripple`
