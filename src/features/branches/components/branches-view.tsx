@@ -11,6 +11,7 @@ import { useState } from "react";
 import { BranchesHeader } from "./branches-header/branches-header";
 import { BranchesTable } from "./branches-table/branches-table";
 import { BranchPagination } from "./branch-pagination/branch-pagination";
+import { ConfirmationModal, type ConfirmationType } from "./confirmation-modal/confirmation-modal";
 import { INITIAL_BRANCHES_DATA, BranchesService } from "../services";
 import type { Branch, BranchQuickAction } from "../types";
 import styles from "./branches-view.module.css";
@@ -21,6 +22,17 @@ export function BranchesView() {
   const [branchesList, setBranchesList] = useState<Branch[]>(INITIAL_BRANCHES_DATA);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Confirmation modal state for sensitive operations (Toggle status & Delete)
+  const [modalState, setModalState] = useState<{
+    isOpen: boolean;
+    type: ConfirmationType;
+    branch: Branch | null;
+  }>({
+    isOpen: false,
+    type: "activate",
+    branch: null,
+  });
 
   const paginatedResult = BranchesService.getBranches(currentPage, PAGE_SIZE, branchesList);
 
@@ -37,21 +49,46 @@ export function BranchesView() {
 
   const handleAction = (action: BranchQuickAction, branch: Branch) => {
     if (action === "toggle-status") {
-      const nextStatus = branch.status === "Active" ? "Inactive" : "Active";
+      // Both activating and deactivating require confirmation as requested by UX review
+      const targetType: ConfirmationType =
+        branch.status === "Active" ? "deactivate" : "activate";
+      setModalState({
+        isOpen: true,
+        type: targetType,
+        branch,
+      });
+    } else if (action === "delete") {
+      // Delete requires confirmation modal
+      setModalState({
+        isOpen: true,
+        type: "delete",
+        branch,
+      });
+    } else if (action === "edit") {
+      showToast(`Editing ${branch.name}...`);
+    }
+  };
+
+  const handleConfirmModal = () => {
+    const { type, branch } = modalState;
+    if (!branch) return;
+
+    if (type === "activate" || type === "deactivate") {
+      const nextStatus = type === "activate" ? "Active" : "Inactive";
       setBranchesList((prev) =>
         prev.map((b) => (b.id === branch.id ? { ...b, status: nextStatus } : b)),
       );
       showToast(`${branch.name} is now ${nextStatus}.`);
-    } else if (action === "delete") {
-      if (window.confirm(`Are you sure you want to delete "${branch.name}"?`)) {
-        setBranchesList((prev) => prev.filter((b) => b.id !== branch.id));
-        showToast(`${branch.name} has been deleted.`);
-      }
-    } else if (action === "edit") {
-      showToast(`Editing ${branch.name}...`);
-    } else if (action === "permissions") {
-      showToast(`Managing permissions for ${branch.name}...`);
+    } else if (type === "delete") {
+      setBranchesList((prev) => prev.filter((b) => b.id !== branch.id));
+      showToast(`${branch.name} has been deleted.`);
     }
+
+    setModalState((prev) => ({ ...prev, isOpen: false, branch: null }));
+  };
+
+  const handleCancelModal = () => {
+    setModalState((prev) => ({ ...prev, isOpen: false, branch: null }));
   };
 
   return (
@@ -74,6 +111,15 @@ export function BranchesView() {
           onPageChange={setCurrentPage}
         />
       </div>
+
+      {/* Confirmation Modal for Activate, Deactivate & Delete */}
+      <ConfirmationModal
+        isOpen={modalState.isOpen}
+        type={modalState.type}
+        branch={modalState.branch}
+        onConfirm={handleConfirmModal}
+        onCancel={handleCancelModal}
+      />
 
       {/* Action Toast Feedback */}
       {toastMessage && (

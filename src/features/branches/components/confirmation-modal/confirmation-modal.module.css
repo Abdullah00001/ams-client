@@ -1,0 +1,236 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(7, 20, 55, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 10000;
+  animation: fadeIn 180ms ease forwards;
+}
+
+.modalCard {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(7, 20, 55, 0.06);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: scaleUp 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.closeButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: #99a1b7;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.closeButton:hover {
+  background-color: #f4f6fa;
+  color: #071437;
+}
+
+.closeIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.content {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.iconWrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.iconBgActivate {
+  background-color: rgba(23, 198, 83, 0.12);
+}
+
+.iconActivate {
+  width: 22px;
+  height: 22px;
+  color: var(--ams-color-feedback-success, #17c653);
+  stroke-width: 2.2;
+}
+
+.iconBgDeactivate {
+  background-color: rgba(246, 192, 0, 0.16);
+}
+
+.iconDeactivate {
+  width: 22px;
+  height: 22px;
+  color: var(--ams-color-feedback-warning, #f6c000);
+  stroke-width: 2.2;
+}
+
+.iconBgDelete {
+  background-color: rgba(248, 40, 90, 0.12);
+}
+
+.iconDelete {
+  width: 22px;
+  height: 22px;
+  color: var(--ams-color-feedback-error, #f8285a);
+  stroke-width: 2.2;
+}
+
+.textGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: #071437;
+  line-height: 1.3;
+}
+
+.description {
+  margin: 0;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  color: #5e6278;
+  line-height: 1.5;
+}
+
+.description strong {
+  color: #071437;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.cancelButton {
+  padding: 9px 16px;
+  border-radius: 6px;
+  border: 1px solid #e4e6ef;
+  background-color: #ffffff;
+  color: #5e6278;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
+}
+
+.cancelButton:hover {
+  background-color: #f4f6fa;
+  color: #071437;
+  border-color: #d8dde6;
+}
+
+.confirmButton {
+  padding: 9px 18px;
+  border-radius: 6px;
+  border: none;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  color: #ffffff;
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.confirmButtonActivate {
+  background-color: var(--ams-color-feedback-success, #17c653);
+  box-shadow: 0 2px 6px rgba(23, 198, 83, 0.25);
+}
+
+.confirmButtonActivate:hover {
+  background-color: #14ad48;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(23, 198, 83, 0.35);
+}
+
+.confirmButtonDeactivate {
+  background-color: var(--ams-color-feedback-warning, #f6c000);
+  box-shadow: 0 2px 6px rgba(246, 192, 0, 0.35);
+}
+
+.confirmButtonDeactivate:hover {
+  background-color: #dfae00;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(246, 192, 0, 0.45);
+}
+
+.confirmButtonDelete {
+  background-color: var(--ams-color-feedback-error, #f8285a);
+  box-shadow: 0 2px 6px rgba(248, 40, 90, 0.25);
+}
+
+.confirmButtonDelete:hover {
+  background-color: #e01e4d;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(248, 40, 90, 0.35);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

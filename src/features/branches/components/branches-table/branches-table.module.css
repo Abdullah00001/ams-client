@@ -18,6 +18,7 @@
 
 .table {
   width: 100%;
+  min-width: 980px;
   table-layout: fixed;
   border-collapse: collapse;
   text-align: left;
@@ -29,23 +30,23 @@
 }
 
 .colLocation {
-  width: 28%;
+  width: 25%;
 }
 
 .colStudents {
-  width: 13%;
+  width: 17%;
 }
 
 .colBatches {
-  width: 11%;
+  width: 15%;
 }
 
 .colStatus {
-  width: 112px;
+  width: 120px;
 }
 
 .colActions {
-  width: 168px;
+  width: 90px;
 }
 
 .headerRow {
@@ -55,14 +56,14 @@
 }
 
 .th {
-  padding: 10px 20px;
+  padding: 10px 16px;
   height: 42px;
   box-sizing: border-box;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--ams-color-text-secondary, #4b5563);
+  letter-spacing: 0.05em;
+  color: #8590a5;
   white-space: nowrap;
 }
 
@@ -173,54 +174,81 @@
   margin-inline-start: 4px;
 }
 
-/* Status Badges */
-.statusBadge {
+/* Status Toggle Switch */
+.statusCell {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-width: 82px;
-  box-sizing: border-box;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1;
-  white-space: nowrap;
+  gap: 10px;
+  user-select: none;
 }
 
-.statusDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+.toggleSwitch {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 2px;
+  display: inline-flex;
+  align-items: center;
+  background-color: #cbd5e1;
+  transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
 }
 
-.statusActive {
-  background-color: rgba(23, 198, 83, 0.1);
-  color: #17c653;
-  border: 1px solid rgba(23, 198, 83, 0.2);
+.toggleSwitch:focus-visible {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #1b84ff;
 }
 
-.statusActive .statusDot {
+.toggleSwitchActive {
   background-color: #17c653;
 }
 
-.statusInactive {
-  background-color: rgba(120, 130, 157, 0.1);
-  color: #78829d;
-  border: 1px solid rgba(120, 130, 157, 0.2);
+.toggleSwitchInactive:hover {
+  background-color: #94a3b8;
 }
 
-.statusInactive .statusDot {
-  background-color: #78829d;
+.toggleSwitchActive:hover {
+  background-color: #14ad48;
 }
 
-/* Actions Cell from Figma Inspect */
+.toggleThumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(0);
+}
+
+.toggleSwitchActive .toggleThumb {
+  transform: translateX(16px);
+}
+
+.statusText {
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.statusTextActive {
+  color: #17c653;
+}
+
+.statusTextInactive {
+  color: #94a3b8;
+}
+
+/* Actions Cell from Figma Inspect (Clean 2-action layout) */
 .actionsCell {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .actionButton {

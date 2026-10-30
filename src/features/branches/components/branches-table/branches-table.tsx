@@ -10,8 +10,6 @@
 import { useRouter } from "next/navigation";
 import {
   Edit3,
-  Power,
-  KeyRound,
   Trash2,
 } from "lucide-react";
 import type { MouseEvent } from "react";
@@ -129,19 +127,33 @@ export function BranchesTable({
                   <span className={styles.metricSub}>batches</span>
                 </td>
 
-                {/* Status Badge */}
-                <td className={styles.td}>
-                  <span
-                    className={`${styles.statusBadge} ${
-                      isActive ? styles.statusActive : styles.statusInactive
-                    }`}
-                  >
-                    <span className={styles.statusDot} aria-hidden="true" />
-                    <span>{branch.status}</span>
-                  </span>
+                {/* Status Toggle Switch */}
+                <td className={styles.td} onClick={(e) => e.stopPropagation()}>
+                  <div className={styles.statusCell}>
+                    <button
+                      type="button"
+                      role="switch"
+                      aria-checked={isActive}
+                      aria-label={`${isActive ? "Deactivate" : "Activate"} ${branch.name}`}
+                      className={`${styles.toggleSwitch} ${
+                        isActive ? styles.toggleSwitchActive : styles.toggleSwitchInactive
+                      }`}
+                      onClick={(e) => handleActionClick(e, "toggle-status", branch)}
+                      title={`Click to ${isActive ? "deactivate" : "activate"} ${branch.name}`}
+                    >
+                      <span className={styles.toggleThumb} aria-hidden="true" />
+                    </button>
+                    <span
+                      className={`${styles.statusText} ${
+                        isActive ? styles.statusTextActive : styles.statusTextInactive
+                      }`}
+                    >
+                      {branch.status}
+                    </span>
+                  </div>
                 </td>
 
-                {/* Quick Actions */}
+                {/* Quick Actions (Edit & Delete only) */}
                 <td className={styles.td} onClick={(e) => e.stopPropagation()}>
                   <div className={styles.actionsCell}>
                     {/* Edit */}
@@ -153,28 +165,6 @@ export function BranchesTable({
                       onClick={(e) => handleActionClick(e, "edit", branch)}
                     >
                       <Edit3 className={styles.actionIcon} />
-                    </button>
-
-                    {/* Toggle Status (Activate / Deactivate) */}
-                    <button
-                      type="button"
-                      className={styles.actionButton}
-                      title={isActive ? "Deactivate Branch" : "Activate Branch"}
-                      aria-label={`${isActive ? "Deactivate" : "Activate"} ${branch.name}`}
-                      onClick={(e) => handleActionClick(e, "toggle-status", branch)}
-                    >
-                      <Power className={styles.actionIcon} />
-                    </button>
-
-                    {/* Permissions */}
-                    <button
-                      type="button"
-                      className={styles.actionButton}
-                      title="Manage Permissions & Roles"
-                      aria-label={`Manage permissions for ${branch.name}`}
-                      onClick={(e) => handleActionClick(e, "permissions", branch)}
-                    >
-                      <KeyRound className={styles.actionIcon} />
                     </button>
 
                     {/* Delete */}
