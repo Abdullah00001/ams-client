@@ -1,13 +1,10 @@
 .paginationContainer {
   display: flex;
-  padding: 12px 24px 16px 24px;
+  padding: 16px 0 0 0;
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
-  border-top: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  background-color: var(--ams-color-base-white, #ffffff);
-  border-bottom-left-radius: var(--ams-radius-8, 8px);
-  border-bottom-right-radius: var(--ams-radius-8, 8px);
+  background-color: transparent;
   box-sizing: border-box;
 }
 

@@ -1,4 +1,5 @@
 import { type RefObject, useState } from "react";
+import { usePathname } from "next/navigation";
 import { ChevronRight, Search } from "lucide-react";
 import clsx from "clsx";
 import {
@@ -252,10 +253,19 @@ function SidebarNavigationGroup({
   isGroupExpanded,
   onExpandedChange,
 }: SidebarNavigationGroupProps) {
+  const pathname = usePathname();
   const headingId = `sidebar-group-${group.id}`;
   const listId = `${headingId}-items`;
   const GroupIcon = group.icon;
   const isDashboardGroup = group.id === "platform";
+
+  const isGroupActive = group.items.some(
+    (item) =>
+      item.kind === "implemented" &&
+      (item.href === "/"
+        ? pathname === "/"
+        : pathname === item.href || pathname.startsWith(item.href + "/")),
+  );
 
   return (
     <section aria-labelledby={headingId} className={styles.group}>
@@ -268,9 +278,12 @@ function SidebarNavigationGroup({
           <button
             aria-controls={listId}
             aria-expanded={isGroupExpanded}
-            className={styles.groupTrigger}
+            className={clsx(
+              styles.groupTrigger,
+              isGroupActive && styles.groupTriggerActive,
+            )}
             onClick={(e) => {
-              createRipple(e, false);
+              createRipple(e, isGroupActive);
               onExpandedChange(group.id);
             }}
             type="button"

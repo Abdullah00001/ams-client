@@ -363,6 +363,21 @@
   color: var(--ams-color-text-inverse);
 }
 
+.groupTriggerActive {
+  background-color: var(--ams-color-action-primary-background, #1b84ff) !important;
+  color: var(--ams-color-base-white, #ffffff) !important;
+}
+
+.groupTriggerActive .groupIcon,
+.groupTriggerActive svg {
+  color: var(--ams-color-base-white, #ffffff) !important;
+}
+
+.groupTriggerActive:hover {
+  background-color: var(--ams-color-action-primary-hover, #056ee9) !important;
+  color: var(--ams-color-base-white, #ffffff) !important;
+}
+
 .groupTrigger:active {
   opacity: 0.8;
 }
@@ -508,13 +523,13 @@
 }
 
 .nestedNavigationList .navigationItem.currentItem {
-  background: var(--ams-color-action-primary-background);
-  color: var(--ams-color-action-primary-foreground);
+  background: #23252d !important;
+  color: #ffffff !important;
   font-weight: var(--ams-font-weight-medium);
 }
 
 .nestedNavigationList .navigationItem.currentItem:hover {
-  background: var(--ams-color-action-primary-hover);
+  background: #2b2e38 !important;
 }
 
 .navigationItem {
