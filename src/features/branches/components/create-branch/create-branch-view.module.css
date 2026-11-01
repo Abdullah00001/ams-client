@@ -1,7 +1,8 @@
 .pageWrapper {
   width: 100%;
+  min-block-size: calc(100dvh - 70px);
   box-sizing: border-box;
-  padding: 16px 24px 40px 24px;
+  padding: clamp(20px, 3vw, 36px);
   display: flex;
   flex-direction: column;
   gap: 20px;
