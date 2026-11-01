@@ -26,7 +26,7 @@ export function SidebarNavigationItem({
     item.kind === "implemented" &&
     (item.href === "/"
       ? pathname === "/"
-      : pathname === item.href || pathname.startsWith(item.href + "/"));
+      : pathname === item.href);
   const itemContent = (
     <>
       {showIcon ? (

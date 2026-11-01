@@ -1,61 +1,93 @@
 .field {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   min-inline-size: 0;
-  gap: var(--ams-spacing-1);
+  gap: 6px;
 }
 
 .label {
-  color: var(--ams-color-text-primary);
-  font-family: inherit;
-  font-size: var(--ams-typography-body-medium-font-size);
-  font-weight: var(--ams-font-weight-medium);
+  color: var(--ams-color-grayscale-400, #071437);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  transition: color 150ms ease;
+}
+
+.labelInvalid {
+  color: var(--ams-color-status-error, #f8285a);
 }
 
 .input {
   inline-size: 100%;
   min-inline-size: 0;
-  min-block-size: calc(var(--ams-spacing-6) + var(--ams-spacing-5));
-  border: 1px solid var(--ams-color-text-secondary);
-  border-radius: var(--ams-radius-6);
-  padding-inline: var(--ams-spacing-3);
-  background-color: var(--ams-color-surface-card);
-  color: var(--ams-color-text-primary);
-  font-family: inherit;
-  font-size: var(--ams-typography-body-medium-font-size);
-  font-weight: var(--ams-typography-body-medium-font-weight);
+  height: 51px;
+  box-sizing: border-box;
+  padding: 16px;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: 4px;
+  background-color: var(--ams-color-surface-card, #ffffff);
+  color: var(--ams-color-grayscale-400, #071437);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  outline: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    caret-color 150ms ease;
 }
 
 .input::placeholder {
-  color: var(--ams-color-text-secondary);
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  font-size: 14px;
 }
 
-.input:focus-visible {
-  outline: 3px solid var(--ams-color-focus-ring);
-  outline-offset: 2px;
+.input:focus-visible,
+.input:focus {
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.12);
 }
 
 .input:disabled {
-  background-color: var(--ams-color-surface-subtle);
-  color: var(--ams-color-text-secondary);
+  background-color: var(--ams-color-surface-subtle, #f8f9fb);
+  color: var(--ams-color-grayscale-300, #99a1b7);
   cursor: not-allowed;
 }
 
 .input:read-only:not(:disabled) {
-  background-color: var(--ams-color-surface-subtle);
-  color: var(--ams-color-text-primary);
+  background-color: var(--ams-color-surface-subtle, #f8f9fb);
+  color: var(--ams-color-grayscale-400, #071437);
 }
 
 .input.invalid {
-  border-color: var(--ams-color-feedback-error);
+  border: 1px solid var(--ams-color-status-error, #f8285a);
+  caret-color: var(--ams-color-status-error, #f8285a);
 }
 
-.helperText,
+.input.invalid:focus {
+  border-color: var(--ams-color-status-error, #f8285a);
+  box-shadow: 0 0 0 3px rgba(248, 40, 90, 0.14);
+}
+
+.helperText {
+  margin: 0;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: normal;
+}
+
 .errorText {
   margin: 0;
-  color: var(--ams-color-text-secondary);
-  font-family: inherit;
-  font-size: var(--ams-typography-body-normal-font-size);
-  font-weight: var(--ams-typography-body-normal-font-weight);
+  color: var(--ams-color-status-error, #f8285a);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .errorLabel {

@@ -89,7 +89,7 @@ export const navigationItems: SidebarNavigationGroup[] = [
     icon: Building2,
     id: "branch-management",
     items: [
-      { icon: Plus, kind: "unimplemented", label: "Create Branch" },
+      { href: "/branches/create", icon: Plus, kind: "implemented", label: "Create Branch" },
       { href: "/branches", icon: Building2, kind: "implemented", label: "All Branches" },
     ],
     label: "Branch Management",

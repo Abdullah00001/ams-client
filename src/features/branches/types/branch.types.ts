@@ -65,3 +65,57 @@ export interface PaginatedBranches {
   /** Total calculated pages */
   totalPages: number;
 }
+
+/**
+ * Module permission flags for campus capabilities.
+ */
+export interface BranchFeaturePermissions {
+  studentManagement: boolean;
+  courseBatchManagement: boolean;
+  attendanceTracking: boolean;
+  feePaymentCollection: boolean;
+  certificateIssuance: boolean;
+  leadCrm: boolean;
+  expenseManagement: boolean;
+  hostelManagement: boolean;
+  staffManagement: boolean;
+}
+
+/**
+ * Supported social media platform types.
+ */
+export type SocialMediaPlatform =
+  | "Facebook"
+  | "LinkedIn"
+  | "YouTube"
+  | "Instagram"
+  | "TikTok";
+
+/**
+ * Dynamic social media link record.
+ */
+export interface SocialMediaLink {
+  id: string;
+  platform: SocialMediaPlatform;
+  url: string;
+}
+
+/**
+ * Complete form model for creating or configuring an AMS branch.
+ */
+export interface CreateBranchFormData {
+  name: string;
+  adminName: string;
+  code: string;
+  slug: string;
+  address: string;
+  phone: string;
+  email: string;
+  website: string;
+  mapsLink: string;
+  logoUrl?: string;
+  status: BranchStatus;
+  brand: BranchBrand;
+  socialLinks: SocialMediaLink[];
+  permissions: BranchFeaturePermissions;
+}

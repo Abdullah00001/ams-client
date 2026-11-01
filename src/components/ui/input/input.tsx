@@ -35,7 +35,14 @@ export function Input({
   return (
     <div className={styles.field}>
       {label ? (
-        <label className={clsx(styles.label, hideLabel && styles.visuallyHidden)} htmlFor={inputId}>
+        <label
+          className={clsx(
+            styles.label,
+            invalid && styles.labelInvalid,
+            hideLabel && styles.visuallyHidden,
+          )}
+          htmlFor={inputId}
+        >
           {label}
         </label>
       ) : null}
@@ -54,7 +61,7 @@ export function Input({
       ) : null}
       {errorId ? (
         <p className={styles.errorText} id={errorId}>
-          <span className={styles.errorLabel}>Error:</span> {errorMessage}
+          {errorMessage}
         </p>
       ) : null}
     </div>

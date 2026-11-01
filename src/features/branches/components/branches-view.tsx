@@ -8,6 +8,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { BranchesHeader } from "./branches-header/branches-header";
 import { BranchesTable } from "./branches-table/branches-table";
 import { BranchPagination } from "./branch-pagination/branch-pagination";
@@ -19,6 +20,7 @@ import styles from "./branches-view.module.css";
 const PAGE_SIZE = 10;
 
 export function BranchesView() {
+  const router = useRouter();
   const [branchesList, setBranchesList] = useState<Branch[]>(INITIAL_BRANCHES_DATA);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -44,7 +46,7 @@ export function BranchesView() {
   };
 
   const handleCreateBranch = () => {
-    showToast("Create Branch form modal will open here.");
+    router.push("/branches/create");
   };
 
   const handleAction = (action: BranchQuickAction, branch: Branch) => {
