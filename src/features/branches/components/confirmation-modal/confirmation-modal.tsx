@@ -46,7 +46,7 @@ export function ConfirmationModal({
         };
       case "deactivate":
         return {
-          variant: "warning" as const,
+          variant: "error" as const,
           title: "Deactivate Branch?",
           description: (
             <>

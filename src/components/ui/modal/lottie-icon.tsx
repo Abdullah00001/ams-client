@@ -12,7 +12,7 @@ import { useEffect, useRef } from "react";
 import type { AnimationItem } from "lottie-web";
 import styles from "./lottie-icon.module.css";
 
-export type LottieIconVariant = "delete" | "warning" | "success" | "info";
+export type LottieIconVariant = "delete" | "error" | "warning" | "success" | "info";
 
 export type LottieIconProps = {
   /** Optional external Lottie JSON animation URL */
@@ -156,6 +156,38 @@ export function LottieIcon({
             rx="2"
             fill="var(--ams-color-status-error, #f8285a)"
           />
+        </svg>
+      )}
+
+      {variant === "error" && (
+        <svg
+          viewBox="0 0 150 150"
+          width={width}
+          height={height}
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={styles.animatedWarning}
+        >
+          <circle
+            cx="75"
+            cy="75"
+            r="48"
+            fill="rgba(248, 40, 90, 0.14)"
+          />
+          <path
+            d="M 75 38 L 112 102 C 114 105 112 109 108 109 L 42 109 C 38 109 36 105 38 102 Z"
+            fill="var(--ams-color-status-error, #f8285a)"
+          />
+          <line
+            x1="75"
+            y1="60"
+            x2="75"
+            y2="86"
+            stroke="#ffffff"
+            strokeWidth="5"
+            strokeLinecap="round"
+          />
+          <circle cx="75" cy="98" r="3.5" fill="#ffffff" />
         </svg>
       )}
 

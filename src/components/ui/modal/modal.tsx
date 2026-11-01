@@ -13,7 +13,7 @@ import { X } from "lucide-react";
 import { LottieIcon, type LottieIconVariant } from "./lottie-icon";
 import styles from "./modal.module.css";
 
-export type ModalVariant = "delete" | "warning" | "success" | "info" | "primary";
+export type ModalVariant = "delete" | "error" | "warning" | "success" | "info" | "primary";
 
 export type ModalProps = {
   isOpen: boolean;
@@ -74,6 +74,7 @@ export function Modal({
   const getConfirmButtonClass = () => {
     switch (variant) {
       case "delete":
+      case "error":
         return styles.confirmButtonDelete;
       case "warning":
         return styles.confirmButtonWarning;
@@ -88,6 +89,7 @@ export function Modal({
 
   const getLottieVariant = (): LottieIconVariant => {
     if (variant === "delete") return "delete";
+    if (variant === "error") return "error";
     if (variant === "warning") return "warning";
     if (variant === "success") return "success";
     return "info";
