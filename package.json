@@ -11,7 +11,8 @@
     "format:check": "prettier --check .",
     "format": "prettier --write .",
     "tokens:build": "node tokens/config.mjs",
-    "tokens:check": "node tokens/check.mjs"
+    "tokens:check": "node tokens/check.mjs",
+    "create:feature": "node scripts/create-feature.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

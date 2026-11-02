@@ -1,0 +1,73 @@
+/**
+ * @fileoverview Form Actions Row Styles
+ * @module features/create-branch/styles/form-actions-row.module.css
+ */
+
+.formActionsRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  margin-top: 8px;
+}
+
+.draftButton {
+  padding: 10px 18px;
+  border-radius: var(--ams-radius-6, 6px);
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  background-color: var(--ams-color-surface-page, #ffffff);
+  color: var(--ams-color-grayscale-400, #071437);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+  font-family: inherit;
+}
+
+.draftButton:hover {
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+  border-color: #d8dadd;
+}
+
+.resetButton {
+  padding: 10px 18px;
+  border-radius: var(--ams-radius-6, 6px);
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: var(--ams-color-text-muted, #99a1b7);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+  font-family: inherit;
+}
+
+.resetButton:hover {
+  color: var(--ams-color-grayscale-400, #071437);
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: var(--ams-radius-6, 6px);
+  border: none;
+  background-color: var(--ams-color-primary-300, #1b84ff);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(27, 132, 255, 0.2);
+  transition: all 150ms ease;
+  font-family: inherit;
+}
+
+.submitButton:hover {
+  background-color: #056ee9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(27, 132, 255, 0.25);
+}

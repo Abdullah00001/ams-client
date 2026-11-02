@@ -1,0 +1,198 @@
+/**
+ * @fileoverview Feature Permissions Section Styles
+ * @module features/create-branch/styles/feature-permissions-section.module.css
+ */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sectionTitleInvalid {
+  color: var(--ams-color-status-error, #f8285a) !important;
+}
+
+.requiredAsterisk {
+  color: var(--ams-color-status-error, #f8285a);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.sectionSubtitle {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ams-color-text-muted, #99a1b7);
+}
+
+.permissionsHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.permissionsCountBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 150ms ease;
+}
+
+.permissionsCountBadgeValid {
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+  color: var(--ams-color-grayscale-400, #071437);
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.permissionsCountBadgeError {
+  background-color: rgba(248, 40, 90, 0.08);
+  color: var(--ams-color-status-error, #f8285a);
+  border: 1px solid rgba(248, 40, 90, 0.25);
+  font-weight: 600;
+}
+
+.permissionErrorBanner {
+  background-color: rgba(248, 40, 90, 0.06);
+  border: 1px solid rgba(248, 40, 90, 0.25);
+  border-radius: var(--ams-radius-6, 6px);
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--ams-color-status-error, #f8285a);
+  line-height: 1.4;
+}
+
+.permissionsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.permissionCard {
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-8, 8px);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: var(--ams-color-surface-page, #ffffff);
+  transition: all 150ms ease;
+}
+
+.permissionCard:hover {
+  border-color: #d8dadd;
+}
+
+.permissionCardActive {
+  border-color: rgba(2, 140, 74, 0.3);
+  background-color: rgba(2, 140, 74, 0.02);
+}
+
+.permissionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.permissionIconTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.permissionIconWrapper {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+  color: var(--ams-color-text-muted, #99a1b7);
+  transition: all 150ms ease;
+}
+
+.permissionIconWrapperActive {
+  background-color: rgba(2, 140, 74, 0.1);
+  color: #028c4a;
+}
+
+.permissionTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.permissionDesc {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ams-color-text-muted, #99a1b7);
+  line-height: 1.4;
+}
+
+.toggleSwitch {
+  width: 38px;
+  height: 22px;
+  border-radius: 11px;
+  background-color: #e4e6ef;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+  transition: background-color 200ms ease;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.toggleSwitchActive {
+  background-color: #028c4a;
+}
+
+.toggleThumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 200ms ease;
+  transform: translateX(0);
+}
+
+.toggleSwitchActive .toggleThumb {
+  transform: translateX(16px);
+}
+
+@media (max-width: 1024px) {
+  .permissionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .permissionsGrid {
+    grid-template-columns: 1fr;
+  }
+}

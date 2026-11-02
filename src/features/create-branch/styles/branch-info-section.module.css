@@ -1,0 +1,334 @@
+/**
+ * @fileoverview Branch Info Section Styles
+ * @module features/create-branch/styles/branch-info-section.module.css
+ */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sectionSubtitle {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ams-color-text-muted, #99a1b7);
+}
+
+.requiredAsterisk {
+  color: var(--ams-color-status-error, #f8285a);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.grid3Col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 24px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.fieldLabelInvalid {
+  color: var(--ams-color-status-error, #f8285a);
+}
+
+.textInput {
+  height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-6, 6px);
+  background-color: var(--ams-color-surface-page, #ffffff);
+  color: var(--ams-color-grayscale-400, #071437);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: all 150ms ease;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.textInput:focus {
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.12);
+}
+
+.textInputInvalid {
+  border-color: var(--ams-color-status-error, #f8285a) !important;
+  background-color: rgba(248, 40, 90, 0.02);
+}
+
+.fieldErrorText {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ams-color-status-error, #f8285a);
+}
+
+.fieldHint {
+  margin: 0;
+  font-size: 11px;
+  color: var(--ams-color-text-muted, #99a1b7);
+}
+
+.inputWithPrefix {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputPrefix {
+  position: absolute;
+  left: 12px;
+  font-size: 13px;
+  color: var(--ams-color-text-muted, #99a1b7);
+  pointer-events: none;
+  user-select: none;
+}
+
+.inputWithPrefix .textInput {
+  padding-left: 54px;
+}
+
+.inputWithSuffix {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputSuffix {
+  position: absolute;
+  right: 12px;
+  font-size: 12px;
+  color: var(--ams-color-text-muted, #99a1b7);
+  pointer-events: none;
+}
+
+/* Status Row */
+.statusHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: #fafbfc;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-8, 8px);
+}
+
+.statusToggleContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.statusLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.statusBadgeActive {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: rgba(27, 132, 255, 0.1);
+  color: var(--ams-color-primary-300, #1b84ff);
+}
+
+.statusBadgeInactive {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+  color: var(--ams-color-text-muted, #99a1b7);
+}
+
+.toggleSwitch {
+  width: 38px;
+  height: 22px;
+  border-radius: 11px;
+  background-color: #e4e6ef;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+  transition: background-color 200ms ease;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.toggleSwitchActive {
+  background-color: var(--ams-color-primary-300, #1b84ff);
+}
+
+.toggleThumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 200ms ease;
+  transform: translateX(0);
+}
+
+.toggleSwitchActive .toggleThumb {
+  transform: translateX(16px);
+}
+
+/* Logo Upload */
+.logoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.logoDropzone {
+  border: 2px dashed #028c4a;
+  border-radius: var(--ams-radius-8, 8px);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  background-color: #fafbfc;
+  transition: all 150ms ease;
+}
+
+.logoDropzone:hover {
+  background-color: rgba(2, 140, 74, 0.04);
+}
+
+.logoDropzoneIcon {
+  color: #028c4a;
+}
+
+.logoDropzoneTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.logoDropzoneHint {
+  font-size: 12px;
+  color: var(--ams-color-text-muted, #99a1b7);
+}
+
+.logoFileInput {
+  display: none;
+}
+
+.logoPreviewBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-8, 8px);
+  background-color: #fafbfc;
+}
+
+.logoThumbnail {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.logoPreviewInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  margin-left: 12px;
+}
+
+.logoFileName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ams-color-grayscale-400, #071437);
+  word-break: break-all;
+}
+
+.logoFileSize {
+  font-size: 11px;
+  color: var(--ams-color-text-muted, #99a1b7);
+}
+
+.logoPreviewActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logoActionBtn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  background-color: #ffffff;
+  border-radius: var(--ams-radius-6, 6px);
+  color: var(--ams-color-text-muted, #99a1b7);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.logoActionBtn:hover {
+  color: var(--ams-color-primary-300, #1b84ff);
+  border-color: var(--ams-color-primary-300, #1b84ff);
+}
+
+.logoActionBtnDanger:hover {
+  color: var(--ams-color-status-error, #f8285a);
+  border-color: var(--ams-color-status-error, #f8285a);
+}
+
+@media (max-width: 1024px) {
+  .grid3Col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid3Col {
+    grid-template-columns: 1fr;
+  }
+}

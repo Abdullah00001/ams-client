@@ -1,0 +1,477 @@
+/**
+ * @fileoverview User Info Section Styles
+ * @module features/create-branch/styles/user-info-section.module.css
+ */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sectionSubtitle {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ams-color-text-muted, #99a1b7);
+}
+
+.grid3Col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 24px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.fieldLabelInvalid {
+  color: var(--ams-color-status-error, #f8285a);
+}
+
+.textInput {
+  height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-6, 6px);
+  background-color: var(--ams-color-surface-page, #ffffff);
+  color: var(--ams-color-grayscale-400, #071437);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: all 150ms ease;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.textInput:focus {
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.12);
+}
+
+.textInputInvalid {
+  border-color: var(--ams-color-status-error, #f8285a) !important;
+  background-color: rgba(248, 40, 90, 0.02);
+}
+
+.inputDisabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+  color: var(--ams-color-text-muted, #99a1b7);
+}
+
+.fieldErrorText {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ams-color-status-error, #f8285a);
+}
+
+/* User search row */
+.userSearchContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.userSearchInputWrapper {
+  position: relative;
+  flex: 1;
+  min-width: 280px;
+}
+
+.userSearchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ams-color-text-muted, #99a1b7);
+  pointer-events: none;
+}
+
+.userSearchInput {
+  width: 100%;
+  height: 44px;
+  padding: 0 16px 0 42px;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-6, 6px);
+  background-color: #fafbfc;
+  color: var(--ams-color-grayscale-400, #071437);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: all 150ms ease;
+  box-sizing: border-box;
+}
+
+.userSearchInput:focus {
+  background-color: #ffffff;
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.12);
+}
+
+.searchLoaderInline {
+  animation: spin 1s linear infinite;
+  color: var(--ams-color-primary-300, #1b84ff);
+}
+
+.userSearchDropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-8, 8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 100;
+  padding: 6px;
+}
+
+.userSearchItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.userSearchItem:hover {
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+}
+
+.userSearchItemInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: rgba(27, 132, 255, 0.12);
+  color: var(--ams-color-primary-300, #1b84ff);
+  font-weight: 600;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.userMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.userName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.userEmailPhone {
+  font-size: 11px;
+  color: var(--ams-color-text-muted, #99a1b7);
+}
+
+.userRoleBadge {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background-color: #f1f3f6;
+  color: var(--ams-color-grayscale-400, #071437);
+  font-weight: 500;
+}
+
+.userSearchEmpty {
+  padding: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ams-color-text-muted, #99a1b7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.userSearchEmptyBtn {
+  border: none;
+  background: transparent;
+  color: var(--ams-color-primary-300, #1b84ff);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.userSearchEmptyBtn:hover {
+  text-decoration: underline;
+}
+
+.orDivider {
+  font-size: 13px;
+  color: var(--ams-color-text-muted, #99a1b7);
+  font-weight: 500;
+}
+
+.switchModeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: var(--ams-radius-6, 6px);
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  background-color: #ffffff;
+  color: var(--ams-color-grayscale-400, #071437);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+  font-family: inherit;
+}
+
+.switchModeBtn:hover {
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  color: var(--ams-color-primary-300, #1b84ff);
+}
+
+.userBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: var(--ams-radius-8, 8px);
+  font-size: 13px;
+}
+
+.createModeBanner {
+  background-color: #f0f7ff;
+  border: 1px solid rgba(27, 132, 255, 0.2);
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.bannerActionBtn {
+  background: transparent;
+  border: none;
+  color: var(--ams-color-primary-300, #1b84ff);
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.bannerActionBtn:hover {
+  text-decoration: underline;
+}
+
+/* Password wrapper */
+.passwordInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordToggleBtn {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ams-color-text-muted, #99a1b7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.passwordToggleBtn:hover {
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+/* Phone input with country */
+.phoneInputWrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-6, 6px);
+  background-color: #ffffff;
+  transition: all 150ms ease;
+}
+
+.phoneInputWrapper:focus-within {
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.12);
+}
+
+.phoneCountrySelect {
+  height: 40px;
+  padding: 0 8px 0 12px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  color: var(--ams-color-grayscale-400, #071437);
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+}
+
+.phoneDivider {
+  width: 1px;
+  height: 22px;
+  background-color: var(--ams-color-border-subtle, #eff1f4);
+}
+
+.phoneInputWrapper .textInput {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* Assigned user card */
+.assignedUserCard {
+  border: 1px solid rgba(2, 140, 74, 0.25);
+  background-color: rgba(2, 140, 74, 0.03);
+  border-radius: var(--ams-radius-8, 8px);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.assignedUserCardContent {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.assignedUserAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #028c4a;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.assignedUserInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.assignedUserBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #028c4a;
+}
+
+.assignedUserTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.assignedUserSubtitle {
+  font-size: 12px;
+  color: var(--ams-color-text-muted, #99a1b7);
+}
+
+.assignedUserChangeBtn {
+  padding: 8px 14px;
+  border-radius: var(--ams-radius-6, 6px);
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  background-color: #ffffff;
+  color: var(--ams-color-grayscale-400, #071437);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+  font-family: inherit;
+}
+
+.assignedUserChangeBtn:hover {
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+  border-color: var(--ams-color-primary-300, #1b84ff);
+}
+
+.addUserBtn {
+  align-self: flex-start;
+  padding: 10px 22px;
+  border-radius: var(--ams-radius-6, 6px);
+  border: none;
+  background-color: var(--ams-color-primary-300, #1b84ff);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 150ms ease;
+  font-family: inherit;
+  box-shadow: 0 2px 6px rgba(27, 132, 255, 0.2);
+}
+
+.addUserBtn:hover {
+  background-color: #056ee9;
+  box-shadow: 0 4px 10px rgba(27, 132, 255, 0.3);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1024px) {
+  .grid3Col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid3Col {
+    grid-template-columns: 1fr;
+  }
+}

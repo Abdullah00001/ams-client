@@ -1,0 +1,123 @@
+/**
+ * @fileoverview Logo Lightbox Modal Styles
+ * @module features/create-branch/styles/logo-lightbox-modal.module.css
+ */
+
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(7, 20, 55, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 150ms ease forwards;
+}
+
+.lightboxContent {
+  background-color: var(--ams-color-surface-card, #ffffff);
+  border-radius: var(--ams-radius-8, 8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 480px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.lightboxHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.lightboxTitleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lightboxTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.lightboxSubtitle {
+  font-size: 12px;
+  color: var(--ams-color-text-muted, #99a1b7);
+}
+
+.lightboxCloseBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ams-color-text-muted, #99a1b7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 150ms ease;
+}
+
+.lightboxCloseBtn:hover {
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.lightboxImageContainer {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fcfdfe;
+  min-height: 200px;
+}
+
+.lightboxImage {
+  max-width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.lightboxFooter {
+  padding: 12px 20px;
+  border-top: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  display: flex;
+  justify-content: flex-end;
+  background-color: #fafbfc;
+}
+
+.lightboxCloseFooterBtn {
+  padding: 8px 16px;
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+  color: var(--ams-color-grayscale-400, #071437);
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: var(--ams-radius-6, 6px);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+  font-family: inherit;
+}
+
+.lightboxCloseFooterBtn:hover {
+  background-color: #e9ecef;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

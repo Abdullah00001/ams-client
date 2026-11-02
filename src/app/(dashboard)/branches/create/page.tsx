@@ -4,7 +4,7 @@
  */
 
 import type { Metadata } from "next";
-import { CreateBranchView } from "@/features/branches";
+import { CreateBranchView } from "@/features/create-branch";
 
 export const metadata: Metadata = {
   title: "Create Branch | Brew Desk",
