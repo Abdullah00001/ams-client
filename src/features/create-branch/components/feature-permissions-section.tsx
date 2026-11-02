@@ -1,6 +1,6 @@
 /**
  * @fileoverview Feature Permissions Section Component
- * @module features/branches/components/create-branch/feature-permissions-section
+ * @module features/create-branch/components/feature-permissions-section
  */
 
 "use client";

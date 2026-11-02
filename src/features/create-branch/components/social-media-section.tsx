@@ -1,6 +1,6 @@
 /**
  * @fileoverview Social Media Section Component
- * @module features/branches/components/create-branch/social-media-section
+ * @module features/create-branch/components/social-media-section
  */
 
 "use client";

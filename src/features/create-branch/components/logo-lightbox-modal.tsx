@@ -1,6 +1,6 @@
 /**
  * @fileoverview Branch Logo Lightbox Modal
- * @module features/branches/components/create-branch/logo-lightbox-modal
+ * @module features/create-branch/components/logo-lightbox-modal
  */
 
 "use client";

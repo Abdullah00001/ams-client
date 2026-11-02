@@ -10,7 +10,7 @@
 import { Plus } from "lucide-react";
 import type { MouseEvent } from "react";
 import { createTouchRipple } from "@/lib/touch-ripple";
-import styles from "./branches-header.module.css";
+import styles from "../styles/branches-header.module.css";
 
 type BranchesHeaderProps = {
   onCreateBranch?: () => void;

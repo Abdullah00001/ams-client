@@ -10,7 +10,7 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { MouseEvent } from "react";
 import { createTouchRipple } from "@/lib/touch-ripple";
-import styles from "./branch-pagination.module.css";
+import styles from "../styles/branch-pagination.module.css";
 
 type BranchPaginationProps = {
   currentPage: number;

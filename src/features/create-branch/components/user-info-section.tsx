@@ -1,6 +1,6 @@
 /**
  * @fileoverview User Info Section Component
- * @module features/branches/components/create-branch/user-info-section
+ * @module features/create-branch/components/user-info-section
  */
 
 "use client";

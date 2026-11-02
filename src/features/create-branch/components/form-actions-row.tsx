@@ -1,6 +1,6 @@
 /**
  * @fileoverview Form Actions Row Component
- * @module features/branches/components/create-branch/form-actions-row
+ * @module features/create-branch/components/form-actions-row
  */
 
 "use client";

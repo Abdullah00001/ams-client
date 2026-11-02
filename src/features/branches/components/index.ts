@@ -4,7 +4,7 @@
  */
 
 export { BranchesView } from "./branches-view";
-export { BranchesHeader } from "./branches-header/branches-header";
-export { BranchesTable } from "./branches-table/branches-table";
-export { BranchPagination } from "./branch-pagination/branch-pagination";
-export { ConfirmationModal } from "./confirmation-modal/confirmation-modal";
+export { BranchesHeader } from "./branches-header";
+export { BranchesTable } from "./branches-table";
+export { BranchPagination } from "./branch-pagination";
+export { ConfirmationModal } from "./confirmation-modal";

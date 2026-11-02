@@ -9,7 +9,7 @@
 "use client";
 
 import { Modal } from "@/components/ui/modal";
-import type { Branch } from "../../types";
+import type { Branch } from "../types";
 
 export type ConfirmationType = "activate" | "deactivate" | "delete";
 

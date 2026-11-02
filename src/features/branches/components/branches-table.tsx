@@ -14,8 +14,8 @@ import {
 } from "lucide-react";
 import type { MouseEvent } from "react";
 import { createTouchRipple } from "@/lib/touch-ripple";
-import type { Branch, BranchQuickAction } from "../../types";
-import styles from "./branches-table.module.css";
+import type { Branch, BranchQuickAction } from "../types";
+import styles from "../styles/branches-table.module.css";
 
 type BranchesTableProps = {
   branches: Branch[];

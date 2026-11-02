@@ -1,6 +1,6 @@
 /**
  * @fileoverview Branch Info Section Component
- * @module features/branches/components/create-branch/branch-info-section
+ * @module features/create-branch/components/branch-info-section
  */
 
 "use client";
