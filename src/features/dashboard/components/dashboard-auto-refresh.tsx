@@ -12,7 +12,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { RefreshCw } from "lucide-react";
-import styles from "./dashboard-auto-refresh.module.css";
+import styles from "../styles/dashboard-auto-refresh.module.css";
 
 /** Auto-refresh interval constant: 5 minutes in milliseconds */
 const REFRESH_INTERVAL_MS = 5 * 60 * 1000;

@@ -6,8 +6,8 @@
  * live auto-refresh indicator.
  */
 
-import { DashboardAutoRefresh } from "../dashboard-auto-refresh/dashboard-auto-refresh";
-import styles from "./dashboard-header.module.css";
+import { DashboardAutoRefresh } from "./dashboard-auto-refresh";
+import styles from "../styles/dashboard-header.module.css";
 
 /**
  * Props for DashboardHeader.

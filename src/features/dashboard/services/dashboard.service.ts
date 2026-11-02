@@ -7,11 +7,11 @@
  * as the abstraction layer for fetching asynchronous remote datasets.
  */
 
-import { LATEST_ENROLLMENTS_DATA } from "../components/latest-enrollments/latest-enrollments-data";
-import { RECENT_ACTIVITIES_DATA } from "../components/recent-activity/recent-activity-data";
-import { TOP_BRANCHES_DATA } from "../components/top-branches/top-branches-data";
-import { REVENUE_CHART_YEARS } from "../components/revenue-chart/revenue-chart-data";
-import { ENROLLMENT_CHART_YEARS } from "../components/enrollment-chart/enrollment-chart-data";
+import { LATEST_ENROLLMENTS_DATA } from "./latest-enrollments-data";
+import { RECENT_ACTIVITIES_DATA } from "./recent-activity-data";
+import { TOP_BRANCHES_DATA } from "./top-branches-data";
+import { REVENUE_CHART_YEARS } from "./revenue-chart-data";
+import { ENROLLMENT_CHART_YEARS } from "./enrollment-chart-data";
 import type {
   EnrollmentItem,
   ActivityItem,

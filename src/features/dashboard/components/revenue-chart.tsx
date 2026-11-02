@@ -17,8 +17,8 @@ import { ChevronDown } from "lucide-react";
 import {
   REVENUE_CHART_YEARS,
   AVAILABLE_YEAR_OPTIONS,
-} from "./revenue-chart-data";
-import styles from "./revenue-chart.module.css";
+} from "../services/revenue-chart-data";
+import styles from "../styles/revenue-chart.module.css";
 
 const MAX_CHART_VALUE = 150000;
 const CHART_HEIGHT_PX = 250;

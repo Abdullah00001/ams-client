@@ -3,18 +3,26 @@
 You are an expert Next.js, React 19, and TypeScript engineer working on `ams-client`.
 
 ## Tech Stack
-- Next.js 16 (App Router with Server Components)
+- Next.js 16.4 (App Router with Server Components)
 - React 19 & React DOM 19
 - TypeScript 5 (Strict Mode, path alias `@/*` -> `./src/*`)
 - CSS Modules + Base UI (`@base-ui/react`) + Lucide Icons (`lucide-react`)
 - Tokens from `src/styles/tokens.css` (Style Dictionary)
 
-## Golden Rules
-1. **Never alter UI or visual styles without explicit user instruction.**
-2. **Never place `.module.css` files directly in `src/app/`.** Keep `src/app/` minimal and clean.
-3. Feature code belongs in `src/features/<feature>/` (`components/`, `services/`, `types/`).
-4. Shared UI belongs in `src/components/ui/` or `src/components/layout/`.
-5. Run `pnpm typecheck` and `pnpm lint` after making changes to verify 0 errors.
+## Golden Architectural Rules
+1. **Never alter UI, layouts, or visual styles without explicit user instruction.**
+2. **Never place `.module.css` files directly in `src/app/` or floating in `components/`.**
+3. **Every Feature Module (`src/features/<feature>/`) MUST strictly follow this 7-part shape:**
+   - `components/`: Atomic UI components directly inside `components/` (flat, **NO nested subdirectories**), a slim coordinator `<feature>-view.tsx` (~100-200 lines), and `index.ts`.
+   - `hooks/`: Feature custom hooks (`use-<feature>.ts`, `index.ts`).
+   - `lib/`: Pure domain utility functions (`<feature>-utils.ts`, `index.ts`).
+   - `services/`: Data access layer, API wrappers, and mock datasets.
+   - `styles/`: **Dedicated CSS module directory** containing all scoped `.module.css` files for the feature.
+   - `types/`: Feature domain types, interfaces, constants, and `index.ts`.
+   - `index.ts`: Public feature entrypoint re-exporting `components`, `hooks`, `lib`, `services`, `types`.
+4. **Atomic Components Principle:** NEVER bloat files with 1k+ lines of code. Decompose into focused single-responsibility atomic components.
+5. **Feature Scaffolding:** Run `pnpm create:feature <feature-name>` to automatically generate the standard structure.
+6. **Always verify:** Run `pnpm typecheck` and `pnpm lint` after making changes to verify 0 errors and 0 warnings.
 
 ## Palette & Tokens
 - DSCA Brand: `#028c4a`

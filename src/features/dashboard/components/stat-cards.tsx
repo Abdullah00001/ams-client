@@ -25,7 +25,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { createTouchRipple } from "@/lib/touch-ripple";
-import styles from "./stat-cards.module.css";
+import styles from "../styles/stat-cards.module.css";
 
 /**
  * Data structure defining an individual KPI stat card.

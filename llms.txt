@@ -3,23 +3,37 @@
 > Frontend client for the Academy Management System (AMS) dashboard. Built with Next.js 16 (App Router), React 19, TypeScript 5, CSS Modules, Base UI, and Style Dictionary design tokens.
 
 ## Architecture & Codebase Map
-- `src/app/`: Next.js 16 App Router pages and layouts. Minimal route handlers only; no CSS modules.
-- `src/features/dashboard/`: Dashboard feature slice containing components, services, types, and index export.
-- `src/components/ui/`: Shared headless and styled UI primitives (badge, button, card, input).
+- `src/app/`: Next.js 16 App Router pages and layouts. Minimal route handlers only; no CSS modules allowed.
+- `src/features/<feature>/`: Feature-Sliced domain modules strictly adhering to a 7-part structure:
+  - `components/`: Atomic UI components directly inside `components/` (flat, no nested subfolders) and `<feature>-view.tsx` coordinator.
+  - `hooks/`: Custom feature hooks (`use-<feature>.ts`, `index.ts`).
+  - `lib/`: Pure domain utilities and formatters (`<feature>-utils.ts`, `index.ts`).
+  - `services/`: Data access layer and mock datasets (`<feature>.service.ts`, `index.ts`).
+  - `styles/`: Dedicated CSS modules folder for the feature (`<feature>-view.module.css`, `<component>.module.css`).
+  - `types/`: Domain TypeScript types, interfaces, and constants.
+  - `index.ts`: Public feature entrypoint re-exporting all submodules.
+- Features implemented:
+  - `src/features/dashboard/`: Main dashboard overview, analytics charts, and activity feeds.
+  - `src/features/branches/`: Multi-branch directory, branch stats, search/filters, action modals.
+  - `src/features/create-branch/`: Branch onboarding form flow (details, assignments, social media).
+- `src/components/ui/`: Shared headless and styled UI primitives (badge, button, card, input, modal).
 - `src/components/layout/`: Global layout components (sidebar, topbar, dashboard shell).
 - `src/components/not-found/`: Modular 404 page component with animated SVG.
 - `src/styles/tokens.css`: Generated design token custom properties (`--ams-*`).
 - `src/lib/touch-ripple.ts`: Material UI style touch ripple generator.
+- `scripts/create-feature.mjs`: Automated feature generator script (`pnpm create:feature <name>`).
 
 ## Key Development Commands
 - `pnpm dev`: Run local dev server on http://localhost:3000
 - `pnpm typecheck`: Run TypeScript compiler type checking (`tsc --noEmit`)
 - `pnpm lint`: Run ESLint checks
 - `pnpm build`: Next.js production build
+- `pnpm create:feature <name>`: Automatically scaffold standard 7-part feature module
 
 ## Brand Colors & Themes
-- Dhaka Specialty Coffee Academy (DSCA): `#028c4a`
-- Global Barista Training Academy (GBTA): `#ff7724`
-- Primary Brand Blue: `#1b84ff`
-- Text Primary: `#071437`
-- Text Muted: `#99a1b7`
+- Dhaka Specialty Coffee Academy (DSCA): `#028c4a` (`--ams-color-brand-dsca`)
+- Global Barista Training Academy (GBTA): `#ff7724` (`--ams-color-brand-gbta`)
+- Primary Action Blue: `#1b84ff` (`--ams-color-primary-300`)
+- Text Primary: `#071437` (`--ams-color-grayscale-400`)
+- Text Muted: `#99a1b7` (`--ams-color-grayscale-300`)
+- Surface Background: `#ffffff` / `#f4f6fa` (`--ams-color-surface-page`)

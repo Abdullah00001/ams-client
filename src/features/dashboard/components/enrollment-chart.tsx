@@ -18,8 +18,8 @@ import { ChevronDown } from "lucide-react";
 import {
   ENROLLMENT_CHART_YEARS,
   AVAILABLE_YEAR_OPTIONS as ENROLLMENT_YEAR_OPTIONS,
-} from "./enrollment-chart-data";
-import styles from "./enrollment-chart.module.css";
+} from "../services/enrollment-chart-data";
+import styles from "../styles/enrollment-chart.module.css";
 
 const MAX_VALUE = 250;
 const PADDING_Y = 16;

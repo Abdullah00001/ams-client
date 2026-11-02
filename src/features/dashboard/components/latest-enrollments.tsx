@@ -22,8 +22,8 @@ import { createTouchRipple } from "@/lib/touch-ripple";
 import {
   LATEST_ENROLLMENTS_DATA,
   type EnrollmentItem,
-} from "./latest-enrollments-data";
-import styles from "./latest-enrollments.module.css";
+} from "../services/latest-enrollments-data";
+import styles from "../styles/latest-enrollments.module.css";
 
 /**
  * Props for LatestEnrollments.

@@ -18,8 +18,8 @@ import {
   TOP_BRANCHES_DATA,
   TOTAL_REVENUE_COUNT,
   type BranchPerformance,
-} from "./top-branches-data";
-import styles from "./top-branches.module.css";
+} from "../services/top-branches-data";
+import styles from "../styles/top-branches.module.css";
 
 /**
  * Universal Material UI TouchRipple event handler.

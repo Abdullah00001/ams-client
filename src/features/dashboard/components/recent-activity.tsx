@@ -18,8 +18,8 @@ import { createTouchRipple } from "@/lib/touch-ripple";
 import {
   RECENT_ACTIVITIES_DATA,
   type ActivityItem,
-} from "./recent-activity-data";
-import styles from "./recent-activity.module.css";
+} from "../services/recent-activity-data";
+import styles from "../styles/recent-activity.module.css";
 
 /**
  * Props for RecentActivityFeed.
