@@ -53,146 +53,166 @@
   font-size: 14px;
   font-weight: 500;
   color: var(--ams-color-grayscale-400, #071437);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 150ms ease;
 }
 
 .fieldLabelInvalid {
-  color: var(--ams-color-status-error, #f8285a);
+  color: var(--ams-color-status-error, #f8285a) !important;
 }
 
-.textInput {
-  height: 42px;
-  padding: 0 14px;
-  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  border-radius: var(--ams-radius-6, 6px);
-  background-color: var(--ams-color-surface-page, #ffffff);
-  color: var(--ams-color-grayscale-400, #071437);
-  font-size: 13px;
-  font-family: inherit;
-  outline: none;
-  transition: all 150ms ease;
-  box-sizing: border-box;
+.fieldHint {
+  font-size: 11px;
+  color: var(--ams-color-text-muted, #99a1b7);
+}
+
+.textInput,
+.selectInput {
   width: 100%;
+  height: 51px;
+  box-sizing: border-box;
+  padding: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  background-color: #ffffff;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 14px;
+  color: var(--ams-color-grayscale-400, #071437);
+  outline: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    caret-color 150ms ease;
 }
 
-.textInput:focus {
+.textInput::placeholder {
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  font-size: 14px;
+}
+
+.textInput:focus,
+.selectInput:focus {
   border-color: var(--ams-color-primary-300, #1b84ff);
   box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.12);
 }
 
 .textInputInvalid {
   border-color: var(--ams-color-status-error, #f8285a) !important;
-  background-color: rgba(248, 40, 90, 0.02);
+  caret-color: var(--ams-color-status-error, #f8285a) !important;
+}
+
+.textInputInvalid:focus {
+  border-color: var(--ams-color-status-error, #f8285a) !important;
+  box-shadow: 0 0 0 3px rgba(248, 40, 90, 0.14) !important;
 }
 
 .fieldErrorText {
   margin: 0;
-  font-size: 12px;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
   color: var(--ams-color-status-error, #f8285a);
 }
 
-.fieldHint {
-  margin: 0;
-  font-size: 11px;
-  color: var(--ams-color-text-muted, #99a1b7);
-}
-
-.inputWithPrefix {
-  position: relative;
+/* Combined Phone Input with Flag & Country Code */
+.phoneInputWrapper {
   display: flex;
   align-items: center;
+  width: 100%;
+  height: 51px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  background-color: #ffffff;
+  overflow: hidden;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
-.inputPrefix {
-  position: absolute;
-  left: 12px;
+.phoneInputWrapper:focus-within {
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.12);
+}
+
+.phoneInputWrapperInvalid {
+  border-color: var(--ams-color-status-error, #f8285a) !important;
+}
+
+.phoneInputWrapperInvalid:focus-within {
+  border-color: var(--ams-color-status-error, #f8285a) !important;
+  box-shadow: 0 0 0 3px rgba(248, 40, 90, 0.14) !important;
+}
+
+.countryCodeSelector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  height: 100%;
+  background-color: var(--ams-color-grayscale-100, #f8f9fb);
+  border-right: 1px solid var(--ams-color-border-subtle, #eff1f4);
   font-size: 13px;
-  color: var(--ams-color-text-muted, #99a1b7);
-  pointer-events: none;
+  font-weight: 500;
+  color: var(--ams-color-grayscale-400, #071437);
   user-select: none;
 }
 
-.inputWithPrefix .textInput {
-  padding-left: 54px;
+.flagIcon {
+  font-size: 16px;
 }
 
-.inputWithSuffix {
-  position: relative;
-  display: flex;
-  align-items: center;
+.phoneInput {
+  flex: 1;
+  height: 100%;
+  border: none;
+  outline: none;
+  padding: 0 16px;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 14px;
+  color: var(--ams-color-grayscale-400, #071437);
+  background: transparent;
+  transition: caret-color 150ms ease;
 }
 
-.inputSuffix {
-  position: absolute;
-  right: 12px;
-  font-size: 12px;
-  color: var(--ams-color-text-muted, #99a1b7);
-  pointer-events: none;
+.phoneInputInvalid {
+  caret-color: var(--ams-color-status-error, #f8285a) !important;
 }
 
-/* Status Row */
-.statusHeaderRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
-  background-color: #fafbfc;
-  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  border-radius: var(--ams-radius-8, 8px);
+.phoneInput::placeholder {
+  color: var(--ams-color-grayscale-300, #99a1b7);
 }
 
+/* Status Field Switch */
 .statusToggleContainer {
   display: flex;
   align-items: center;
   gap: 12px;
-}
-
-.statusLabel {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ams-color-grayscale-400, #071437);
-}
-
-.statusBadgeActive {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
-  border-radius: 9999px;
-  font-size: 12px;
-  font-weight: 600;
-  background-color: rgba(27, 132, 255, 0.1);
-  color: var(--ams-color-primary-300, #1b84ff);
-}
-
-.statusBadgeInactive {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
-  border-radius: 9999px;
-  font-size: 12px;
-  font-weight: 600;
-  background-color: var(--ams-color-grayscale-100, #f4f6fa);
-  color: var(--ams-color-text-muted, #99a1b7);
+  height: 51px;
 }
 
 .toggleSwitch {
+  position: relative;
   width: 38px;
   height: 22px;
   border-radius: 11px;
-  background-color: #e4e6ef;
   border: none;
   cursor: pointer;
-  position: relative;
+  outline: none;
   padding: 2px;
-  transition: background-color 200ms ease;
   display: inline-flex;
   align-items: center;
+  background-color: #cbd5e1;
+  transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
 }
 
 .toggleSwitchActive {
-  background-color: var(--ams-color-primary-300, #1b84ff);
+  background-color: var(--ams-color-status-success, #17c653);
 }
 
 .toggleThumb {
@@ -200,8 +220,8 @@
   height: 18px;
   border-radius: 50%;
   background-color: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  transition: transform 200ms ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateX(0);
 }
 
@@ -209,116 +229,177 @@
   transform: translateX(16px);
 }
 
-/* Logo Upload */
-.logoSection {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.statusText {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+/* Logo Upload Dropzone */
+.logoFieldGroup {
+  max-width: 520px;
+  width: 100%;
 }
 
 .logoDropzone {
-  border: 2px dashed #028c4a;
-  border-radius: var(--ams-radius-8, 8px);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px dashed #d1d5db;
+  border-radius: 6px;
+  padding: 16px;
   background-color: #fafbfc;
-  transition: all 150ms ease;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease;
 }
 
 .logoDropzone:hover {
-  background-color: rgba(2, 140, 74, 0.04);
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  background-color: #f8fbff;
 }
 
-.logoDropzoneIcon {
-  color: #028c4a;
+.logoUploadIconWrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ams-color-primary-300, #1b84ff);
+  flex-shrink: 0;
 }
 
-.logoDropzoneTitle {
+.logoUploadTexts {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.logoUploadPrimary {
   font-size: 13px;
   font-weight: 500;
   color: var(--ams-color-grayscale-400, #071437);
 }
 
-.logoDropzoneHint {
-  font-size: 12px;
+.logoUploadSub {
+  font-size: 11px;
   color: var(--ams-color-text-muted, #99a1b7);
 }
 
-.logoFileInput {
-  display: none;
-}
-
-.logoPreviewBox {
+.logoPreviewArea {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 16px;
   padding: 12px 16px;
-  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  border-radius: var(--ams-radius-8, 8px);
   background-color: #fafbfc;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 520px;
+  box-sizing: border-box;
+}
+
+.logoThumbnailWrapper {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  flex-shrink: 0;
+  background-color: #ffffff;
 }
 
 .logoThumbnail {
-  width: 48px;
-  height: 48px;
-  border-radius: 6px;
-  object-fit: cover;
-  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
-.logoPreviewInfo {
+.logoThumbnailOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(7, 20, 55, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.logoThumbnailWrapper:hover .logoThumbnailOverlay {
+  opacity: 1;
+}
+
+.logoMetaActions {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
+  min-width: 0;
   flex: 1;
-  margin-left: 12px;
 }
 
 .logoFileName {
   font-size: 13px;
   font-weight: 500;
   color: var(--ams-color-grayscale-400, #071437);
-  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.logoFileSize {
-  font-size: 11px;
-  color: var(--ams-color-text-muted, #99a1b7);
-}
-
-.logoPreviewActions {
+.logoBtnGroup {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.logoActionBtn {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  background-color: #ffffff;
-  border-radius: var(--ams-radius-6, 6px);
-  color: var(--ams-color-text-muted, #99a1b7);
+.viewLogoBtn {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ams-color-primary-300, #1b84ff);
+  background-color: rgba(27, 132, 255, 0.08);
+  border: 1px solid rgba(27, 132, 255, 0.2);
   cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   transition: all 150ms ease;
 }
 
-.logoActionBtn:hover {
-  color: var(--ams-color-primary-300, #1b84ff);
+.viewLogoBtn:hover {
+  background-color: rgba(27, 132, 255, 0.16);
   border-color: var(--ams-color-primary-300, #1b84ff);
 }
 
-.logoActionBtnDanger:hover {
+.removeLogoBtn {
+  font-size: 12px;
+  font-weight: 500;
   color: var(--ams-color-status-error, #f8285a);
-  border-color: var(--ams-color-status-error, #f8285a);
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 150ms ease;
+}
+
+.removeLogoBtn:hover {
+  background-color: #fff1f2;
 }
 
 @media (max-width: 1024px) {

@@ -87,19 +87,18 @@ export function SocialMediaSection({
           </div>
         ))}
 
-        <div className={styles.socialActions}>
+        <div className={styles.socialActionsRow}>
           <button
             type="button"
             onClick={onAddRow}
-            className={styles.addMoreButton}
+            className={styles.addSocialBtn}
           >
-            <Plus size={14} /> Add more
+            <Plus size={15} /> + Add more
           </button>
           <button
             type="button"
             onClick={onSaveLinks}
             className={styles.draftButton}
-            style={{ height: "36px", padding: "0 14px", fontSize: "13px" }}
           >
             Save Links
           </button>

@@ -31,9 +31,21 @@
   color: var(--ams-color-text-muted, #99a1b7);
 }
 
+.requiredAsterisk {
+  color: var(--ams-color-status-error, #f8285a);
+  font-size: 16px;
+  font-weight: 600;
+}
+
 .grid3Col {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 20px 24px;
+}
+
+.grid2Col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px 24px;
 }
 
@@ -47,25 +59,41 @@
   font-size: 14px;
   font-weight: 500;
   color: var(--ams-color-grayscale-400, #071437);
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .fieldLabelInvalid {
-  color: var(--ams-color-status-error, #f8285a);
+  color: var(--ams-color-status-error, #f8285a) !important;
+}
+
+.fieldHint {
+  font-size: 11px;
+  color: var(--ams-color-text-muted, #99a1b7);
 }
 
 .textInput {
-  height: 42px;
-  padding: 0 14px;
-  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  border-radius: var(--ams-radius-6, 6px);
-  background-color: var(--ams-color-surface-page, #ffffff);
-  color: var(--ams-color-grayscale-400, #071437);
-  font-size: 13px;
-  font-family: inherit;
-  outline: none;
-  transition: all 150ms ease;
-  box-sizing: border-box;
   width: 100%;
+  height: 51px;
+  box-sizing: border-box;
+  padding: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  background-color: #ffffff;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 14px;
+  color: var(--ams-color-grayscale-400, #071437);
+  outline: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    caret-color 150ms ease;
+}
+
+.textInput::placeholder {
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  font-size: 14px;
 }
 
 .textInput:focus {
@@ -75,7 +103,7 @@
 
 .textInputInvalid {
   border-color: var(--ams-color-status-error, #f8285a) !important;
-  background-color: rgba(248, 40, 90, 0.02);
+  caret-color: var(--ams-color-status-error, #f8285a) !important;
 }
 
 .inputDisabled {
@@ -86,7 +114,11 @@
 
 .fieldErrorText {
   margin: 0;
-  font-size: 12px;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
   color: var(--ams-color-status-error, #f8285a);
 }
 
@@ -95,43 +127,81 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
-.userSearchInputWrapper {
+.userSearchBar {
   position: relative;
   flex: 1;
-  min-width: 280px;
+  max-width: 520px;
 }
 
-.userSearchIcon {
+.searchIcon {
   position: absolute;
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--ams-color-text-muted, #99a1b7);
   pointer-events: none;
+  z-index: 1;
 }
 
 .userSearchInput {
   width: 100%;
-  height: 44px;
-  padding: 0 16px 0 42px;
+  height: 48px;
+  padding: 0 40px 0 42px;
   border: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  border-radius: var(--ams-radius-6, 6px);
-  background-color: #fafbfc;
+  border-radius: 4px;
+  background-color: #ffffff;
   color: var(--ams-color-grayscale-400, #071437);
-  font-size: 13px;
-  font-family: inherit;
+  font-size: 14px;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
   outline: none;
-  transition: all 150ms ease;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
   box-sizing: border-box;
 }
 
+.userSearchInput::placeholder {
+  color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
 .userSearchInput:focus {
-  background-color: #ffffff;
   border-color: var(--ams-color-primary-300, #1b84ff);
   box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.12);
+}
+
+.searchLoader {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: spin 1s linear infinite;
+  color: var(--ams-color-primary-300, #1b84ff);
+  display: flex;
+  align-items: center;
+}
+
+.clearSearchBtn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: var(--ams-color-text-muted, #99a1b7);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.clearSearchBtn:hover {
+  color: var(--ams-color-grayscale-400, #071437);
+  background-color: #f4f6fa;
 }
 
 .searchLoaderInline {
@@ -146,7 +216,7 @@
   right: 0;
   background-color: #ffffff;
   border: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  border-radius: var(--ams-radius-8, 8px);
+  border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   max-height: 280px;
   overflow-y: auto;
@@ -248,9 +318,10 @@
 .switchModeBtn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 18px;
-  border-radius: var(--ams-radius-6, 6px);
+  gap: 8px;
+  height: 48px;
+  padding: 0 18px;
+  border-radius: 4px;
   border: 1px solid var(--ams-color-border-subtle, #eff1f4);
   background-color: #ffffff;
   color: var(--ams-color-grayscale-400, #071437);
@@ -258,7 +329,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 150ms ease;
-  font-family: inherit;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
 }
 
 .switchModeBtn:hover {
@@ -272,7 +343,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
-  border-radius: var(--ams-radius-8, 8px);
+  border-radius: 6px;
   font-size: 13px;
 }
 
@@ -294,6 +365,67 @@
 
 .bannerActionBtn:hover {
   text-decoration: underline;
+}
+
+/* Phone input with country code dropdown */
+.phoneInputWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 51px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  background-color: #ffffff;
+  overflow: hidden;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.phoneInputWrapper:focus-within {
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.12);
+}
+
+.phoneInputWrapperInvalid {
+  border-color: var(--ams-color-status-error, #f8285a) !important;
+}
+
+.countrySelectWrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  background-color: var(--ams-color-grayscale-100, #f8f9fb);
+  border-right: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.countryCodeSelect {
+  height: 100%;
+  padding: 0 8px 0 12px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  color: var(--ams-color-grayscale-400, #071437);
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+}
+
+.phoneInput {
+  flex: 1;
+  height: 100%;
+  border: none;
+  outline: none;
+  padding: 0 16px;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 14px;
+  color: var(--ams-color-grayscale-400, #071437);
+  background: transparent;
+}
+
+.phoneInputInvalid {
+  caret-color: var(--ams-color-status-error, #f8285a) !important;
 }
 
 /* Password wrapper */
@@ -320,50 +452,56 @@
   color: var(--ams-color-grayscale-400, #071437);
 }
 
-/* Phone input with country */
-.phoneInputWrapper {
+/* User Form Actions (Reset & Add) */
+.userInfoActionsRow {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.userInfoResetBtn {
+  padding: 10px 18px;
+  border-radius: 4px;
   border: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  border-radius: var(--ams-radius-6, 6px);
   background-color: #ffffff;
-  transition: all 150ms ease;
-}
-
-.phoneInputWrapper:focus-within {
-  border-color: var(--ams-color-primary-300, #1b84ff);
-  box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.12);
-}
-
-.phoneCountrySelect {
-  height: 40px;
-  padding: 0 8px 0 12px;
-  border: none;
-  background: transparent;
-  font-size: 13px;
   color: var(--ams-color-grayscale-400, #071437);
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  outline: none;
-  font-family: inherit;
+  transition: all 150ms ease;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
 }
 
-.phoneDivider {
-  width: 1px;
-  height: 22px;
-  background-color: var(--ams-color-border-subtle, #eff1f4);
+.userInfoResetBtn:hover {
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
 }
 
-.phoneInputWrapper .textInput {
+.userInfoAddBtn {
+  padding: 10px 24px;
+  border-radius: 4px;
   border: none;
-  box-shadow: none;
-  background: transparent;
+  background-color: var(--ams-color-primary-300, #1b84ff);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 150ms ease;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  box-shadow: 0 2px 6px rgba(27, 132, 255, 0.2);
+}
+
+.userInfoAddBtn:hover {
+  background-color: #056ee9;
+  box-shadow: 0 4px 10px rgba(27, 132, 255, 0.3);
 }
 
 /* Assigned user card */
 .assignedUserCard {
-  border: 1px solid rgba(2, 140, 74, 0.25);
-  background-color: rgba(2, 140, 74, 0.03);
-  border-radius: var(--ams-radius-8, 8px);
+  border: 1px solid rgba(27, 132, 255, 0.25);
+  background-color: rgba(27, 132, 255, 0.03);
+  border-radius: 8px;
   padding: 16px 20px;
   display: flex;
   align-items: center;
@@ -381,7 +519,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background-color: #028c4a;
+  background-color: var(--ams-color-primary-300, #1b84ff);
   color: #ffffff;
   font-weight: 700;
   font-size: 15px;
@@ -403,7 +541,7 @@
   gap: 4px;
   font-size: 11px;
   font-weight: 600;
-  color: #028c4a;
+  color: var(--ams-color-primary-300, #1b84ff);
 }
 
 .assignedUserTitle {
@@ -417,9 +555,9 @@
   color: var(--ams-color-text-muted, #99a1b7);
 }
 
-.assignedUserChangeBtn {
+.reassignBtn {
   padding: 8px 14px;
-  border-radius: var(--ams-radius-6, 6px);
+  border-radius: 4px;
   border: 1px solid var(--ams-color-border-subtle, #eff1f4);
   background-color: #ffffff;
   color: var(--ams-color-grayscale-400, #071437);
@@ -430,29 +568,10 @@
   font-family: inherit;
 }
 
-.assignedUserChangeBtn:hover {
+.reassignBtn:hover {
   background-color: var(--ams-color-grayscale-100, #f4f6fa);
   border-color: var(--ams-color-primary-300, #1b84ff);
-}
-
-.addUserBtn {
-  align-self: flex-start;
-  padding: 10px 22px;
-  border-radius: var(--ams-radius-6, 6px);
-  border: none;
-  background-color: var(--ams-color-primary-300, #1b84ff);
-  color: #ffffff;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 150ms ease;
-  font-family: inherit;
-  box-shadow: 0 2px 6px rgba(27, 132, 255, 0.2);
-}
-
-.addUserBtn:hover {
-  background-color: #056ee9;
-  box-shadow: 0 4px 10px rgba(27, 132, 255, 0.3);
+  color: var(--ams-color-primary-300, #1b84ff);
 }
 
 @keyframes spin {
@@ -465,13 +584,19 @@
 }
 
 @media (max-width: 1024px) {
-  .grid3Col {
-    grid-template-columns: repeat(2, 1fr);
+  .grid3Col,
+  .grid2Col {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 640px) {
-  .grid3Col {
-    grid-template-columns: 1fr;
+  .userSearchContainer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .userSearchBar {
+    max-width: 100%;
   }
 }
