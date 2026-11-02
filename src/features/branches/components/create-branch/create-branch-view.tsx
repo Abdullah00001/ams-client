@@ -42,6 +42,7 @@ interface FormErrors {
   address?: string;
   email?: string;
   phone?: string;
+  permissions?: string;
 }
 
 const INITIAL_PERMISSIONS: BranchFeaturePermissions = {
@@ -141,6 +142,11 @@ export function CreateBranchView() {
       newErrors.phone = "This is an error... (Phone number is required)";
     }
 
+    const activePermissionsCount = Object.values(formData.permissions).filter(Boolean).length;
+    if (activePermissionsCount < 3) {
+      newErrors.permissions = "This is an error... (At least 3 feature permissions must be selected)";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -173,13 +179,30 @@ export function CreateBranchView() {
 
   // Toggle module permissions
   const handleTogglePermission = (key: keyof BranchFeaturePermissions) => {
-    setFormData((prev) => ({
-      ...prev,
-      permissions: {
+    setFormData((prev) => {
+      const nextPermissions = {
         ...prev.permissions,
         [key]: !prev.permissions[key],
-      },
-    }));
+      };
+      const activeCount = Object.values(nextPermissions).filter(Boolean).length;
+      if (activeCount < 3) {
+        setErrors((prevErr) => ({
+          ...prevErr,
+          permissions: "This is an error... (At least 3 feature permissions must be selected)",
+        }));
+      } else {
+        setErrors((prevErr) => {
+          if (!prevErr.permissions) return prevErr;
+          const rest = { ...prevErr };
+          delete rest.permissions;
+          return rest;
+        });
+      }
+      return {
+        ...prev,
+        permissions: nextPermissions,
+      };
+    });
   };
 
   // Social media dynamic rows
@@ -720,12 +743,41 @@ export function CreateBranchView() {
             ========================================= */}
         <section className={styles.section} aria-labelledby="section-permissions">
           <div className={styles.sectionHeader}>
-            <h2 id="section-permissions" className={styles.sectionTitle}>
-              Feature Permissions<span className={styles.requiredAsterisk}>*</span>
-            </h2>
-            <p className={styles.sectionSubtitle}>
-              Assigned at creation, editable anytime. Turn campus modules ON or OFF.
-            </p>
+            <div className={styles.permissionsHeaderRow}>
+              <div>
+                <h2
+                  id="section-permissions"
+                  className={clsx(
+                    styles.sectionTitle,
+                    errors.permissions && styles.sectionTitleInvalid,
+                  )}
+                >
+                  Feature Permissions<span className={styles.requiredAsterisk}>*</span>
+                </h2>
+                <p className={styles.sectionSubtitle}>
+                  Assigned at creation, editable anytime. Turn campus modules ON or OFF.
+                </p>
+              </div>
+              <span
+                className={clsx(
+                  styles.permissionsCountBadge,
+                  Object.values(formData.permissions).filter(Boolean).length < 3
+                    ? styles.permissionsCountBadgeError
+                    : styles.permissionsCountBadgeValid,
+                )}
+              >
+                {Object.values(formData.permissions).filter(Boolean).length} of 9 selected (Min. 3)
+              </span>
+            </div>
+            {errors.permissions ? (
+              <p
+                id="permissions-error"
+                className={styles.fieldErrorText}
+                role="alert"
+              >
+                {errors.permissions}
+              </p>
+            ) : null}
           </div>
 
           <div className={styles.permissionsGrid}>
