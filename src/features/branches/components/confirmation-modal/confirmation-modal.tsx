@@ -35,6 +35,7 @@ export function ConfirmationModal({
       case "activate":
         return {
           variant: "success" as const,
+          confirmVariant: "primary" as const,
           title: "Activate Branch?",
           description: (
             <>
@@ -47,6 +48,7 @@ export function ConfirmationModal({
       case "deactivate":
         return {
           variant: "error" as const,
+          confirmVariant: "error" as const,
           title: "Deactivate Branch?",
           description: (
             <>
@@ -59,6 +61,7 @@ export function ConfirmationModal({
       case "delete":
         return {
           variant: "delete" as const,
+          confirmVariant: "delete" as const,
           title: "Delete Branch?",
           description: (
             <>
@@ -83,6 +86,7 @@ export function ConfirmationModal({
       confirmLabel={config.confirmLabel}
       cancelLabel="Cancel"
       variant={config.variant}
+      confirmVariant={config.confirmVariant}
     />
   );
 }

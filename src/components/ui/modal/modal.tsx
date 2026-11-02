@@ -24,6 +24,10 @@ export type ModalProps = {
   confirmLabel?: string;
   cancelLabel?: string;
   variant?: ModalVariant;
+  /** Explicit override for confirm button style */
+  confirmVariant?: ModalVariant;
+  /** Explicit override for icon/Lottie style */
+  iconVariant?: LottieIconVariant;
   /** Optional URL to a custom Lottie JSON file */
   lottieUrl?: string;
   /** Optional Lottie animation JSON object */
@@ -43,6 +47,8 @@ export function Modal({
   confirmLabel = "Delete",
   cancelLabel = "Cancel",
   variant = "delete",
+  confirmVariant,
+  iconVariant,
   lottieUrl,
   lottieData,
   icon,
@@ -72,7 +78,8 @@ export function Modal({
   if (!isOpen) return null;
 
   const getConfirmButtonClass = () => {
-    switch (variant) {
+    const effective = confirmVariant ?? variant;
+    switch (effective) {
       case "delete":
       case "error":
         return styles.confirmButtonDelete;
@@ -88,6 +95,7 @@ export function Modal({
   };
 
   const getLottieVariant = (): LottieIconVariant => {
+    if (iconVariant) return iconVariant;
     if (variant === "delete") return "delete";
     if (variant === "error") return "error";
     if (variant === "warning") return "warning";
