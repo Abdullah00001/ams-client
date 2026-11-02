@@ -18,6 +18,7 @@ import {
   CalendarCheck2,
   ContactRound,
   CreditCard,
+  Eye,
   FileBadge2,
   Plus,
   ReceiptText,
@@ -100,6 +101,8 @@ export function CreateBranchView() {
 
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [logoFileName, setLogoFileName] = useState<string>("branch-logo.png");
+  const [isLogoModalOpen, setIsLogoModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [errors, setErrors] = useState<FormErrors>({});
   const countryCode = "+880";
@@ -164,7 +167,7 @@ export function CreateBranchView() {
       ...prev,
       name: newName,
       slug: slugManuallyEdited ? prev.slug : autoSlug,
-      code: prev.code ? prev.code : autoCode ? `${prev.brand}-${autoCode}-01` : "",
+      code: prev.code ? prev.code : autoCode ? `BRN-${autoCode}-01` : "",
     }));
   };
 
@@ -226,6 +229,7 @@ export function CreateBranchView() {
     if (file) {
       const url = URL.createObjectURL(file);
       setLogoPreview(url);
+      setLogoFileName(file.name);
       setFormData((prev) => ({ ...prev, logoUrl: url }));
       showToast(`Uploaded ${file.name}`);
     }
@@ -233,6 +237,7 @@ export function CreateBranchView() {
 
   const handleRemoveLogo = () => {
     setLogoPreview(null);
+    setIsLogoModalOpen(false);
     setFormData((prev) => ({ ...prev, logoUrl: "" }));
   };
 
@@ -274,6 +279,7 @@ export function CreateBranchView() {
     });
     setErrors({});
     setLogoPreview(null);
+    setIsLogoModalOpen(false);
     setSlugManuallyEdited(false);
     showToast("Form fields reset to defaults.");
   };
@@ -556,91 +562,77 @@ export function CreateBranchView() {
             </div>
           </div>
 
-          {/* Row: Brand Affiliation & Logo Upload */}
-          <div className={styles.grid2Col}>
-            {/* Brand Affiliation */}
-            <div className={styles.fieldGroup}>
-              <label className={styles.fieldLabel}>Academy Brand Affiliation</label>
-              <div className={styles.brandChips} role="radiogroup" aria-label="Brand affiliation">
-                <button
-                  type="button"
-                  role="radio"
-                  aria-checked={formData.brand === "DSCA"}
-                  className={`${styles.brandChip} ${
-                    formData.brand === "DSCA" ? styles.brandChipActiveDsca : ""
-                  }`}
-                  onClick={() => setFormData((prev) => ({ ...prev, brand: "DSCA" }))}
+          {/* Branch Logo Upload */}
+          <div className={clsx(styles.fieldGroup, styles.logoFieldGroup)}>
+            <label className={styles.fieldLabel}>
+              Branch Logo Upload <span className={styles.fieldHint}>(PNG, SVG, or JPG)</span>
+            </label>
+            {logoPreview ? (
+              <div className={styles.logoPreviewArea}>
+                <div
+                  className={styles.logoThumbnailWrapper}
+                  onClick={() => setIsLogoModalOpen(true)}
+                  title="Click to view full image"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      setIsLogoModalOpen(true);
+                    }
+                  }}
                 >
-                  <span>☕ DSCA (Dhaka Specialty)</span>
-                </button>
-                <button
-                  type="button"
-                  role="radio"
-                  aria-checked={formData.brand === "GBTA"}
-                  className={`${styles.brandChip} ${
-                    formData.brand === "GBTA" ? styles.brandChipActiveGbta : ""
-                  }`}
-                  onClick={() => setFormData((prev) => ({ ...prev, brand: "GBTA" }))}
-                >
-                  <span>🎓 GBTA (Global Barista)</span>
-                </button>
-                <button
-                  type="button"
-                  role="radio"
-                  aria-checked={formData.brand === "OTHER"}
-                  className={`${styles.brandChip} ${
-                    formData.brand === "OTHER" ? styles.brandChipActiveOther : ""
-                  }`}
-                  onClick={() => setFormData((prev) => ({ ...prev, brand: "OTHER" }))}
-                >
-                  <span>🏢 Other Academy</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Branch Logo Upload */}
-            <div className={styles.fieldGroup}>
-              <label className={styles.fieldLabel}>
-                Branch Logo Upload <span className={styles.fieldHint}>(PNG, SVG, or JPG)</span>
-              </label>
-              {logoPreview ? (
-                <div className={styles.logoPreviewArea}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={logoPreview}
                     alt="Branch logo preview"
                     className={styles.logoThumbnail}
                   />
-                  <button
-                    type="button"
-                    onClick={handleRemoveLogo}
-                    className={styles.removeLogoBtn}
-                  >
-                    <X size={14} /> Remove Logo
-                  </button>
+                  <div className={styles.logoThumbnailOverlay}>
+                    <Eye size={16} />
+                  </div>
                 </div>
-              ) : (
-                <label className={styles.logoDropzone}>
-                  <div className={styles.logoUploadIconWrapper}>
-                    <UploadCloud size={20} />
+                <div className={styles.logoMetaActions}>
+                  <span className={styles.logoFileName}>{logoFileName}</span>
+                  <div className={styles.logoBtnGroup}>
+                    <button
+                      type="button"
+                      onClick={() => setIsLogoModalOpen(true)}
+                      className={styles.viewLogoBtn}
+                      title="View full image"
+                    >
+                      <Eye size={14} /> View
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleRemoveLogo}
+                      className={styles.removeLogoBtn}
+                    >
+                      <X size={14} /> Remove
+                    </button>
                   </div>
-                  <div className={styles.logoUploadTexts}>
-                    <span className={styles.logoUploadPrimary}>
-                      Click to upload or drag and drop
-                    </span>
-                    <span className={styles.logoUploadSub}>
-                      SVG, PNG, or JPG (max. 2MB)
-                    </span>
-                  </div>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleLogoUpload}
-                    style={{ display: "none" }}
-                  />
-                </label>
-              )}
-            </div>
+                </div>
+              </div>
+            ) : (
+              <label className={styles.logoDropzone}>
+                <div className={styles.logoUploadIconWrapper}>
+                  <UploadCloud size={20} />
+                </div>
+                <div className={styles.logoUploadTexts}>
+                  <span className={styles.logoUploadPrimary}>
+                    Click to upload or drag and drop
+                  </span>
+                  <span className={styles.logoUploadSub}>
+                    SVG, PNG, or JPG (max. 2MB)
+                  </span>
+                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleLogoUpload}
+                  style={{ display: "none" }}
+                />
+              </label>
+            )}
           </div>
         </section>
 
@@ -1074,13 +1066,6 @@ export function CreateBranchView() {
               </p>
             </div>
           </div>
-
-          {/* Callout Notice regarding Hostel & Meal Counting */}
-          <div className={styles.hostelCallout}>
-            📌 <strong>Feature Toggle Flexibility:</strong> Hostel Management and Meal Counting
-            are dynamic feature toggles, not hardcoded to any specific branch. If DSCA or any other
-            campus opens a hostel tomorrow, Super Admin can flip it ON here anytime without code change.
-          </div>
         </section>
 
         {/* =========================================
@@ -1113,6 +1098,54 @@ export function CreateBranchView() {
           {toastMessage}
         </div>
       )}
+
+      {/* Logo Preview Lightbox Modal */}
+      {isLogoModalOpen && logoPreview ? (
+        <div
+          className={styles.lightboxOverlay}
+          onClick={() => setIsLogoModalOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Branch Logo Preview"
+        >
+          <div
+            className={styles.lightboxContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.lightboxHeader}>
+              <div className={styles.lightboxTitleInfo}>
+                <h3 className={styles.lightboxTitle}>Branch Logo Preview</h3>
+                <span className={styles.lightboxSubtitle}>{logoFileName}</span>
+              </div>
+              <button
+                type="button"
+                className={styles.lightboxCloseBtn}
+                onClick={() => setIsLogoModalOpen(false)}
+                aria-label="Close preview"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <div className={styles.lightboxImageContainer}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={logoPreview}
+                alt={logoFileName}
+                className={styles.lightboxImage}
+              />
+            </div>
+            <div className={styles.lightboxFooter}>
+              <button
+                type="button"
+                className={styles.lightboxCloseFooterBtn}
+                onClick={() => setIsLogoModalOpen(false)}
+              >
+                Close Preview
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

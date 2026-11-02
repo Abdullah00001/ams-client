@@ -301,7 +301,14 @@
 }
 
 /* Logo Upload Dropzone */
+.logoFieldGroup {
+  max-width: 520px;
+  width: 100%;
+}
+
 .logoDropzone {
+  width: 100%;
+  box-sizing: border-box;
   border: 1.5px dashed #d1d5db;
   border-radius: 6px;
   padding: 16px;
@@ -353,32 +360,245 @@
 .logoPreviewArea {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
+  padding: 12px 16px;
+  background-color: #fafbfc;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 520px;
+  box-sizing: border-box;
+}
+
+.logoThumbnailWrapper {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  flex-shrink: 0;
+  background-color: #ffffff;
 }
 
 .logoThumbnail {
-  width: 50px;
-  height: 50px;
-  border-radius: 6px;
-  object-fit: cover;
-  border: 1px solid #eff1f4;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.logoThumbnailOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(7, 20, 55, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.logoThumbnailWrapper:hover .logoThumbnailOverlay {
+  opacity: 1;
+}
+
+.logoMetaActions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
+}
+
+.logoFileName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ams-color-grayscale-400, #071437);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.logoBtnGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.viewLogoBtn {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ams-color-primary-300, #1b84ff);
+  background-color: rgba(27, 132, 255, 0.08);
+  border: 1px solid rgba(27, 132, 255, 0.2);
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 150ms ease;
+}
+
+.viewLogoBtn:hover {
+  background-color: rgba(27, 132, 255, 0.16);
+  border-color: var(--ams-color-primary-300, #1b84ff);
 }
 
 .removeLogoBtn {
   font-size: 12px;
+  font-weight: 500;
   color: var(--ams-color-status-error, #f8285a);
   background: none;
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 4px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  transition: all 150ms ease;
 }
 
 .removeLogoBtn:hover {
   background-color: #fff1f2;
+}
+
+/* Lightbox Modal */
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(7, 20, 55, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: lightboxFadeIn 150ms ease;
+}
+
+.lightboxContent {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  max-width: 640px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: lightboxScaleUp 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lightboxHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.lightboxTitleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lightboxTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.lightboxSubtitle {
+  font-size: 12px;
+  color: var(--ams-color-text-muted, #99a1b7);
+}
+
+.lightboxCloseBtn {
+  background: none;
+  border: none;
+  color: var(--ams-color-text-muted, #99a1b7);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 150ms ease;
+}
+
+.lightboxCloseBtn:hover {
+  background-color: #f4f6fa;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.lightboxImageContainer {
+  padding: 28px;
+  background-color: #f8f9fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  max-height: 60vh;
+}
+
+.lightboxImage {
+  max-width: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
+}
+
+.lightboxFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 20px;
+  border-top: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  background-color: #ffffff;
+}
+
+.lightboxCloseFooterBtn {
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+  color: var(--ams-color-grayscale-400, #071437);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.lightboxCloseFooterBtn:hover {
+  background-color: #e9ecf2;
+}
+
+@keyframes lightboxFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lightboxScaleUp {
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Status Field Switch */
@@ -546,13 +766,18 @@
 }
 
 .permissionCardActive {
-  border-color: #d0f4db;
-  background-color: #fbfdfc;
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  background-color: #fbfdff;
 }
 
 .permissionCardHostelSpecial {
   border-color: #fed7aa;
   background-color: #fffcf8;
+}
+
+.permissionCardHostelSpecial.permissionCardActive {
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  background-color: #fbfdff;
 }
 
 .permissionHeader {
@@ -578,11 +803,14 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
 }
 
 .permissionIconWrapperActive {
-  background-color: #e8f5e9;
-  color: #028c4a;
+  background-color: var(--ams-color-primary-100, #e8f3ff);
+  color: var(--ams-color-primary-300, #1b84ff);
 }
 
 .permissionTitle {
