@@ -8,6 +8,7 @@
 import { useState, useRef, type ChangeEvent } from "react";
 import clsx from "clsx";
 import {
+  Check,
   CheckCircle2,
   Eye,
   EyeOff,
@@ -100,6 +101,42 @@ export function detectQueryType(query: string): DetectedUserInfo {
     email: "",
     phone: "",
   };
+}
+
+export interface PasswordCriteria {
+  minLength: boolean;
+  hasUpper: boolean;
+  hasLower: boolean;
+  hasNumber: boolean;
+  hasSpecial: boolean;
+}
+
+export function checkPasswordCriteria(password: string): PasswordCriteria {
+  return {
+    minLength: password.length >= 8,
+    hasUpper: /[A-Z]/.test(password),
+    hasLower: /[a-z]/.test(password),
+    hasNumber: /[0-9]/.test(password),
+    hasSpecial: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~`]/.test(password),
+  };
+}
+
+export function getPasswordErrorMessage(password: string): string | null {
+  if (!password) {
+    return "Password is required.";
+  }
+  const criteria = checkPasswordCriteria(password);
+  const missing: string[] = [];
+  if (!criteria.minLength) missing.push("at least 8 characters");
+  if (!criteria.hasUpper) missing.push("1 uppercase letter");
+  if (!criteria.hasLower) missing.push("1 lowercase letter");
+  if (!criteria.hasNumber) missing.push("1 number");
+  if (!criteria.hasSpecial) missing.push("1 special character (!@#$%...)");
+
+  if (missing.length > 0) {
+    return `Password must include ${missing.join(", ")}.`;
+  }
+  return null;
 }
 
 const AVATAR_PALETTES = [
@@ -286,25 +323,91 @@ export function UserInfoSection({
     showToast("User Info fields reset.");
   };
 
+  const validateField = (field: "name" | "email" | "phone" | "password" | "confirmPassword") => {
+    switch (field) {
+      case "name": {
+        if (!userName.trim()) {
+          setUserInfoErrors((prev) => ({ ...prev, name: "Full Name is required." }));
+        } else if (userName.trim().length < 2) {
+          setUserInfoErrors((prev) => ({ ...prev, name: "Full Name must be at least 2 characters." }));
+        } else {
+          setUserInfoErrors((prev) => ({ ...prev, name: undefined }));
+        }
+        break;
+      }
+      case "email": {
+        if (!userEmail.trim()) {
+          setUserInfoErrors((prev) => ({ ...prev, email: "User Email is required." }));
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.trim())) {
+          setUserInfoErrors((prev) => ({ ...prev, email: "Please enter a valid email address." }));
+        } else {
+          setUserInfoErrors((prev) => ({ ...prev, email: undefined }));
+        }
+        break;
+      }
+      case "phone": {
+        const digits = userPhone.replace(/\D/g, "");
+        if (!userPhone.trim()) {
+          setUserInfoErrors((prev) => ({ ...prev, phone: "User Mobile number is required." }));
+        } else if (digits.length < 6 || digits.length > 15) {
+          setUserInfoErrors((prev) => ({ ...prev, phone: "Please enter a valid mobile number (6 to 15 digits)." }));
+        } else {
+          setUserInfoErrors((prev) => ({ ...prev, phone: undefined }));
+        }
+        break;
+      }
+      case "password": {
+        const passwordErr = getPasswordErrorMessage(userPassword);
+        if (passwordErr) {
+          setUserInfoErrors((prev) => ({ ...prev, password: passwordErr }));
+        } else {
+          setUserInfoErrors((prev) => ({ ...prev, password: undefined }));
+        }
+        if (userConfirmPassword && userPassword && userPassword !== userConfirmPassword) {
+          setUserInfoErrors((prev) => ({ ...prev, confirmPassword: "Passwords do not match." }));
+        } else if (userConfirmPassword && userPassword && userPassword === userConfirmPassword) {
+          setUserInfoErrors((prev) => ({ ...prev, confirmPassword: undefined }));
+        }
+        break;
+      }
+      case "confirmPassword": {
+        if (!userConfirmPassword) {
+          setUserInfoErrors((prev) => ({ ...prev, confirmPassword: "Confirm password is required." }));
+        } else if (userConfirmPassword !== userPassword) {
+          setUserInfoErrors((prev) => ({ ...prev, confirmPassword: "Passwords do not match." }));
+        } else {
+          setUserInfoErrors((prev) => ({ ...prev, confirmPassword: undefined }));
+        }
+        break;
+      }
+    }
+  };
+
   const handleAddUserInfo = () => {
     const errs: typeof userInfoErrors = {};
 
     if (!userName.trim()) {
       errs.name = "Full Name is required.";
-    }
-    if (!userEmail.trim()) {
-      errs.email = "User Email is required.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail)) {
-      errs.email = "Please enter a valid email address.";
-    }
-    if (!userPhone.trim()) {
-      errs.phone = "User Mobile number is required.";
+    } else if (userName.trim().length < 2) {
+      errs.name = "Full Name must be at least 2 characters.";
     }
 
-    if (!userPassword) {
-      errs.password = "Password is required.";
-    } else if (userPassword.length < 6) {
-      errs.password = "Password must be at least 6 characters.";
+    if (!userEmail.trim()) {
+      errs.email = "User Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.trim())) {
+      errs.email = "Please enter a valid email address.";
+    }
+
+    const cleanDigits = userPhone.replace(/\D/g, "");
+    if (!userPhone.trim()) {
+      errs.phone = "User Mobile number is required.";
+    } else if (cleanDigits.length < 6 || cleanDigits.length > 15) {
+      errs.phone = "Please enter a valid mobile number (6 to 15 digits).";
+    }
+
+    const passwordErr = getPasswordErrorMessage(userPassword);
+    if (passwordErr) {
+      errs.password = passwordErr;
     }
 
     if (!userConfirmPassword) {
@@ -316,13 +419,13 @@ export function UserInfoSection({
     setUserInfoErrors(errs);
 
     if (Object.keys(errs).length > 0) {
-      showToast("Please resolve errors in User Info.");
+      showToast("Please fill in all required fields marked in red.");
       return;
     }
 
     setIsUserAssigned(true);
-    onAssignUser(userName);
-    showToast(`Created & assigned "${userName}" as branch manager.`);
+    onAssignUser(userName.trim());
+    showToast(`Created & assigned "${userName.trim()}" as branch manager.`);
   };
 
   const assignedName = userMode === "create" ? userName : selectedExistingUser?.name || userName;
@@ -332,6 +435,11 @@ export function UserInfoSection({
   const assignedRole = selectedExistingUser?.role || "Branch Manager";
   const avatarPalette = getAvatarPalette(assignedName);
   const initials = getUserInitials(assignedName);
+  const passwordCriteria = checkPasswordCriteria(userPassword);
+  const hasPassword = userPassword.length > 0;
+  const hasConfirmPassword = userConfirmPassword.length > 0;
+  const isPasswordMatched = hasConfirmPassword && hasPassword && userConfirmPassword === userPassword;
+  const isPasswordMismatch = hasConfirmPassword && (!hasPassword || userConfirmPassword !== userPassword);
 
   return (
     <section className={styles.section} aria-labelledby="section-user-info">
@@ -527,7 +635,7 @@ export function UserInfoSection({
                       userInfoErrors.name && styles.fieldLabelInvalid,
                     )}
                   >
-                    Full Name
+                    Full Name <span className={styles.requiredAsterisk}>*</span>
                   </label>
                   <input
                     id="userName"
@@ -539,14 +647,16 @@ export function UserInfoSection({
                         setUserInfoErrors((prev) => ({ ...prev, name: undefined }));
                       }
                     }}
+                    onBlur={() => validateField("name")}
                     placeholder="e.g. Tanvir Ahmed"
                     className={clsx(
                       styles.textInput,
                       userInfoErrors.name && styles.textInputInvalid,
                     )}
+                    aria-invalid={Boolean(userInfoErrors.name)}
                   />
                   {userInfoErrors.name ? (
-                    <p className={styles.fieldErrorText}>{userInfoErrors.name}</p>
+                    <p className={styles.fieldErrorText} role="alert">{userInfoErrors.name}</p>
                   ) : null}
                 </div>
 
@@ -559,7 +669,7 @@ export function UserInfoSection({
                       userInfoErrors.email && styles.fieldLabelInvalid,
                     )}
                   >
-                    User Email
+                    User Email <span className={styles.requiredAsterisk}>*</span>
                   </label>
                   <input
                     id="userEmail"
@@ -571,14 +681,16 @@ export function UserInfoSection({
                         setUserInfoErrors((prev) => ({ ...prev, email: undefined }));
                       }
                     }}
+                    onBlur={() => validateField("email")}
                     placeholder="ex: mail@mail.com"
                     className={clsx(
                       styles.textInput,
                       userInfoErrors.email && styles.textInputInvalid,
                     )}
+                    aria-invalid={Boolean(userInfoErrors.email)}
                   />
                   {userInfoErrors.email ? (
-                    <p className={styles.fieldErrorText}>{userInfoErrors.email}</p>
+                    <p className={styles.fieldErrorText} role="alert">{userInfoErrors.email}</p>
                   ) : null}
                 </div>
 
@@ -591,7 +703,7 @@ export function UserInfoSection({
                       userInfoErrors.phone && styles.fieldLabelInvalid,
                     )}
                   >
-                    User Mobile<span className={styles.requiredAsterisk}>*</span>
+                    User Mobile <span className={styles.requiredAsterisk}>*</span>
                   </label>
                   <div
                     className={clsx(
@@ -623,15 +735,17 @@ export function UserInfoSection({
                           setUserInfoErrors((prev) => ({ ...prev, phone: undefined }));
                         }
                       }}
+                      onBlur={() => validateField("phone")}
                       placeholder="ex: 01234567"
                       className={clsx(
                         styles.phoneInput,
                         userInfoErrors.phone && styles.phoneInputInvalid,
                       )}
+                      aria-invalid={Boolean(userInfoErrors.phone)}
                     />
                   </div>
                   {userInfoErrors.phone ? (
-                    <p className={styles.fieldErrorText}>{userInfoErrors.phone}</p>
+                    <p className={styles.fieldErrorText} role="alert">{userInfoErrors.phone}</p>
                   ) : null}
                 </div>
               </div>
@@ -647,7 +761,7 @@ export function UserInfoSection({
                       userInfoErrors.password && styles.fieldLabelInvalid,
                     )}
                   >
-                    Password
+                    Password <span className={styles.requiredAsterisk}>*</span>
                   </label>
                   <div className={styles.passwordInputWrapper}>
                     <input
@@ -655,17 +769,23 @@ export function UserInfoSection({
                       type={showPassword ? "text" : "password"}
                       value={userPassword}
                       onChange={(e) => {
-                        setUserPassword(e.target.value);
+                        const val = e.target.value;
+                        setUserPassword(val);
                         if (userInfoErrors.password) {
                           setUserInfoErrors((prev) => ({ ...prev, password: undefined }));
                         }
+                        if (userInfoErrors.confirmPassword && val === userConfirmPassword) {
+                          setUserInfoErrors((prev) => ({ ...prev, confirmPassword: undefined }));
+                        }
                       }}
+                      onBlur={() => validateField("password")}
                       placeholder="********"
                       className={clsx(
                         styles.textInput,
                         userInfoErrors.password && styles.textInputInvalid,
                       )}
                       style={{ paddingRight: "42px" }}
+                      aria-invalid={Boolean(userInfoErrors.password)}
                     />
                     <button
                       type="button"
@@ -677,12 +797,71 @@ export function UserInfoSection({
                     </button>
                   </div>
                   {userInfoErrors.password ? (
-                    <p className={styles.fieldErrorText}>{userInfoErrors.password}</p>
-                  ) : (
-                    <span className={styles.fieldHint}>
-                      Enter password for the new manager account (min. 6 characters)
-                    </span>
-                  )}
+                    <p className={styles.fieldErrorText} role="alert">{userInfoErrors.password}</p>
+                  ) : null}
+
+                  {/* Strong password criteria checklist */}
+                  <div className={styles.passwordCriteriaList} aria-label="Password strength requirements">
+                    <div
+                      className={clsx(
+                        styles.passwordCriteriaItem,
+                        passwordCriteria.minLength && styles.passwordCriteriaMet,
+                      )}
+                    >
+                      <span className={styles.criteriaIcon}>
+                        {passwordCriteria.minLength ? <Check size={12} /> : <span className={styles.criteriaDot} />}
+                      </span>
+                      <span>At least 8 characters</span>
+                    </div>
+
+                    <div
+                      className={clsx(
+                        styles.passwordCriteriaItem,
+                        passwordCriteria.hasUpper && styles.passwordCriteriaMet,
+                      )}
+                    >
+                      <span className={styles.criteriaIcon}>
+                        {passwordCriteria.hasUpper ? <Check size={12} /> : <span className={styles.criteriaDot} />}
+                      </span>
+                      <span>At least 1 uppercase letter (A-Z)</span>
+                    </div>
+
+                    <div
+                      className={clsx(
+                        styles.passwordCriteriaItem,
+                        passwordCriteria.hasLower && styles.passwordCriteriaMet,
+                      )}
+                    >
+                      <span className={styles.criteriaIcon}>
+                        {passwordCriteria.hasLower ? <Check size={12} /> : <span className={styles.criteriaDot} />}
+                      </span>
+                      <span>At least 1 lowercase letter (a-z)</span>
+                    </div>
+
+                    <div
+                      className={clsx(
+                        styles.passwordCriteriaItem,
+                        passwordCriteria.hasNumber && styles.passwordCriteriaMet,
+                      )}
+                    >
+                      <span className={styles.criteriaIcon}>
+                        {passwordCriteria.hasNumber ? <Check size={12} /> : <span className={styles.criteriaDot} />}
+                      </span>
+                      <span>At least 1 number (0-9)</span>
+                    </div>
+
+                    <div
+                      className={clsx(
+                        styles.passwordCriteriaItem,
+                        passwordCriteria.hasSpecial && styles.passwordCriteriaMet,
+                      )}
+                    >
+                      <span className={styles.criteriaIcon}>
+                        {passwordCriteria.hasSpecial ? <Check size={12} /> : <span className={styles.criteriaDot} />}
+                      </span>
+                      <span>At least 1 special character (!@#$%...)</span>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Confirm Password */}
@@ -691,10 +870,10 @@ export function UserInfoSection({
                     htmlFor="userConfirmPassword"
                     className={clsx(
                       styles.fieldLabel,
-                      userInfoErrors.confirmPassword && styles.fieldLabelInvalid,
+                      (userInfoErrors.confirmPassword || isPasswordMismatch) && styles.fieldLabelInvalid,
                     )}
                   >
-                    Confirm Password
+                    Confirm Password <span className={styles.requiredAsterisk}>*</span>
                   </label>
                   <div className={styles.passwordInputWrapper}>
                     <input
@@ -710,13 +889,32 @@ export function UserInfoSection({
                           }));
                         }
                       }}
+                      onBlur={() => validateField("confirmPassword")}
                       placeholder="********"
                       className={clsx(
                         styles.textInput,
-                        userInfoErrors.confirmPassword && styles.textInputInvalid,
+                        (userInfoErrors.confirmPassword || isPasswordMismatch) && styles.textInputInvalid,
+                        isPasswordMatched && styles.textInputSuccess,
                       )}
-                      style={{ paddingRight: "42px" }}
+                      style={{ paddingRight: hasConfirmPassword ? "64px" : "42px" }}
+                      aria-invalid={Boolean(userInfoErrors.confirmPassword || isPasswordMismatch)}
                     />
+                    {hasConfirmPassword ? (
+                      <span
+                        className={clsx(
+                          styles.matchInlineBadge,
+                          isPasswordMatched ? styles.matchInlineSuccess : styles.matchInlineMismatch,
+                        )}
+                        title={isPasswordMatched ? "Passwords match" : "Passwords do not match"}
+                        aria-hidden="true"
+                      >
+                        {isPasswordMatched ? (
+                          <Check size={12} strokeWidth={2.5} />
+                        ) : (
+                          <X size={12} strokeWidth={2.5} />
+                        )}
+                      </span>
+                    ) : null}
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword((prev) => !prev)}
@@ -726,8 +924,28 @@ export function UserInfoSection({
                       {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                   </div>
-                  {userInfoErrors.confirmPassword ? (
-                    <p className={styles.fieldErrorText}>
+                  {hasConfirmPassword ? (
+                    <div
+                      className={clsx(
+                        styles.passwordMatchBox,
+                        isPasswordMatched ? styles.passwordMatchBoxSuccess : styles.passwordMatchBoxMismatch,
+                      )}
+                      role="status"
+                      aria-live="polite"
+                    >
+                      <span className={styles.criteriaIcon}>
+                        {isPasswordMatched ? (
+                          <Check size={12} strokeWidth={2.5} />
+                        ) : (
+                          <X size={12} strokeWidth={2.5} />
+                        )}
+                      </span>
+                      <span>
+                        {isPasswordMatched ? "Passwords match" : "Passwords do not match"}
+                      </span>
+                    </div>
+                  ) : userInfoErrors.confirmPassword ? (
+                    <p className={styles.fieldErrorText} role="alert">
                       {userInfoErrors.confirmPassword}
                     </p>
                   ) : null}
