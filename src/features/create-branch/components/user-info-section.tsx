@@ -13,7 +13,6 @@ import {
   EyeOff,
   Loader2,
   Search,
-  UserCheck,
   UserPlus,
   X,
 } from "lucide-react";
@@ -23,6 +22,33 @@ import {
   type ExistingUser,
 } from "../types";
 import styles from "../styles/user-info-section.module.css";
+
+function getUserInitials(name: string): string {
+  if (!name.trim()) return "U";
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) {
+    return parts[0].slice(0, 2).toUpperCase();
+  }
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+const AVATAR_PALETTES = [
+  { bg: "#e8f3ff", text: "#1b84ff", border: "rgba(27, 132, 255, 0.25)" },
+  { bg: "#eef2ff", text: "#4f46e5", border: "rgba(79, 70, 229, 0.25)" },
+  { bg: "#e8fff3", text: "#028c4a", border: "rgba(2, 140, 74, 0.25)" },
+  { bg: "#fffbeb", text: "#d97706", border: "rgba(217, 119, 6, 0.25)" },
+  { bg: "#fdf2f8", text: "#db2777", border: "rgba(219, 39, 119, 0.25)" },
+  { bg: "#f3e8ff", text: "#7c3aed", border: "rgba(124, 58, 237, 0.25)" },
+];
+
+function getAvatarPalette(name: string) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const idx = Math.abs(hash) % AVATAR_PALETTES.length;
+  return AVATAR_PALETTES[idx];
+}
 
 interface UserInfoSectionProps {
   onAssignUser: (assignedName: string) => void;
@@ -60,9 +86,6 @@ export function UserInfoSection({
     confirmPassword?: string;
     general?: string;
   }>({});
-
-  const isPasswordEnabled = userMode === "create" || Boolean(selectedExistingUser);
-  const isFieldsEnabled = userMode === "create";
 
   const filteredUsers = MOCK_EXISTING_USERS.filter((u) => {
     const q = userSearchQuery.toLowerCase().trim();
@@ -109,14 +132,12 @@ export function UserInfoSection({
     setUserEmail(user.email);
     setUserPhoneCountry(user.countryCode);
     setUserPhone(user.phone);
-    setUserSearchQuery(user.name);
     setIsUserSearchOpen(false);
     setIsSearching(false);
-    setIsFormOpen(true);
-    setUserInfoErrors({});
-    setUserPassword("");
-    setUserConfirmPassword("");
-    showToast(`Selected "${user.name}". Please enter password.`);
+    setIsFormOpen(false);
+    setIsUserAssigned(true);
+    onAssignUser(user.name);
+    showToast(`Assigned "${user.name}" as branch manager.`);
   };
 
   const handleSwitchToCreate = () => {
@@ -151,6 +172,14 @@ export function UserInfoSection({
     setUserInfoErrors({});
   };
 
+  const handleReassign = () => {
+    setIsUserAssigned(false);
+    setIsFormOpen(false);
+    setUserMode("search");
+    setUserSearchQuery("");
+    setSelectedExistingUser(null);
+  };
+
   const handleResetUserInfo = () => {
     setUserMode("search");
     setUserSearchQuery("");
@@ -174,25 +203,16 @@ export function UserInfoSection({
   const handleAddUserInfo = () => {
     const errs: typeof userInfoErrors = {};
 
-    if (userMode === "search" && !selectedExistingUser) {
-      errs.general = "Please search and select a user first, or click 'Create a new user'.";
-      setUserInfoErrors(errs);
-      showToast("Please select a user from the search bar.");
-      return;
+    if (!userName.trim()) {
+      errs.name = "User Name is required.";
     }
-
-    if (userMode === "create") {
-      if (!userName.trim()) {
-        errs.name = "User Name is required.";
-      }
-      if (!userEmail.trim()) {
-        errs.email = "User Email is required.";
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail)) {
-        errs.email = "Please enter a valid email address.";
-      }
-      if (!userPhone.trim()) {
-        errs.phone = "User Mobile number is required.";
-      }
+    if (!userEmail.trim()) {
+      errs.email = "User Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail)) {
+      errs.email = "Please enter a valid email address.";
+    }
+    if (!userPhone.trim()) {
+      errs.phone = "User Mobile number is required.";
     }
 
     if (!userPassword) {
@@ -214,11 +234,18 @@ export function UserInfoSection({
       return;
     }
 
-    const assignedName = userMode === "create" ? userName : selectedExistingUser?.name || userName;
     setIsUserAssigned(true);
-    onAssignUser(assignedName);
-    showToast(`User "${assignedName}" assigned as branch manager.`);
+    onAssignUser(userName);
+    showToast(`Created & assigned "${userName}" as branch manager.`);
   };
+
+  const assignedName = userMode === "create" ? userName : selectedExistingUser?.name || userName;
+  const assignedEmail = userMode === "create" ? userEmail : selectedExistingUser?.email || userEmail;
+  const assignedCountry = userMode === "create" ? userPhoneCountry : selectedExistingUser?.countryCode || userPhoneCountry;
+  const assignedPhone = userMode === "create" ? userPhone : selectedExistingUser?.phone || userPhone;
+  const assignedRole = selectedExistingUser?.role || "Branch Manager";
+  const avatarPalette = getAvatarPalette(assignedName);
+  const initials = getUserInitials(assignedName);
 
   return (
     <section className={styles.section} aria-labelledby="section-user-info">
@@ -236,34 +263,39 @@ export function UserInfoSection({
         ) : null}
       </div>
 
-      {/* If already assigned, show rich Assigned Card with Change button */}
+      {/* If already assigned, show rich Assigned Card with Circle Avatar and Change button */}
       {isUserAssigned ? (
-        <div className={styles.userAssignedCard}>
-          <div className={styles.userAssignedInfo}>
-            <div className={styles.userAvatar}>
-              <UserCheck size={18} />
+        <div className={styles.assignedUserCard}>
+          <div className={styles.assignedUserCardContent}>
+            <div
+              className={styles.assignedUserAvatar}
+              style={{
+                backgroundColor: avatarPalette.bg,
+                color: avatarPalette.text,
+                borderColor: avatarPalette.border,
+              }}
+            >
+              {initials}
             </div>
-            <div className={styles.userMeta}>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <span className={styles.userName}>
-                  {userMode === "create" ? userName : selectedExistingUser?.name}
-                </span>
-                <span className={styles.userAssignedBadge}>
-                  <CheckCircle2 size={12} /> Assigned Manager
+            <div className={styles.assignedUserDetails}>
+              <div className={styles.assignedUserNameRow}>
+                <span className={styles.assignedUserName}>{assignedName}</span>
+                <span className={styles.assignedUserBadge}>
+                  <CheckCircle2 size={13} /> Assigned Manager
                 </span>
               </div>
-              <span className={styles.userEmailPhone}>
-                {userMode === "create" ? userEmail : selectedExistingUser?.email} •{" "}
-                {userPhoneCountry} {userMode === "create" ? userPhone : selectedExistingUser?.phone}
+              <span className={styles.assignedUserMeta}>
+                <span className={styles.assignedUserRole}>{assignedRole}</span>
+                <span>•</span>
+                <span>{assignedEmail}</span>
+                <span>•</span>
+                <span>{assignedCountry} {assignedPhone}</span>
               </span>
             </div>
           </div>
           <button
             type="button"
-            onClick={() => {
-              setIsUserAssigned(false);
-              setIsFormOpen(true);
-            }}
+            onClick={handleReassign}
             className={styles.reassignBtn}
           >
             Change User
@@ -299,7 +331,7 @@ export function UserInfoSection({
                   </button>
                 ) : null}
 
-                {/* Autocomplete Dropdown - only when user has typed */}
+                {/* Autocomplete Dropdown with Circle Avatars */}
                 {isUserSearchOpen && userSearchQuery.trim() ? (
                   <div className={styles.userSearchDropdown}>
                     {isSearching ? (
@@ -308,31 +340,37 @@ export function UserInfoSection({
                         <span>Searching users...</span>
                       </div>
                     ) : filteredUsers.length > 0 ? (
-                      filteredUsers.map((u) => (
-                        <div
-                          key={u.id}
-                          className={styles.userSearchItem}
-                          onClick={() => handleSelectUser(u)}
-                        >
-                          <div className={styles.userSearchItemInfo}>
-                            <div className={styles.userAvatar}>
-                              {u.name
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")
-                                .slice(0, 2)
-                                .toUpperCase()}
+                      filteredUsers.map((u) => {
+                        const uPalette = getAvatarPalette(u.name);
+                        const uInitials = getUserInitials(u.name);
+                        return (
+                          <div
+                            key={u.id}
+                            className={styles.userSearchItem}
+                            onClick={() => handleSelectUser(u)}
+                          >
+                            <div className={styles.userSearchItemInfo}>
+                              <div
+                                className={styles.userSearchAvatar}
+                                style={{
+                                  backgroundColor: uPalette.bg,
+                                  color: uPalette.text,
+                                  borderColor: uPalette.border,
+                                }}
+                              >
+                                {uInitials}
+                              </div>
+                              <div className={styles.userSearchMeta}>
+                                <span className={styles.userSearchName}>{u.name}</span>
+                                <span className={styles.userSearchEmailPhone}>
+                                  {u.email} • {u.countryCode} {u.phone}
+                                </span>
+                              </div>
                             </div>
-                            <div className={styles.userMeta}>
-                              <span className={styles.userName}>{u.name}</span>
-                              <span className={styles.userEmailPhone}>
-                                {u.email} • {u.countryCode} {u.phone}
-                              </span>
-                            </div>
+                            <span className={styles.userRoleBadge}>{u.role}</span>
                           </div>
-                          <span className={styles.userRoleBadge}>{u.role}</span>
-                        </div>
-                      ))
+                        );
+                      })
                     ) : (
                       <div className={styles.userSearchEmpty}>
                         <span>No existing users found matching &ldquo;{userSearchQuery}&rdquo;</span>
@@ -352,25 +390,21 @@ export function UserInfoSection({
                 ) : null}
               </div>
 
-              {/* Create New User button and OR divider only visible if no user selected yet */}
-              {!selectedExistingUser ? (
-                <>
-                  <span className={styles.orDivider}>or</span>
-                  <button
-                    type="button"
-                    onClick={handleSwitchToCreate}
-                    className={styles.switchModeBtn}
-                  >
-                    <UserPlus size={16} />
-                    Create a new user
-                  </button>
-                </>
-              ) : null}
+              {/* Create New User button and OR divider */}
+              <span className={styles.orDivider}>or</span>
+              <button
+                type="button"
+                onClick={handleSwitchToCreate}
+                className={styles.switchModeBtn}
+              >
+                <UserPlus size={16} />
+                Create a new user
+              </button>
             </div>
           ) : (
             <div className={clsx(styles.userBanner, styles.createModeBanner)}>
               <span>
-                <strong>Create New User Mode:</strong> Enter the user&apos;s details to create and assign them to this branch.
+                <strong>Create New User Mode:</strong> Enter user details to create and assign as branch manager.
               </span>
               <button
                 type="button"
@@ -388,8 +422,8 @@ export function UserInfoSection({
             </p>
           ) : null}
 
-          {/* Form Grid: Opens only when a user is selected or in create mode */}
-          {isFormOpen ? (
+          {/* Form Grid: Opens only in create mode (NO avatar in Add User mode) */}
+          {isFormOpen && userMode === "create" ? (
             <>
               <div className={styles.grid3Col}>
                 {/* User Name */}
@@ -413,11 +447,9 @@ export function UserInfoSection({
                         setUserInfoErrors((prev) => ({ ...prev, name: undefined }));
                       }
                     }}
-                    disabled={!isFieldsEnabled && !selectedExistingUser}
-                    placeholder={isFieldsEnabled ? "Inp|" : "Select user from search above"}
+                    placeholder="e.g. Tanvir Ahmed"
                     className={clsx(
                       styles.textInput,
-                      !isFieldsEnabled && !selectedExistingUser && styles.inputDisabled,
                       userInfoErrors.name && styles.textInputInvalid,
                     )}
                   />
@@ -447,11 +479,9 @@ export function UserInfoSection({
                         setUserInfoErrors((prev) => ({ ...prev, email: undefined }));
                       }
                     }}
-                    disabled={!isFieldsEnabled && !selectedExistingUser}
                     placeholder="ex: mail@mail.com"
                     className={clsx(
                       styles.textInput,
-                      !isFieldsEnabled && !selectedExistingUser && styles.inputDisabled,
                       userInfoErrors.email && styles.textInputInvalid,
                     )}
                   />
@@ -474,7 +504,6 @@ export function UserInfoSection({
                   <div
                     className={clsx(
                       styles.phoneInputWrapper,
-                      !isFieldsEnabled && !selectedExistingUser && styles.inputDisabled,
                       userInfoErrors.phone && styles.phoneInputWrapperInvalid,
                     )}
                   >
@@ -482,7 +511,6 @@ export function UserInfoSection({
                       <select
                         value={userPhoneCountry}
                         onChange={(e) => setUserPhoneCountry(e.target.value)}
-                        disabled={!isFieldsEnabled && !selectedExistingUser}
                         className={styles.countryCodeSelect}
                         aria-label="Country Code"
                       >
@@ -503,11 +531,9 @@ export function UserInfoSection({
                           setUserInfoErrors((prev) => ({ ...prev, phone: undefined }));
                         }
                       }}
-                      disabled={!isFieldsEnabled && !selectedExistingUser}
                       placeholder="ex: 01234567"
                       className={clsx(
                         styles.phoneInput,
-                        !isFieldsEnabled && !selectedExistingUser && styles.inputDisabled,
                         userInfoErrors.phone && styles.phoneInputInvalid,
                       )}
                     />
@@ -518,7 +544,7 @@ export function UserInfoSection({
                 </div>
               </div>
 
-              {/* Password Row (2 Columns matching user screenshot) */}
+              {/* Password Row */}
               <div className={styles.grid2Col} style={{ marginTop: "16px" }}>
                 {/* Password */}
                 <div className={styles.fieldGroup}>
@@ -542,18 +568,15 @@ export function UserInfoSection({
                           setUserInfoErrors((prev) => ({ ...prev, password: undefined }));
                         }
                       }}
-                      disabled={!isPasswordEnabled}
                       placeholder="********"
                       className={clsx(
                         styles.textInput,
-                        !isPasswordEnabled && styles.inputDisabled,
                         userInfoErrors.password && styles.textInputInvalid,
                       )}
                       style={{ paddingRight: "42px" }}
                     />
                     <button
                       type="button"
-                      disabled={!isPasswordEnabled}
                       onClick={() => setShowPassword((prev) => !prev)}
                       className={styles.passwordToggleBtn}
                       aria-label={showPassword ? "Hide password" : "Show password"}
@@ -565,9 +588,7 @@ export function UserInfoSection({
                     <p className={styles.fieldErrorText}>{userInfoErrors.password}</p>
                   ) : (
                     <span className={styles.fieldHint}>
-                      {!isPasswordEnabled
-                        ? "Select a user above to enable password"
-                        : "Enter password to authorize user assignment (min. 6 characters)"}
+                      Enter password for the new manager account (min. 6 characters)
                     </span>
                   )}
                 </div>
@@ -597,18 +618,15 @@ export function UserInfoSection({
                           }));
                         }
                       }}
-                      disabled={!isPasswordEnabled}
                       placeholder="********"
                       className={clsx(
                         styles.textInput,
-                        !isPasswordEnabled && styles.inputDisabled,
                         userInfoErrors.confirmPassword && styles.textInputInvalid,
                       )}
                       style={{ paddingRight: "42px" }}
                     />
                     <button
                       type="button"
-                      disabled={!isPasswordEnabled}
                       onClick={() => setShowConfirmPassword((prev) => !prev)}
                       className={styles.passwordToggleBtn}
                       aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
@@ -624,7 +642,7 @@ export function UserInfoSection({
                 </div>
               </div>
 
-              {/* Bottom Action Buttons (Reset & Add) with Add button in Primary Color */}
+              {/* Bottom Action Buttons (Reset & Add) */}
               <div className={styles.userInfoActionsRow}>
                 <button
                   type="button"

@@ -228,10 +228,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 12px;
+  padding: 8px 12px;
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 150ms ease;
+  gap: 12px;
 }
 
 .userSearchItem:hover {
@@ -241,38 +242,43 @@
 .userSearchItemInfo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  min-width: 0;
 }
 
-.userAvatar {
-  width: 34px;
-  height: 34px;
+.userSearchAvatar {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background-color: rgba(27, 132, 255, 0.12);
-  color: var(--ams-color-primary-300, #1b84ff);
-  font-weight: 600;
-  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  border: 1.5px solid;
   flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.userMeta {
+.userSearchMeta {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
 }
 
-.userName {
+.userSearchName {
   font-size: 13px;
   font-weight: 600;
   color: var(--ams-color-grayscale-400, #071437);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
 }
 
-.userEmailPhone {
+.userSearchEmailPhone {
   font-size: 11px;
   color: var(--ams-color-text-muted, #99a1b7);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
 }
 
 .userRoleBadge {
@@ -282,6 +288,7 @@
   background-color: #f1f3f6;
   color: var(--ams-color-grayscale-400, #071437);
   font-weight: 500;
+  flex-shrink: 0;
 }
 
 .userSearchEmpty {
@@ -499,73 +506,115 @@
 
 /* Assigned user card */
 .assignedUserCard {
-  border: 1px solid rgba(27, 132, 255, 0.25);
-  background-color: rgba(27, 132, 255, 0.03);
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  background-color: #ffffff;
   border-radius: 8px;
   padding: 16px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  max-width: 680px;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 150ms ease;
+  box-sizing: border-box;
+}
+
+.assignedUserCard:hover {
+  border-color: #d8dee8;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .assignedUserCardContent {
   display: flex;
   align-items: center;
   gap: 14px;
+  min-width: 0;
 }
 
 .assignedUserAvatar {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background-color: var(--ams-color-primary-300, #1b84ff);
-  color: #ffffff;
-  font-weight: 700;
-  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border: 1.5px solid;
   flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.assignedUserInfo {
+.assignedUserDetails {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  min-width: 0;
+}
+
+.assignedUserNameRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.assignedUserName {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
 }
 
 .assignedUserBadge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background-color: #e8fff3;
+  color: var(--ams-color-status-success, #028c4a);
   font-size: 11px;
   font-weight: 600;
-  color: var(--ams-color-primary-300, #1b84ff);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
 }
 
-.assignedUserTitle {
-  font-size: 14px;
-  font-weight: 600;
+.assignedUserMeta {
+  font-size: 12px;
+  color: var(--ams-color-text-muted, #99a1b7);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.assignedUserRole {
+  font-weight: 500;
   color: var(--ams-color-grayscale-400, #071437);
 }
 
-.assignedUserSubtitle {
-  font-size: 12px;
-  color: var(--ams-color-text-muted, #99a1b7);
-}
-
 .reassignBtn {
-  padding: 8px 14px;
+  height: 36px;
+  padding: 0 14px;
   border-radius: 4px;
   border: 1px solid var(--ams-color-border-subtle, #eff1f4);
   background-color: #ffffff;
   color: var(--ams-color-grayscale-400, #071437);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   transition: all 150ms ease;
-  font-family: inherit;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  flex-shrink: 0;
 }
 
 .reassignBtn:hover {
