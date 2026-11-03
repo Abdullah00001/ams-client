@@ -7,6 +7,7 @@
 
 import { useState } from "react";
 import { AlertCircle, Check, Plus, Trash2 } from "lucide-react";
+import { Dropdown } from "@/components/ui/dropdown";
 import {
   type SocialMediaLink,
   type SocialMediaPlatform,
@@ -102,24 +103,24 @@ export function SocialMediaSection({
             <div key={social.id} className={styles.socialRowContainer}>
               <div className={styles.socialRow}>
                 {/* Platform selector */}
-                <select
+                <Dropdown<SocialMediaPlatform>
                   value={social.platform}
-                  onChange={(e) =>
+                  onChange={(newPlatform) =>
                     handlePlatformSelectChange(
                       social.id,
                       social.url,
-                      e.target.value as SocialMediaPlatform,
+                      newPlatform,
                     )
                   }
-                  className={styles.socialPlatformSelect}
-                  aria-label="Social media platform"
-                >
-                  {SOCIAL_PLATFORMS.map((platform) => (
-                    <option key={platform} value={platform}>
-                      {platform}
-                    </option>
-                  ))}
-                </select>
+                  options={SOCIAL_PLATFORMS.map((platform) => ({
+                    value: platform,
+                    label: platform,
+                  }))}
+                  size="sm"
+                  fullWidth={false}
+                  className={styles.socialPlatformDropdown}
+                  triggerClassName={styles.socialPlatformTrigger}
+                />
 
                 {/* URL input with validation and status icons */}
                 <div className={styles.socialInputWrapper}>

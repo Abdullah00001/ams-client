@@ -17,6 +17,7 @@ import {
   UserPlus,
   X,
 } from "lucide-react";
+import { Dropdown } from "@/components/ui/dropdown";
 import {
   COUNTRY_OPTIONS,
   MOCK_EXISTING_USERS,
@@ -712,18 +713,19 @@ export function UserInfoSection({
                     )}
                   >
                     <div className={styles.countrySelectWrapper}>
-                      <select
+                      <Dropdown
                         value={userPhoneCountry}
-                        onChange={(e) => setUserPhoneCountry(e.target.value)}
-                        className={styles.countryCodeSelect}
-                        aria-label="Country Code"
-                      >
-                        {COUNTRY_OPTIONS.map((c) => (
-                          <option key={c.code} value={c.code}>
-                            {c.flag} {c.code}
-                          </option>
-                        ))}
-                      </select>
+                        onChange={(val) => setUserPhoneCountry(val)}
+                        options={COUNTRY_OPTIONS.map((c) => ({
+                          value: c.code,
+                          label: `${c.flag} ${c.code}`,
+                        }))}
+                        size="sm"
+                        variant="ghost"
+                        fullWidth={false}
+                        className={styles.countryDropdown}
+                        triggerClassName={styles.countryDropdownTrigger}
+                      />
                     </div>
                     <input
                       id="userMobile"

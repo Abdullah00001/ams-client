@@ -416,6 +416,29 @@
   border-right: 1px solid var(--ams-color-border-subtle, #eff1f4);
 }
 
+.countryDropdown {
+  height: 100%;
+}
+
+.countryDropdownTrigger {
+  height: 100% !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 8px 0 12px !important;
+  font-size: 13px !important;
+  font-weight: 500;
+  border-radius: 0 !important;
+  cursor: pointer;
+}
+
+.countryDropdownTrigger:focus-visible,
+.countryDropdownTrigger[data-popup-open],
+.countryDropdownTrigger[data-open] {
+  box-shadow: none !important;
+  background-color: rgba(27, 132, 255, 0.06) !important;
+}
+
 .countryCodeSelect {
   height: 100%;
   padding: 0 8px 0 12px;
