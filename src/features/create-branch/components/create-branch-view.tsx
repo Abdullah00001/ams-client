@@ -47,7 +47,6 @@ export function CreateBranchView() {
     handleRemoveSocialRow,
     handleSocialPlatformChange,
     handleSocialUrlChange,
-    handleSaveSocialLinks,
     handleTogglePermission,
     handleSubmit,
     handleSaveDraft,
@@ -98,7 +97,6 @@ export function CreateBranchView() {
           onRemoveRow={handleRemoveSocialRow}
           onPlatformChange={handleSocialPlatformChange}
           onUrlChange={handleSocialUrlChange}
-          onSaveLinks={handleSaveSocialLinks}
         />
 
         {/* Section 3: User Info */}

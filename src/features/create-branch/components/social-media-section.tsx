@@ -20,7 +20,6 @@ interface SocialMediaSectionProps {
   onRemoveRow: (id: string) => void;
   onPlatformChange: (id: string, platform: SocialMediaPlatform) => void;
   onUrlChange: (id: string, url: string) => void;
-  onSaveLinks: () => void;
 }
 
 export function SocialMediaSection({
@@ -29,7 +28,6 @@ export function SocialMediaSection({
   onRemoveRow,
   onPlatformChange,
   onUrlChange,
-  onSaveLinks,
 }: SocialMediaSectionProps) {
   return (
     <section className={styles.section} aria-labelledby="section-social-links">
@@ -94,13 +92,6 @@ export function SocialMediaSection({
             className={styles.addSocialBtn}
           >
             <Plus size={15} /> + Add more
-          </button>
-          <button
-            type="button"
-            onClick={onSaveLinks}
-            className={styles.draftButton}
-          >
-            Save Links
           </button>
         </div>
       </div>

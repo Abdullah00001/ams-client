@@ -159,11 +159,6 @@ export function useCreateBranchForm() {
     }));
   };
 
-  const handleSaveSocialLinks = () => {
-    const filledLinks = formData.socialLinks.filter((s) => s.url.trim() !== "");
-    showToast(`Saved ${filledLinks.length} social link(s).`);
-  };
-
   // Feature Permissions Toggle Handler
   const handleTogglePermission = (key: keyof BranchFeaturePermissions) => {
     setFormData((prev) => {
@@ -252,7 +247,6 @@ export function useCreateBranchForm() {
     handleRemoveSocialRow,
     handleSocialPlatformChange,
     handleSocialUrlChange,
-    handleSaveSocialLinks,
     handleTogglePermission,
     handleSubmit,
     handleSaveDraft,

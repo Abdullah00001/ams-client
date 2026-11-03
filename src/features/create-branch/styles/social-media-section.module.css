@@ -134,26 +134,3 @@
 .addSocialBtn:hover {
   background-color: #d1e6ff;
 }
-
-.draftButton {
-  height: 36px;
-  padding: 0 14px;
-  border-radius: 4px;
-  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  background-color: #ffffff;
-  color: var(--ams-color-grayscale-400, #071437);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 150ms ease;
-  font-family: var(--ams-font-family-sans, Inter, sans-serif);
-}
-
-.draftButton:hover {
-  background-color: var(--ams-color-grayscale-100, #f4f6fa);
-  color: var(--ams-color-grayscale-400, #071437);
-}
