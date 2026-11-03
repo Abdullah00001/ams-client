@@ -27,11 +27,13 @@ import styles from "../styles/user-info-section.module.css";
 interface UserInfoSectionProps {
   onAssignUser: (assignedName: string) => void;
   showToast: (msg: string) => void;
+  errorMessage?: string;
 }
 
 export function UserInfoSection({
   onAssignUser,
   showToast,
+  errorMessage,
 }: UserInfoSectionProps) {
   const [userMode, setUserMode] = useState<"search" | "create">("search");
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -227,6 +229,11 @@ export function UserInfoSection({
         <p className={styles.sectionSubtitle}>
           Search an existing user or create a new user account to assign as branch admin / manager.
         </p>
+        {errorMessage && !isUserAssigned ? (
+          <p className={styles.fieldErrorText} role="alert">
+            {errorMessage}
+          </p>
+        ) : null}
       </div>
 
       {/* If already assigned, show rich Assigned Card with Change button */}

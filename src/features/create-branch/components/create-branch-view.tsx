@@ -101,7 +101,12 @@ export function CreateBranchView() {
         />
 
         {/* Section 3: User Info */}
-        <UserInfoSection key={resetKey} onAssignUser={handleAssignUser} showToast={showToast} />
+        <UserInfoSection
+          key={resetKey}
+          onAssignUser={handleAssignUser}
+          showToast={showToast}
+          errorMessage={errors.adminName}
+        />
 
         {/* Section 4: Feature Permissions */}
         <FeaturePermissionsSection

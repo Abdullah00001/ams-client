@@ -79,34 +79,6 @@ export function BranchInfoSection({
           ) : null}
         </div>
 
-        {/* Admin / Manager Name */}
-        <div className={styles.fieldGroup}>
-          <label
-            htmlFor="adminName"
-            className={clsx(styles.fieldLabel, errors.adminName && styles.fieldLabelInvalid)}
-          >
-            Admin / Manager Name <span className={styles.requiredAsterisk}>*</span>
-          </label>
-          <input
-            id="adminName"
-            type="text"
-            value={formData.adminName}
-            onChange={(e) => {
-              clearFieldError("adminName");
-              onFieldChange("adminName", e.target.value);
-            }}
-            placeholder="e.g. Tanvir Ahmed"
-            className={clsx(styles.textInput, errors.adminName && styles.textInputInvalid)}
-            aria-invalid={Boolean(errors.adminName)}
-            aria-describedby={errors.adminName ? "adminName-error" : undefined}
-          />
-          {errors.adminName ? (
-            <p id="adminName-error" className={styles.fieldErrorText}>
-              {errors.adminName}
-            </p>
-          ) : null}
-        </div>
-
         {/* Branch Code / Slug */}
         <div className={styles.fieldGroup}>
           <label
@@ -132,9 +104,7 @@ export function BranchInfoSection({
             </p>
           ) : null}
         </div>
-      </div>
 
-      <div className={styles.grid3Col}>
         {/* Campus Address */}
         <div className={styles.fieldGroup}>
           <label
@@ -229,9 +199,7 @@ export function BranchInfoSection({
             </p>
           ) : null}
         </div>
-      </div>
 
-      <div className={styles.grid3Col}>
         {/* Branch Website */}
         <div className={styles.fieldGroup}>
           <label htmlFor="website" className={styles.fieldLabel}>
