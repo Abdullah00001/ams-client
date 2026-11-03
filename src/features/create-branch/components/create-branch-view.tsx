@@ -91,14 +91,7 @@ export function CreateBranchView() {
           clearFieldError={clearFieldError}
         />
 
-        {/* Section 2: User Info */}
-        <UserInfoSection
-          key={resetKey}
-          onAssignUser={handleAssignUser}
-          showToast={showToast}
-        />
-
-        {/* Section 3: Social Media Links */}
+        {/* Section 2: Social Media Links */}
         <SocialMediaSection
           socialLinks={formData.socialLinks}
           onAddRow={handleAddSocialRow}
@@ -107,6 +100,9 @@ export function CreateBranchView() {
           onUrlChange={handleSocialUrlChange}
           onSaveLinks={handleSaveSocialLinks}
         />
+
+        {/* Section 3: User Info */}
+        <UserInfoSection key={resetKey} onAssignUser={handleAssignUser} showToast={showToast} />
 
         {/* Section 4: Feature Permissions */}
         <FeaturePermissionsSection
