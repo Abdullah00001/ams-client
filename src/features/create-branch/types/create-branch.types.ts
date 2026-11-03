@@ -55,6 +55,8 @@ export interface FormErrors {
   address?: string;
   email?: string;
   phone?: string;
+  website?: string;
+  mapsLink?: string;
   permissions?: string;
   socialLinks?: string;
 }

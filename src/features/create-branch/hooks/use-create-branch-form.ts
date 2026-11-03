@@ -14,7 +14,15 @@ import {
   type FormErrors,
   type SocialMediaPlatform,
 } from "../types";
-import { generateBranchCode, generateSlug, validateCreateBranchForm } from "../lib";
+import {
+  generateBranchCode,
+  generateSlug,
+  normalizeGoogleMapsUrl,
+  normalizeWebsiteUrl,
+  validateCreateBranchForm,
+  validateGoogleMapsUrl,
+  validateWebsiteUrl,
+} from "../lib";
 import { submitCreateBranch } from "../services";
 
 const INITIAL_FORM_DATA: CreateBranchFormData = {
@@ -66,6 +74,40 @@ export function useCreateBranchForm() {
   const handleFieldChange = (field: keyof CreateBranchFormData, value: string) => {
     clearFieldError(field as keyof FormErrors);
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleWebsiteBlur = () => {
+    if (!formData.website.trim()) {
+      clearFieldError("website");
+      return;
+    }
+    const normalized = normalizeWebsiteUrl(formData.website);
+    if (normalized !== formData.website) {
+      setFormData((prev) => ({ ...prev, website: normalized }));
+    }
+    const err = validateWebsiteUrl(normalized);
+    if (err) {
+      setErrors((prev) => ({ ...prev, website: err }));
+    } else {
+      clearFieldError("website");
+    }
+  };
+
+  const handleMapsLinkBlur = () => {
+    if (!formData.mapsLink.trim()) {
+      clearFieldError("mapsLink");
+      return;
+    }
+    const normalized = normalizeGoogleMapsUrl(formData.mapsLink);
+    if (normalized !== formData.mapsLink) {
+      setFormData((prev) => ({ ...prev, mapsLink: normalized }));
+    }
+    const err = validateGoogleMapsUrl(normalized);
+    if (err) {
+      setErrors((prev) => ({ ...prev, mapsLink: err }));
+    } else {
+      clearFieldError("mapsLink");
+    }
   };
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -199,6 +241,8 @@ export function useCreateBranchForm() {
     if (Object.keys(validationErrors).length > 0) {
       if (validationErrors.socialLinks) {
         showToast(validationErrors.socialLinks);
+      } else if (validationErrors.website || validationErrors.mapsLink) {
+        showToast("Please correct invalid or broken links marked in red.");
       } else {
         showToast("Please fill in the required fields marked in red.");
       }
@@ -243,6 +287,8 @@ export function useCreateBranchForm() {
     clearFieldError,
     setIsLogoModalOpen,
     handleFieldChange,
+    handleWebsiteBlur,
+    handleMapsLinkBlur,
     handleNameChange,
     handleSlugChange,
     handleStatusToggle,

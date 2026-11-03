@@ -37,6 +37,8 @@ export function CreateBranchView() {
     clearFieldError,
     setIsLogoModalOpen,
     handleFieldChange,
+    handleWebsiteBlur,
+    handleMapsLinkBlur,
     handleNameChange,
     handleSlugChange,
     handleStatusToggle,
@@ -81,6 +83,8 @@ export function CreateBranchView() {
           logoPreview={logoPreview}
           logoFileName={logoFileName}
           onFieldChange={handleFieldChange}
+          onWebsiteBlur={handleWebsiteBlur}
+          onMapsLinkBlur={handleMapsLinkBlur}
           onNameChange={handleNameChange}
           onSlugChange={handleSlugChange}
           onStatusToggle={handleStatusToggle}

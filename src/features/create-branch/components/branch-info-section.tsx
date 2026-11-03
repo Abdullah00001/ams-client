@@ -18,6 +18,8 @@ interface BranchInfoSectionProps {
   logoPreview: string | null;
   logoFileName: string;
   onFieldChange: (field: keyof CreateBranchFormData, value: string) => void;
+  onWebsiteBlur?: () => void;
+  onMapsLinkBlur?: () => void;
   onNameChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSlugChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onStatusToggle: () => void;
@@ -34,6 +36,8 @@ export function BranchInfoSection({
   logoPreview,
   logoFileName,
   onFieldChange,
+  onWebsiteBlur,
+  onMapsLinkBlur,
   onNameChange,
   onSlugChange,
   onStatusToggle,
@@ -202,32 +206,60 @@ export function BranchInfoSection({
 
         {/* Branch Website */}
         <div className={styles.fieldGroup}>
-          <label htmlFor="website" className={styles.fieldLabel}>
+          <label
+            htmlFor="website"
+            className={clsx(styles.fieldLabel, errors.website && styles.fieldLabelInvalid)}
+          >
             Branch Website <span className={styles.fieldHint}>(Optional)</span>
           </label>
           <input
             id="website"
             type="url"
             value={formData.website}
-            onChange={(e) => onFieldChange("website", e.target.value)}
+            onChange={(e) => {
+              clearFieldError("website");
+              onFieldChange("website", e.target.value);
+            }}
+            onBlur={onWebsiteBlur}
             placeholder="https://dsca.edu.bd"
-            className={styles.textInput}
+            className={clsx(styles.textInput, errors.website && styles.textInputInvalid)}
+            aria-invalid={Boolean(errors.website)}
+            aria-describedby={errors.website ? "website-error" : undefined}
           />
+          {errors.website ? (
+            <p id="website-error" className={styles.fieldErrorText}>
+              {errors.website}
+            </p>
+          ) : null}
         </div>
 
         {/* Google Maps Link */}
         <div className={styles.fieldGroup}>
-          <label htmlFor="mapsLink" className={styles.fieldLabel}>
+          <label
+            htmlFor="mapsLink"
+            className={clsx(styles.fieldLabel, errors.mapsLink && styles.fieldLabelInvalid)}
+          >
             Google Maps Link <span className={styles.fieldHint}>(Optional)</span>
           </label>
           <input
             id="mapsLink"
             type="url"
             value={formData.mapsLink}
-            onChange={(e) => onFieldChange("mapsLink", e.target.value)}
+            onChange={(e) => {
+              clearFieldError("mapsLink");
+              onFieldChange("mapsLink", e.target.value);
+            }}
+            onBlur={onMapsLinkBlur}
             placeholder="https://maps.google.com/?q=..."
-            className={styles.textInput}
+            className={clsx(styles.textInput, errors.mapsLink && styles.textInputInvalid)}
+            aria-invalid={Boolean(errors.mapsLink)}
+            aria-describedby={errors.mapsLink ? "mapsLink-error" : undefined}
           />
+          {errors.mapsLink ? (
+            <p id="mapsLink-error" className={styles.fieldErrorText}>
+              {errors.mapsLink}
+            </p>
+          ) : null}
         </div>
 
         {/* Operating Status Switch */}
