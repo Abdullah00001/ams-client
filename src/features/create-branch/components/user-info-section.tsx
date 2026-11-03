@@ -290,7 +290,7 @@ export function UserInfoSection({
     const errs: typeof userInfoErrors = {};
 
     if (!userName.trim()) {
-      errs.name = "User Name is required.";
+      errs.name = "Full Name is required.";
     }
     if (!userEmail.trim()) {
       errs.email = "User Email is required.";
@@ -518,7 +518,7 @@ export function UserInfoSection({
           {isFormOpen && userMode === "create" ? (
             <>
               <div className={styles.grid3Col}>
-                {/* User Name */}
+                {/* Full Name */}
                 <div className={styles.fieldGroup}>
                   <label
                     htmlFor="userName"
@@ -527,7 +527,7 @@ export function UserInfoSection({
                       userInfoErrors.name && styles.fieldLabelInvalid,
                     )}
                   >
-                    User Name
+                    Full Name
                   </label>
                   <input
                     id="userName"
