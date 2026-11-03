@@ -218,22 +218,51 @@
   color: var(--ams-color-primary-300, #1b84ff);
 }
 
+.userSearchPositioner {
+  z-index: 1000;
+  width: var(--anchor-width);
+  max-width: 480px;
+  outline: none;
+}
+
 .userSearchDropdown {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
+  box-sizing: border-box;
   background-color: #ffffff;
   border: 1px solid var(--ams-color-border-subtle, #eff1f4);
   border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.08),
+    0 8px 10px -6px rgba(0, 0, 0, 0.04);
   max-height: 280px;
   overflow-y: auto;
-  z-index: 100;
   padding: 6px;
+  outline: none;
+  animation: userSearchPopupIn 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes userSearchPopupIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.userSearchList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  outline: none;
 }
 
 .userSearchItem {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -242,9 +271,12 @@
   cursor: pointer;
   transition: background-color 150ms ease;
   gap: 12px;
+  outline: none;
+  overflow: hidden;
 }
 
-.userSearchItem:hover {
+.userSearchItem:hover,
+.userSearchItem[data-highlighted] {
   background-color: var(--ams-color-grayscale-100, #f4f6fa);
 }
 

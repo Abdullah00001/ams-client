@@ -17,7 +17,8 @@ import {
   UserPlus,
   X,
 } from "lucide-react";
-import { Dropdown } from "@/components/ui/dropdown";
+import { Dropdown, Autocomplete } from "@/components/ui/dropdown";
+import { createTouchRipple } from "@/lib/touch-ripple";
 import {
   COUNTRY_OPTIONS,
   MOCK_EXISTING_USERS,
@@ -501,95 +502,112 @@ export function UserInfoSection({
           {/* Search Bar & Switch Mode */}
           {userMode === "search" ? (
             <div className={styles.userSearchContainer}>
-              <div className={styles.userSearchBar}>
-                <Search size={16} className={styles.searchIcon} />
-                <input
-                  type="text"
-                  value={userSearchQuery}
-                  onChange={handleSearchChange}
-                  onFocus={handleSearchFocus}
-                  placeholder="Search user by name, email, or mobile..."
-                  className={styles.userSearchInput}
-                />
-                {isSearching ? (
-                  <span className={styles.searchLoader} aria-label="Loading search results">
-                    <Loader2 size={16} />
-                  </span>
-                ) : userSearchQuery ? (
-                  <button
-                    type="button"
-                    onClick={handleSwitchToSearch}
-                    className={styles.clearSearchBtn}
-                    aria-label="Clear search"
-                  >
-                    <X size={14} />
-                  </button>
-                ) : null}
+              <Autocomplete.Root<ExistingUser>
+                open={isUserSearchOpen && Boolean(userSearchQuery.trim())}
+                onOpenChange={(nextOpen) => setIsUserSearchOpen(nextOpen)}
+                items={filteredUsers}
+                itemToStringValue={(u) => (u ? u.name : "")}
+                filter={null}
+                modal={false}
+              >
+                <Autocomplete.InputGroup className={styles.userSearchBar}>
+                  <Search size={16} className={styles.searchIcon} />
+                  <Autocomplete.Input
+                    value={userSearchQuery}
+                    onChange={handleSearchChange}
+                    onFocus={handleSearchFocus}
+                    placeholder="Search user by name, email, or mobile..."
+                    className={styles.userSearchInput}
+                  />
+                  {isSearching ? (
+                    <span className={styles.searchLoader} aria-label="Loading search results">
+                      <Loader2 size={16} />
+                    </span>
+                  ) : userSearchQuery ? (
+                    <button
+                      type="button"
+                      onClick={handleSwitchToSearch}
+                      className={styles.clearSearchBtn}
+                      aria-label="Clear search"
+                    >
+                      <X size={14} />
+                    </button>
+                  ) : null}
+                </Autocomplete.InputGroup>
 
-                {/* Autocomplete Dropdown with Circle Avatars */}
-                {isUserSearchOpen && userSearchQuery.trim() ? (
-                  <div className={styles.userSearchDropdown}>
-                    {isSearching ? (
-                      <div className={styles.userSearchEmpty}>
-                        <Loader2 size={18} className={styles.searchLoaderInline} />
-                        <span>Searching users...</span>
-                      </div>
-                    ) : filteredUsers.length > 0 ? (
-                      filteredUsers.map((u) => {
-                        const uPalette = getAvatarPalette(u.name);
-                        const uInitials = getUserInitials(u.name);
-                        return (
-                          <div
-                            key={u.id}
-                            className={styles.userSearchItem}
-                            onClick={() => handleSelectUser(u)}
-                          >
-                            <div className={styles.userSearchItemInfo}>
-                              <div
-                                className={styles.userSearchAvatar}
-                                style={{
-                                  backgroundColor: uPalette.bg,
-                                  color: uPalette.text,
-                                  borderColor: uPalette.border,
-                                }}
+                <Autocomplete.Portal>
+                  <Autocomplete.Positioner
+                    sideOffset={6}
+                    align="start"
+                    className={styles.userSearchPositioner}
+                  >
+                    <Autocomplete.Popup className={styles.userSearchDropdown}>
+                      {isSearching ? (
+                        <div className={styles.userSearchEmpty}>
+                          <Loader2 size={18} className={styles.searchLoaderInline} />
+                          <span>Searching users...</span>
+                        </div>
+                      ) : filteredUsers.length > 0 ? (
+                        <Autocomplete.List className={styles.userSearchList}>
+                          {filteredUsers.map((u) => {
+                            const uPalette = getAvatarPalette(u.name);
+                            const uInitials = getUserInitials(u.name);
+                            return (
+                              <Autocomplete.Item
+                                key={u.id}
+                                value={u}
+                                onClick={() => handleSelectUser(u)}
+                                onMouseDown={(e) => createTouchRipple(e, "primary")}
+                                className={styles.userSearchItem}
                               >
-                                {uInitials}
-                              </div>
-                              <div className={styles.userSearchMeta}>
-                                <span className={styles.userSearchName}>{u.name}</span>
-                                <span className={styles.userSearchEmailPhone}>
-                                  {u.email} • {u.countryCode} {u.phone}
-                                </span>
-                              </div>
-                            </div>
-                            <span className={styles.userRoleBadge}>{u.role}</span>
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <div className={styles.userSearchEmpty}>
-                        <span>No existing users found matching &ldquo;{userSearchQuery}&rdquo;</span>
-                        <button
-                          type="button"
-                          onClick={() => handleSwitchToCreate(userSearchQuery)}
-                          className={styles.userSearchEmptyBtn}
-                        >
-                          {(() => {
-                            const detected = detectQueryType(userSearchQuery);
-                            if (detected.type === "email") {
-                              return `+ Create new user with email "${userSearchQuery}"`;
-                            }
-                            if (detected.type === "phone") {
-                              return `+ Create new user with mobile "${userSearchQuery}"`;
-                            }
-                            return `+ Create new user "${userSearchQuery}"`;
-                          })()}
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ) : null}
-              </div>
+                                <div className={styles.userSearchItemInfo}>
+                                  <div
+                                    className={styles.userSearchAvatar}
+                                    style={{
+                                      backgroundColor: uPalette.bg,
+                                      color: uPalette.text,
+                                      borderColor: uPalette.border,
+                                    }}
+                                  >
+                                    {uInitials}
+                                  </div>
+                                  <div className={styles.userSearchMeta}>
+                                    <span className={styles.userSearchName}>{u.name}</span>
+                                    <span className={styles.userSearchEmailPhone}>
+                                      {u.email} • {u.countryCode} {u.phone}
+                                    </span>
+                                  </div>
+                                </div>
+                                <span className={styles.userRoleBadge}>{u.role}</span>
+                              </Autocomplete.Item>
+                            );
+                          })}
+                        </Autocomplete.List>
+                      ) : (
+                        <div className={styles.userSearchEmpty}>
+                          <span>No existing users found matching &ldquo;{userSearchQuery}&rdquo;</span>
+                          <button
+                            type="button"
+                            onClick={() => handleSwitchToCreate(userSearchQuery)}
+                            className={styles.userSearchEmptyBtn}
+                          >
+                            {(() => {
+                              const detected = detectQueryType(userSearchQuery);
+                              if (detected.type === "email") {
+                                return `+ Create new user with email "${userSearchQuery}"`;
+                              }
+                              if (detected.type === "phone") {
+                                return `+ Create new user with mobile "${userSearchQuery}"`;
+                              }
+                              return `+ Create new user "${userSearchQuery}"`;
+                            })()}
+                          </button>
+                        </div>
+                      )}
+                    </Autocomplete.Popup>
+                  </Autocomplete.Positioner>
+                </Autocomplete.Portal>
+              </Autocomplete.Root>
 
               {/* Create New User button and OR divider */}
               <span className={styles.orDivider}>or</span>

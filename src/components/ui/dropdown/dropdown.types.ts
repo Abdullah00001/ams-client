@@ -45,6 +45,7 @@ export interface DropdownProps<T = string> {
   enableRipple?: boolean;
   alignItemWithTrigger?: boolean;
   sideOffset?: number;
+  modal?: boolean;
 }
 
 export interface DropdownMenuItem {
@@ -67,5 +68,6 @@ export interface DropdownMenuProps {
   popupClassName?: string;
   disabled?: boolean;
   enableRipple?: boolean;
+  modal?: boolean;
 }
 

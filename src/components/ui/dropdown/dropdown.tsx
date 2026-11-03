@@ -10,7 +10,7 @@
 "use client";
 
 import { useId, useMemo, type MouseEvent } from "react";
-import { Select, Menu } from "@base-ui/react";
+import { Select, Menu, Autocomplete } from "@base-ui/react";
 import clsx from "clsx";
 import { Check, ChevronDown } from "lucide-react";
 import { createTouchRipple } from "@/lib/touch-ripple";
@@ -48,6 +48,7 @@ export function Dropdown<T = string>({
   id,
   invalid = false,
   label,
+  modal = false,
   name,
   onChange,
   onValueChange,
@@ -130,6 +131,7 @@ export function Dropdown<T = string>({
         readOnly={readOnly}
         required={required}
         items={baseItems}
+        modal={modal}
       >
         <Select.Trigger
           onMouseDown={handleTriggerMouseDown}
@@ -241,6 +243,9 @@ Dropdown.ItemIndicator = Select.ItemIndicator;
 Dropdown.Group = Select.Group;
 Dropdown.GroupLabel = Select.GroupLabel;
 Dropdown.Separator = Select.Separator;
+Dropdown.Autocomplete = Autocomplete;
+
+export { Autocomplete };
 
 /**
  * Dropdown Action Menu Component (MUI style Action Menu with Base UI)
@@ -263,6 +268,7 @@ export function DropdownMenu({
   disabled = false,
   enableRipple = true,
   items,
+  modal = false,
   popupClassName,
   sideOffset = 6,
   trigger,
@@ -274,7 +280,7 @@ export function DropdownMenu({
   };
 
   return (
-    <Menu.Root>
+    <Menu.Root modal={modal}>
       <Menu.Trigger
         disabled={disabled}
         className={className}
