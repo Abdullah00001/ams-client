@@ -142,6 +142,7 @@ export function useCreateBranchForm() {
   };
 
   const handleSocialPlatformChange = (id: string, platform: SocialMediaPlatform) => {
+    clearFieldError("socialLinks");
     setFormData((prev) => ({
       ...prev,
       socialLinks: prev.socialLinks.map((s) =>
@@ -151,6 +152,7 @@ export function useCreateBranchForm() {
   };
 
   const handleSocialUrlChange = (id: string, url: string) => {
+    clearFieldError("socialLinks");
     setFormData((prev) => ({
       ...prev,
       socialLinks: prev.socialLinks.map((s) =>
@@ -195,7 +197,11 @@ export function useCreateBranchForm() {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
-      showToast("Please fill in the required fields marked in red.");
+      if (validationErrors.socialLinks) {
+        showToast(validationErrors.socialLinks);
+      } else {
+        showToast("Please fill in the required fields marked in red.");
+      }
       return;
     }
 

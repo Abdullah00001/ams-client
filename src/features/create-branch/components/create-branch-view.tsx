@@ -97,6 +97,7 @@ export function CreateBranchView() {
           onRemoveRow={handleRemoveSocialRow}
           onPlatformChange={handleSocialPlatformChange}
           onUrlChange={handleSocialUrlChange}
+          errorMessage={errors.socialLinks}
         />
 
         {/* Section 3: User Info */}

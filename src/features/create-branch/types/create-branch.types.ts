@@ -56,6 +56,7 @@ export interface FormErrors {
   email?: string;
   phone?: string;
   permissions?: string;
+  socialLinks?: string;
 }
 
 export interface ExistingUser {

@@ -4,12 +4,14 @@
  */
 
 import type { CreateBranchFormData, FormErrors } from "../types";
+import { validateSocialUrl } from "./social-media-utils";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
  * Validates the Create Branch form data.
- * Checks required fields, valid email format, and the minimum 3 features rule.
+ * Checks required fields, valid email format, minimum 3 features rule,
+ * and validates that any entered social media links are working and unbroken.
  */
 export function validateCreateBranchForm(formData: CreateBranchFormData): FormErrors {
   const errors: FormErrors = {};
@@ -43,6 +45,17 @@ export function validateCreateBranchForm(formData: CreateBranchFormData): FormEr
   const activePermissionsCount = Object.values(formData.permissions).filter(Boolean).length;
   if (activePermissionsCount < 3) {
     errors.permissions = "This is an error... (At least 3 feature permissions must be selected)";
+  }
+
+  // Validate non-empty social links
+  for (const social of formData.socialLinks) {
+    if (social.url.trim()) {
+      const socialErr = validateSocialUrl(social.platform, social.url);
+      if (socialErr) {
+        errors.socialLinks = "Please correct invalid or broken social media links before submitting.";
+        break;
+      }
+    }
   }
 
   return errors;
