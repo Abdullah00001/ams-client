@@ -214,7 +214,7 @@ export function useCreateBranchForm() {
       if (activeCount < 3) {
         setErrors((prevErr) => ({
           ...prevErr,
-          permissions: "This is an error... (At least 3 feature permissions must be selected)",
+          permissions: "At least 3 feature permissions must be selected",
         }));
       } else {
         setErrors((prevErr) => {

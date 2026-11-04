@@ -22,7 +22,7 @@ export function validateWebsiteUrl(url: string): string | null {
   if (!trimmed) return null; // Optional
 
   if (/\s/.test(trimmed)) {
-    return "This is an error... (Website URL cannot contain spaces)";
+    return "Website URL cannot contain spaces";
   }
 
   const normalized = normalizeWebsiteUrl(trimmed);
@@ -30,20 +30,20 @@ export function validateWebsiteUrl(url: string): string | null {
   try {
     const parsed = new URL(normalized);
     if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
-      return "This is an error... (Please enter a valid website URL with http or https)";
+      return "Please enter a valid website URL with http or https";
     }
     const host = parsed.hostname;
     if (!host || !host.includes(".") || host.startsWith(".") || host.endsWith(".")) {
-      return "This is an error... (Please enter a valid website URL, e.g. https://dsca.edu.bd)";
+      return "Please enter a valid website URL, e.g. https://dsca.edu.bd";
     }
     const parts = host.split(".");
     const tld = parts[parts.length - 1];
     if (tld.length < 2 || !/^[a-zA-Z]+$/.test(tld)) {
-      return "This is an error... (Please enter a valid website URL with a valid domain extension)";
+      return "Please enter a valid website URL with a valid domain extension";
     }
     return null;
   } catch {
-    return "This is an error... (Please enter a valid website URL, e.g. https://dsca.edu.bd)";
+    return "Please enter a valid website URL, e.g. https://dsca.edu.bd";
   }
 }
 
@@ -61,7 +61,7 @@ export function validateGoogleMapsUrl(url: string): string | null {
   if (!trimmed) return null; // Optional
 
   if (/\s/.test(trimmed)) {
-    return "This is an error... (Google Maps link cannot contain spaces)";
+    return "Google Maps link cannot contain spaces";
   }
 
   const normalized = normalizeGoogleMapsUrl(trimmed);
@@ -69,7 +69,7 @@ export function validateGoogleMapsUrl(url: string): string | null {
   try {
     const parsed = new URL(normalized);
     if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
-      return "This is an error... (Please enter a valid Google Maps link with http or https)";
+      return "Please enter a valid Google Maps link with http or https";
     }
     const host = parsed.hostname.toLowerCase();
     const path = parsed.pathname.toLowerCase();
@@ -94,12 +94,12 @@ export function validateGoogleMapsUrl(url: string): string | null {
       !isMapsAppGooGl &&
       !isGCoMaps
     ) {
-      return "This is an error... (Please enter a valid Google Maps link, e.g. https://maps.google.com/?q=...)";
+      return "Please enter a valid Google Maps link, e.g. https://maps.google.com/?q=...";
     }
 
     return null;
   } catch {
-    return "This is an error... (Please enter a valid Google Maps link, e.g. https://maps.google.com/?q=...)";
+    return "Please enter a valid Google Maps link, e.g. https://maps.google.com/?q=...";
   }
 }
 
@@ -112,29 +112,29 @@ export function validateCreateBranchForm(formData: CreateBranchFormData): FormEr
   const errors: FormErrors = {};
 
   if (!formData.name.trim()) {
-    errors.name = "This is an error... (Branch name is required)";
+    errors.name = "Branch name is required";
   }
 
   if (!formData.adminName.trim()) {
-    errors.adminName = "This is an error... (Please search and select, or create a branch admin account in User Info)";
+    errors.adminName = "Please search and select, or create a branch admin account in User Info";
   }
 
   if (!formData.slug.trim()) {
-    errors.slug = "This is an error... (Branch code / slug is required)";
+    errors.slug = "Branch code / slug is required";
   }
 
   if (!formData.address.trim()) {
-    errors.address = "This is an error... (Campus address is required)";
+    errors.address = "Campus address is required";
   }
 
   if (!formData.email.trim()) {
-    errors.email = "This is an error... (Branch email is required)";
+    errors.email = "Branch email is required";
   } else if (!EMAIL_REGEX.test(formData.email)) {
-    errors.email = "This is an error... (Please enter a valid email address)";
+    errors.email = "Please enter a valid email address";
   }
 
   if (!formData.phone.trim()) {
-    errors.phone = "This is an error... (Phone number is required)";
+    errors.phone = "Phone number is required";
   }
 
   if (formData.website.trim()) {
@@ -153,7 +153,7 @@ export function validateCreateBranchForm(formData: CreateBranchFormData): FormEr
 
   const activePermissionsCount = Object.values(formData.permissions).filter(Boolean).length;
   if (activePermissionsCount < 3) {
-    errors.permissions = "This is an error... (At least 3 feature permissions must be selected)";
+    errors.permissions = "At least 3 feature permissions must be selected";
   }
 
   // Validate non-empty social links
