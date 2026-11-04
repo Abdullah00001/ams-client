@@ -127,6 +127,22 @@ export const MOCK_EXISTING_USERS: ExistingUser[] = [
     phone: "07019876543",
     role: "Lead Trainer",
   },
+  {
+    id: "usr-6",
+    name: "Nafis Fuad",
+    email: "nafis.fuad@dsca.edu.bd",
+    countryCode: "+880",
+    phone: "01755667788",
+    role: "Campus Executive",
+  },
+  {
+    id: "usr-7",
+    name: "Zubaida Begum",
+    email: "zubaida.b@ams.edu.bd",
+    countryCode: "+880",
+    phone: "01844556677",
+    role: "Course Director",
+  },
 ];
 
 export const INITIAL_PERMISSIONS: BranchFeaturePermissions = {

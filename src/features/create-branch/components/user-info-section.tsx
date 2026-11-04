@@ -10,6 +10,7 @@ import clsx from "clsx";
 import {
   Check,
   CheckCircle2,
+  Clock,
   Eye,
   EyeOff,
   Loader2,
@@ -196,6 +197,8 @@ export function UserInfoSection({
     general?: string;
   }>({});
 
+  const isQueryEmpty = !userSearchQuery.trim();
+
   const filteredUsers = MOCK_EXISTING_USERS.filter((u) => {
     const q = userSearchQuery.toLowerCase().trim();
     if (!q) return true;
@@ -207,6 +210,10 @@ export function UserInfoSection({
     );
   });
 
+  const displayedUsers = isQueryEmpty
+    ? MOCK_EXISTING_USERS.slice(0, 5)
+    : filteredUsers;
+
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setUserSearchQuery(val);
@@ -216,8 +223,8 @@ export function UserInfoSection({
     }
 
     if (!val.trim()) {
-      setIsUserSearchOpen(false);
       setIsSearching(false);
+      setIsUserSearchOpen(true);
       return;
     }
 
@@ -230,9 +237,12 @@ export function UserInfoSection({
   };
 
   const handleSearchFocus = () => {
-    if (userSearchQuery.trim()) {
-      setIsUserSearchOpen(true);
-    }
+    setIsUserSearchOpen(true);
+  };
+
+  const handleClearSearch = () => {
+    setUserSearchQuery("");
+    setIsUserSearchOpen(true);
   };
 
   const handleSelectUser = (user: ExistingUser) => {
@@ -446,7 +456,10 @@ export function UserInfoSection({
   return (
     <section className={styles.section} aria-labelledby="section-user-info">
       <div className={styles.sectionHeader}>
-        <h2 id="section-user-info" className={styles.sectionTitle}>
+        <h2
+          id="section-user-info"
+          className={clsx(styles.sectionTitle, errorMessage && styles.sectionTitleInvalid)}
+        >
           User Info<span className={styles.requiredAsterisk}>*</span>
         </h2>
         <p className={styles.sectionSubtitle}>
@@ -503,12 +516,13 @@ export function UserInfoSection({
           {userMode === "search" ? (
             <div className={styles.userSearchContainer}>
               <Autocomplete.Root<ExistingUser>
-                open={isUserSearchOpen && Boolean(userSearchQuery.trim())}
+                open={isUserSearchOpen}
                 onOpenChange={(nextOpen) => setIsUserSearchOpen(nextOpen)}
-                items={filteredUsers}
+                items={displayedUsers}
                 itemToStringValue={(u) => (u ? u.name : "")}
                 filter={null}
                 modal={false}
+                openOnInputClick={true}
               >
                 <Autocomplete.InputGroup className={styles.userSearchBar}>
                   <Search size={16} className={styles.searchIcon} />
@@ -516,6 +530,7 @@ export function UserInfoSection({
                     value={userSearchQuery}
                     onChange={handleSearchChange}
                     onFocus={handleSearchFocus}
+                    onClick={() => setIsUserSearchOpen(true)}
                     placeholder="Search user by name, email, or mobile..."
                     className={styles.userSearchInput}
                   />
@@ -526,7 +541,7 @@ export function UserInfoSection({
                   ) : userSearchQuery ? (
                     <button
                       type="button"
-                      onClick={handleSwitchToSearch}
+                      onClick={handleClearSearch}
                       className={styles.clearSearchBtn}
                       aria-label="Clear search"
                     >
@@ -547,42 +562,63 @@ export function UserInfoSection({
                           <Loader2 size={18} className={styles.searchLoaderInline} />
                           <span>Searching users...</span>
                         </div>
-                      ) : filteredUsers.length > 0 ? (
-                        <Autocomplete.List className={styles.userSearchList}>
-                          {filteredUsers.map((u) => {
-                            const uPalette = getAvatarPalette(u.name);
-                            const uInitials = getUserInitials(u.name);
-                            return (
-                              <Autocomplete.Item
-                                key={u.id}
-                                value={u}
-                                onClick={() => handleSelectUser(u)}
-                                onMouseDown={(e) => createTouchRipple(e, "primary")}
-                                className={styles.userSearchItem}
-                              >
-                                <div className={styles.userSearchItemInfo}>
-                                  <div
-                                    className={styles.userSearchAvatar}
-                                    style={{
-                                      backgroundColor: uPalette.bg,
-                                      color: uPalette.text,
-                                      borderColor: uPalette.border,
-                                    }}
-                                  >
-                                    {uInitials}
+                      ) : displayedUsers.length > 0 ? (
+                        <>
+                          <div className={styles.userSearchSectionHeader}>
+                            <div className={styles.userSearchSectionTitleRow}>
+                              {isQueryEmpty ? (
+                                <>
+                                  <Clock size={12} />
+                                  <span>Recently Added Users</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Search size={12} />
+                                  <span>Matching Users</span>
+                                </>
+                              )}
+                            </div>
+                            <span className={styles.userSearchSectionBadge}>
+                              {isQueryEmpty ? "5 Latest" : `${displayedUsers.length} found`}
+                            </span>
+                          </div>
+
+                          <Autocomplete.List className={styles.userSearchList}>
+                            {displayedUsers.map((u) => {
+                              const uPalette = getAvatarPalette(u.name);
+                              const uInitials = getUserInitials(u.name);
+                              return (
+                                <Autocomplete.Item
+                                  key={u.id}
+                                  value={u}
+                                  onClick={() => handleSelectUser(u)}
+                                  onMouseDown={(e) => createTouchRipple(e, "primary")}
+                                  className={styles.userSearchItem}
+                                >
+                                  <div className={styles.userSearchItemInfo}>
+                                    <div
+                                      className={styles.userSearchAvatar}
+                                      style={{
+                                        backgroundColor: uPalette.bg,
+                                        color: uPalette.text,
+                                        borderColor: uPalette.border,
+                                      }}
+                                    >
+                                      {uInitials}
+                                    </div>
+                                    <div className={styles.userSearchMeta}>
+                                      <span className={styles.userSearchName}>{u.name}</span>
+                                      <span className={styles.userSearchEmailPhone}>
+                                        {u.email} • {u.countryCode} {u.phone}
+                                      </span>
+                                    </div>
                                   </div>
-                                  <div className={styles.userSearchMeta}>
-                                    <span className={styles.userSearchName}>{u.name}</span>
-                                    <span className={styles.userSearchEmailPhone}>
-                                      {u.email} • {u.countryCode} {u.phone}
-                                    </span>
-                                  </div>
-                                </div>
-                                <span className={styles.userRoleBadge}>{u.role}</span>
-                              </Autocomplete.Item>
-                            );
-                          })}
-                        </Autocomplete.List>
+                                  <span className={styles.userRoleBadge}>{u.role}</span>
+                                </Autocomplete.Item>
+                              );
+                            })}
+                          </Autocomplete.List>
+                        </>
                       ) : (
                         <div className={styles.userSearchEmpty}>
                           <span>No existing users found matching &ldquo;{userSearchQuery}&rdquo;</span>

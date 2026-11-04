@@ -43,6 +43,12 @@
   gap: 20px 24px;
 }
 
+.grid2Col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 24px;
+}
+
 .fieldGroup {
   display: flex;
   flex-direction: column;
@@ -403,13 +409,15 @@
 }
 
 @media (max-width: 1024px) {
-  .grid3Col {
+  .grid3Col,
+  .grid2Col {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 640px) {
-  .grid3Col {
+  .grid3Col,
+  .grid2Col {
     grid-template-columns: 1fr;
   }
 }

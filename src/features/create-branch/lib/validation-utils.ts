@@ -116,7 +116,7 @@ export function validateCreateBranchForm(formData: CreateBranchFormData): FormEr
   }
 
   if (!formData.adminName.trim()) {
-    errors.adminName = "This is an error... (Admin/Manager name is required in User Info)";
+    errors.adminName = "This is an error... (Please search and select, or create a branch admin account in User Info)";
   }
 
   if (!formData.slug.trim()) {
