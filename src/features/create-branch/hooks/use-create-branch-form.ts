@@ -289,7 +289,7 @@ export function useCreateBranchForm() {
 
   const handleViewAllBranches = () => {
     setIsSuccessModalOpen(false);
-    router.push("/branches");
+    router.push("/branches", { scroll: false });
   };
 
   return {

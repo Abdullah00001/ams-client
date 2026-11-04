@@ -45,6 +45,7 @@ export function SidebarNavigationItem({
           aria-label={item.label}
           className={itemClassName}
           href={item.href}
+          scroll={false}
           onClick={(e) => createRipple(e, isCurrentPage)}
         >
           {itemContent}

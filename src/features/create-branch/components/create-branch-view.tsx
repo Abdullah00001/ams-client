@@ -66,11 +66,11 @@ export function CreateBranchView() {
       <header className={styles.header}>
         <h1 className={styles.title}>Create Branch</h1>
         <nav aria-label="Breadcrumb" className={styles.breadcrumb}>
-          <Link href="/" className={styles.breadcrumbLink}>
+          <Link href="/" scroll={false} className={styles.breadcrumbLink}>
             Dashboard
           </Link>
           <span className={styles.breadcrumbSeparator}>/</span>
-          <Link href="/branches" className={styles.breadcrumbLink}>
+          <Link href="/branches" scroll={false} className={styles.breadcrumbLink}>
             Branches
           </Link>
           <span className={styles.breadcrumbSeparator}>/</span>

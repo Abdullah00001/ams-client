@@ -289,11 +289,13 @@ function SidebarNavigationGroup({
             type="button"
           >
             <span className={styles.groupTriggerLabel}>
-              <GroupIcon aria-hidden="true" className={styles.groupIcon} />
+              <GroupIcon aria-hidden="true" className={styles.groupIcon} size={16} strokeWidth={1.9} />
               <span>{group.label}</span>
             </span>
             <ChevronRight
               aria-hidden="true"
+              size={16}
+              strokeWidth={1.9}
               className={clsx(styles.groupChevron, isGroupExpanded && styles.groupChevronExpanded)}
             />
           </button>

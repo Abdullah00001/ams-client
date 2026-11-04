@@ -1,6 +1,8 @@
 .shell {
   display: flex;
-  min-block-size: 100dvh;
+  block-size: 100dvh;
+  max-block-size: 100dvh;
+  overflow: hidden;
   background: var(--ams-color-surface-page);
 }
 
@@ -9,9 +11,13 @@
   min-inline-size: 0;
   flex: 1 1 auto;
   flex-direction: column;
+  block-size: 100%;
+  overflow: hidden;
 }
 
 .content {
   min-inline-size: 0;
   flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

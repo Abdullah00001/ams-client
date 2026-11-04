@@ -40,7 +40,7 @@ export function useBranches() {
   };
 
   const handleCreateBranch = () => {
-    router.push("/branches/create");
+    router.push("/branches/create", { scroll: false });
   };
 
   const handleAction = (action: BranchQuickAction, branch: Branch) => {
