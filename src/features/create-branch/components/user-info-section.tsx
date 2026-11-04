@@ -5,7 +5,7 @@
 
 "use client";
 
-import { useState, useRef, type ChangeEvent } from "react";
+import { useState, useRef, useEffect, type ChangeEvent } from "react";
 import clsx from "clsx";
 import {
   Check,
@@ -176,6 +176,7 @@ export function UserInfoSection({
   const [userSearchQuery, setUserSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [isUserSearchOpen, setIsUserSearchOpen] = useState(false);
+  const [loadedUsers, setLoadedUsers] = useState<ExistingUser[]>([]);
   const [selectedExistingUser, setSelectedExistingUser] = useState<ExistingUser | null>(null);
   const searchTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -199,50 +200,70 @@ export function UserInfoSection({
 
   const isQueryEmpty = !userSearchQuery.trim();
 
-  const filteredUsers = MOCK_EXISTING_USERS.filter((u) => {
-    const q = userSearchQuery.toLowerCase().trim();
-    if (!q) return true;
-    return (
-      u.name.toLowerCase().includes(q) ||
-      u.email.toLowerCase().includes(q) ||
-      u.phone.includes(q) ||
-      u.role.toLowerCase().includes(q)
-    );
-  });
-
-  const displayedUsers = isQueryEmpty
-    ? MOCK_EXISTING_USERS.slice(0, 5)
-    : filteredUsers;
-
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    setUserSearchQuery(val);
+  const handleOpenSearch = (queryOverride?: string) => {
+    const q = typeof queryOverride === "string" ? queryOverride : userSearchQuery;
+    setIsUserSearchOpen(true);
+    setIsSearching(true);
 
     if (searchTimerRef.current) {
       clearTimeout(searchTimerRef.current);
     }
 
-    if (!val.trim()) {
-      setIsSearching(false);
-      setIsUserSearchOpen(true);
-      return;
-    }
-
-    setIsSearching(true);
-    setIsUserSearchOpen(true);
-
     searchTimerRef.current = setTimeout(() => {
+      const trimmed = q.toLowerCase().trim();
+      if (!trimmed) {
+        setLoadedUsers(MOCK_EXISTING_USERS.slice(0, 5));
+      } else {
+        const matched = MOCK_EXISTING_USERS.filter(
+          (u) =>
+            u.name.toLowerCase().includes(trimmed) ||
+            u.email.toLowerCase().includes(trimmed) ||
+            u.phone.includes(trimmed) ||
+            u.role.toLowerCase().includes(trimmed),
+        );
+        setLoadedUsers(matched);
+      }
       setIsSearching(false);
-    }, 280);
+    }, 450);
+  };
+
+  const handleCloseSearch = () => {
+    setIsUserSearchOpen(false);
+    setIsSearching(false);
+    if (searchTimerRef.current) {
+      clearTimeout(searchTimerRef.current);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (searchTimerRef.current) {
+        clearTimeout(searchTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setUserSearchQuery(val);
+    handleOpenSearch(val);
   };
 
   const handleSearchFocus = () => {
-    setIsUserSearchOpen(true);
+    if (!isUserSearchOpen) {
+      handleOpenSearch();
+    }
+  };
+
+  const handleInputClick = () => {
+    if (!isUserSearchOpen) {
+      handleOpenSearch();
+    }
   };
 
   const handleClearSearch = () => {
     setUserSearchQuery("");
-    setIsUserSearchOpen(true);
+    handleOpenSearch("");
   };
 
   const handleSelectUser = (user: ExistingUser) => {
@@ -517,8 +538,14 @@ export function UserInfoSection({
             <div className={styles.userSearchContainer}>
               <Autocomplete.Root<ExistingUser>
                 open={isUserSearchOpen}
-                onOpenChange={(nextOpen) => setIsUserSearchOpen(nextOpen)}
-                items={displayedUsers}
+                onOpenChange={(nextOpen) => {
+                  if (nextOpen) {
+                    handleOpenSearch();
+                  } else {
+                    handleCloseSearch();
+                  }
+                }}
+                items={loadedUsers}
                 itemToStringValue={(u) => (u ? u.name : "")}
                 filter={null}
                 modal={false}
@@ -530,7 +557,7 @@ export function UserInfoSection({
                     value={userSearchQuery}
                     onChange={handleSearchChange}
                     onFocus={handleSearchFocus}
-                    onClick={() => setIsUserSearchOpen(true)}
+                    onClick={handleInputClick}
                     placeholder="Search user by name, email, or mobile..."
                     className={styles.userSearchInput}
                   />
@@ -558,11 +585,15 @@ export function UserInfoSection({
                   >
                     <Autocomplete.Popup className={styles.userSearchDropdown}>
                       {isSearching ? (
-                        <div className={styles.userSearchEmpty}>
+                        <div className={styles.userSearchLoadingState}>
                           <Loader2 size={18} className={styles.searchLoaderInline} />
-                          <span>Searching users...</span>
+                          <span>
+                            {isQueryEmpty
+                              ? "Loading recently added users..."
+                              : `Searching users matching "${userSearchQuery}"...`}
+                          </span>
                         </div>
-                      ) : displayedUsers.length > 0 ? (
+                      ) : loadedUsers.length > 0 ? (
                         <>
                           <div className={styles.userSearchSectionHeader}>
                             <div className={styles.userSearchSectionTitleRow}>
@@ -579,12 +610,12 @@ export function UserInfoSection({
                               )}
                             </div>
                             <span className={styles.userSearchSectionBadge}>
-                              {isQueryEmpty ? "5 Latest" : `${displayedUsers.length} found`}
+                              {isQueryEmpty ? "5 Latest" : `${loadedUsers.length} found`}
                             </span>
                           </div>
 
                           <Autocomplete.List className={styles.userSearchList}>
-                            {displayedUsers.map((u) => {
+                            {loadedUsers.map((u) => {
                               const uPalette = getAvatarPalette(u.name);
                               const uInitials = getUserInitials(u.name);
                               return (
@@ -607,9 +638,17 @@ export function UserInfoSection({
                                       {uInitials}
                                     </div>
                                     <div className={styles.userSearchMeta}>
-                                      <span className={styles.userSearchName}>{u.name}</span>
+                                      <span className={styles.userSearchName} title={u.name}>
+                                        {u.name}
+                                      </span>
                                       <span className={styles.userSearchEmailPhone}>
-                                        {u.email} • {u.countryCode} {u.phone}
+                                        <span className={styles.userSearchEmail} title={u.email}>
+                                          {u.email}
+                                        </span>
+                                        <span className={styles.userSearchDot}>•</span>
+                                        <span className={styles.userSearchPhone}>
+                                          {u.countryCode} {u.phone}
+                                        </span>
                                       </span>
                                     </div>
                                   </div>
