@@ -6,3 +6,4 @@
 export * from "./slug-utils";
 export * from "./social-media-utils";
 export * from "./validation-utils";
+export * from "./user-utils";
