@@ -59,6 +59,10 @@ export function useCreateBranchForm() {
   // Toast notification message
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  // Success popup state
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [createdBranchName, setCreatedBranchName] = useState("");
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3200);
@@ -251,10 +255,8 @@ export function useCreateBranchForm() {
 
     try {
       await submitCreateBranch(formData);
-      showToast(`Branch "${formData.name}" created successfully! Redirecting...`);
-      setTimeout(() => {
-        router.push("/branches");
-      }, 1200);
+      setCreatedBranchName(formData.name);
+      setIsSuccessModalOpen(true);
     } catch {
       showToast("Failed to create branch. Please try again.");
     }
@@ -274,6 +276,22 @@ export function useCreateBranchForm() {
     showToast("Form fields reset to defaults.");
   };
 
+  const handleCreateAnother = () => {
+    setIsSuccessModalOpen(false);
+    setFormData(INITIAL_FORM_DATA);
+    setErrors({});
+    setLogoPreview(null);
+    setIsLogoModalOpen(false);
+    setSlugManuallyEdited(false);
+    setResetKey((prev) => prev + 1);
+    showToast("Form reset. Ready to create another branch.");
+  };
+
+  const handleViewAllBranches = () => {
+    setIsSuccessModalOpen(false);
+    router.push("/branches");
+  };
+
   return {
     formData,
     errors,
@@ -282,6 +300,8 @@ export function useCreateBranchForm() {
     logoPreview,
     logoFileName,
     isLogoModalOpen,
+    isSuccessModalOpen,
+    createdBranchName,
     toastMessage,
     showToast,
     clearFieldError,
@@ -303,5 +323,7 @@ export function useCreateBranchForm() {
     handleSubmit,
     handleSaveDraft,
     handleReset,
+    handleCreateAnother,
+    handleViewAllBranches,
   };
 }

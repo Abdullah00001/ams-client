@@ -21,6 +21,7 @@ import { SocialMediaSection } from "./social-media-section";
 import { FeaturePermissionsSection } from "./feature-permissions-section";
 import { FormActionsRow } from "./form-actions-row";
 import { LogoLightboxModal } from "./logo-lightbox-modal";
+import { BranchSuccessModal } from "./branch-success-modal";
 import styles from "../styles/create-branch-view.module.css";
 
 export function CreateBranchView() {
@@ -32,6 +33,8 @@ export function CreateBranchView() {
     logoPreview,
     logoFileName,
     isLogoModalOpen,
+    isSuccessModalOpen,
+    createdBranchName,
     toastMessage,
     showToast,
     clearFieldError,
@@ -53,6 +56,8 @@ export function CreateBranchView() {
     handleSubmit,
     handleSaveDraft,
     handleReset,
+    handleCreateAnother,
+    handleViewAllBranches,
   } = useCreateBranchForm();
 
   return (
@@ -136,6 +141,14 @@ export function CreateBranchView() {
         logoUrl={logoPreview}
         logoFileName={logoFileName}
         onClose={() => setIsLogoModalOpen(false)}
+      />
+
+      {/* Branch Creation Success Popup */}
+      <BranchSuccessModal
+        isOpen={isSuccessModalOpen}
+        branchName={createdBranchName}
+        onCreateAnother={handleCreateAnother}
+        onViewAllBranches={handleViewAllBranches}
       />
     </div>
   );

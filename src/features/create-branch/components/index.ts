@@ -13,3 +13,4 @@ export * from "./social-media-section";
 export * from "./feature-permissions-section";
 export * from "./form-actions-row";
 export * from "./logo-lightbox-modal";
+export * from "./branch-success-modal";

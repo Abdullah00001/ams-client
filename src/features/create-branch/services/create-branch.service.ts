@@ -3,6 +3,8 @@
  * @module features/create-branch/services/create-branch.service
  */
 
+import { INITIAL_BRANCHES_DATA } from "@/features/branches/services";
+import type { Branch } from "@/features/branches/types";
 import {
   MOCK_EXISTING_USERS,
   type CreateBranchFormData,
@@ -39,11 +41,27 @@ export async function searchExistingUsers(
 export async function submitCreateBranch(
   payload: CreateBranchFormData,
 ): Promise<{ success: boolean; branchId: string }> {
-  void payload;
   // Simulate network delay
   await new Promise((resolve) => setTimeout(resolve, 400));
 
   const branchId = `branch-${Date.now()}`;
+
+  const newBranch: Branch = {
+    id: branchId,
+    name: payload.name,
+    code: payload.code || `AMS-${(payload.slug || "BR").toUpperCase().slice(0, 6)}`,
+    slug: payload.slug,
+    location: payload.address || "Main Campus Location",
+    activeStudents: 0,
+    activeBatches: 0,
+    status: payload.status,
+    brand: payload.brand || (payload.name.toUpperCase().includes("GBTA") ? "GBTA" : "DSCA"),
+    phone: payload.phone,
+    email: payload.email,
+  };
+
+  INITIAL_BRANCHES_DATA.unshift(newBranch);
+
   return {
     success: true,
     branchId,

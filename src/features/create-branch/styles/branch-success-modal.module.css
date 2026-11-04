@@ -1,0 +1,18 @@
+/**
+ * @fileoverview Branch Success Modal Styles
+ * @module features/create-branch/styles/branch-success-modal.module.css
+ */
+
+.descriptionText {
+  margin: 0;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
+.branchHighlight {
+  color: var(--ams-color-grayscale-400, #071437);
+  font-weight: 600;
+}
+
