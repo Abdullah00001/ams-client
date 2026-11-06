@@ -8,6 +8,7 @@
 import type { ChangeEvent } from "react";
 import clsx from "clsx";
 import { FileText, Trash2, UploadCloud } from "lucide-react";
+import { Dropdown } from "@/components/ui/dropdown";
 import type {
   CreateStudentFormData,
   CreateStudentFormErrors,
@@ -38,23 +39,17 @@ export function IdentityVerificationCard({
   return (
     <div className={styles.grid3Col}>
       <div className={styles.fieldGroup}>
-        <label htmlFor="identityType" className={styles.fieldLabel}>
-          Identity Document Type
-        </label>
-        <select
+        <Dropdown<IdentityDocType>
           id="identityType"
+          label="Identity Document Type"
           value={formData.identityType}
-          onChange={(e) =>
-            onFieldChange("identityType", e.target.value as IdentityDocType)
-          }
-          className={styles.selectField}
-        >
-          {IDENTITY_TYPES.map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
+          onChange={(val) => onFieldChange("identityType", val)}
+          options={IDENTITY_TYPES.map((type) => ({
+            value: type,
+            label: type,
+          }))}
+          fullWidth
+        />
       </div>
 
       <div className={styles.fieldGroup}>
@@ -116,4 +111,3 @@ export function IdentityVerificationCard({
     </div>
   );
 }
-

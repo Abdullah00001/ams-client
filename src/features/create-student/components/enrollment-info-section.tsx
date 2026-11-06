@@ -5,8 +5,8 @@
 
 "use client";
 
-import clsx from "clsx";
 import { AlertCircle, Calendar, CheckCircle2, Users } from "lucide-react";
+import { Dropdown } from "@/components/ui/dropdown";
 import type {
   AvailableBatch,
   AvailableCourse,
@@ -67,79 +67,62 @@ export function EnrollmentInfoSection({
       <div className={styles.grid3Col}>
         {/* Branch Selection */}
         <div className={styles.fieldGroup}>
-          <label
-            htmlFor="branchId"
-            className={clsx(styles.fieldLabel, errors.branchId && styles.fieldLabelInvalid)}
-          >
-            Branch Campus <span className={styles.requiredAsterisk}>*</span>
-          </label>
-          <select
+          <Dropdown
             id="branchId"
+            label={<>Branch Campus <span className={styles.requiredAsterisk}>*</span></>}
             value={formData.branchId}
-            onChange={(e) => onBranchChange(e.target.value)}
-            className={clsx(styles.selectField, errors.branchId && styles.inputInvalid)}
-          >
-            {STUDENT_BRANCH_OPTIONS.map((branch) => (
-              <option key={branch.id} value={branch.id}>
-                {branch.name}
-              </option>
-            ))}
-          </select>
-          {errors.branchId ? <span className={styles.fieldError}>{errors.branchId}</span> : null}
+            onChange={onBranchChange}
+            invalid={Boolean(errors.branchId)}
+            errorMessage={errors.branchId}
+            options={STUDENT_BRANCH_OPTIONS.map((branch) => ({
+              value: branch.id,
+              label: branch.name,
+            }))}
+            fullWidth
+          />
         </div>
 
         {/* Course Selection */}
         <div className={styles.fieldGroup}>
-          <label
-            htmlFor="courseId"
-            className={clsx(styles.fieldLabel, errors.courseId && styles.fieldLabelInvalid)}
-          >
-            Program / Course <span className={styles.requiredAsterisk}>*</span>
-          </label>
-          <select
+          <Dropdown
             id="courseId"
+            label={<>Program / Course <span className={styles.requiredAsterisk}>*</span></>}
             value={formData.courseId}
-            onChange={(e) => onCourseChange(e.target.value)}
-            className={clsx(styles.selectField, errors.courseId && styles.inputInvalid)}
-          >
-            {availableCourses.map((course) => (
-              <option key={course.id} value={course.id}>
-                {course.name} ({course.duration})
-              </option>
-            ))}
-          </select>
-          {errors.courseId ? <span className={styles.fieldError}>{errors.courseId}</span> : null}
-          {selectedCourse ? (
-            <span className={styles.courseHint}>
-              Duration: {selectedCourse.duration} • Base Fee: ৳ {selectedCourse.baseFee.toLocaleString("en-BD")}
-            </span>
-          ) : null}
+            onChange={onCourseChange}
+            invalid={Boolean(errors.courseId)}
+            errorMessage={errors.courseId}
+            options={availableCourses.map((course) => ({
+              value: course.id,
+              label: `${course.name} (${course.duration})`,
+            }))}
+            fullWidth
+            helperText={
+              selectedCourse
+                ? `Duration: ${selectedCourse.duration} • Base Fee: ৳ ${selectedCourse.baseFee.toLocaleString("en-BD")}`
+                : undefined
+            }
+          />
         </div>
 
         {/* Batch Selection */}
         <div className={styles.fieldGroup}>
-          <label
-            htmlFor="batchId"
-            className={clsx(styles.fieldLabel, errors.batchId && styles.fieldLabelInvalid)}
-          >
-            Batch & Shift <span className={styles.requiredAsterisk}>*</span>
-          </label>
-          <select
+          <Dropdown
             id="batchId"
+            label={<>Batch & Shift <span className={styles.requiredAsterisk}>*</span></>}
             value={formData.batchId}
-            onChange={(e) => onFieldChange("batchId", e.target.value)}
-            className={clsx(styles.selectField, errors.batchId && styles.inputInvalid)}
-          >
-            {availableBatches.map((batch) => {
+            onChange={(val) => onFieldChange("batchId", val)}
+            invalid={Boolean(errors.batchId)}
+            errorMessage={errors.batchId}
+            options={availableBatches.map((batch) => {
               const seatsLeft = batch.totalSeats - batch.filledSeats;
-              return (
-                <option key={batch.id} value={batch.id}>
-                  {batch.name} — {seatsLeft > 0 ? `${seatsLeft} seats left` : "Full"}
-                </option>
-              );
+              return {
+                value: batch.id,
+                label: `${batch.name} — ${seatsLeft > 0 ? `${seatsLeft} seats left` : "Full"}`,
+                disabled: seatsLeft === 0,
+              };
             })}
-          </select>
-          {errors.batchId ? <span className={styles.fieldError}>{errors.batchId}</span> : null}
+            fullWidth
+          />
         </div>
       </div>
 
@@ -186,21 +169,17 @@ export function EnrollmentInfoSection({
 
         {/* Student Status */}
         <div className={styles.fieldGroup}>
-          <label htmlFor="status" className={styles.fieldLabel}>
-            Student Progression Status
-          </label>
-          <select
+          <Dropdown
             id="status"
+            label="Student Progression Status"
             value={formData.status}
-            onChange={(e) => onFieldChange("status", e.target.value as StudentStatus)}
-            className={styles.selectField}
-          >
-            {STATUS_OPTIONS.map((status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            ))}
-          </select>
+            onChange={(val) => onFieldChange("status", val as StudentStatus)}
+            options={STATUS_OPTIONS.map((status) => ({
+              value: status,
+              label: status,
+            }))}
+            fullWidth
+          />
         </div>
       </div>
     </section>

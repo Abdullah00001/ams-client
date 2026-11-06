@@ -6,6 +6,7 @@
 "use client";
 
 import { Check, CreditCard, Layers } from "lucide-react";
+import { Dropdown } from "@/components/ui/dropdown";
 import type {
   CreateStudentFormData,
   DiscountType,
@@ -27,6 +28,18 @@ interface PaymentPlanSectionProps {
     value: CreateStudentFormData[K],
   ) => void;
 }
+
+const DISCOUNT_OPTIONS = [
+  { value: "none" as DiscountType, label: "No Discount" },
+  { value: "percentage" as DiscountType, label: "Percentage Discount (%)" },
+  { value: "fixed" as DiscountType, label: "Fixed Deduction (৳ BDT)" },
+];
+
+const INSTALLMENT_COUNT_OPTIONS = [
+  { value: "2", label: "2 Installments" },
+  { value: "3", label: "3 Installments" },
+  { value: "4", label: "4 Installments" },
+];
 
 export function PaymentPlanSection({
   formData,
@@ -58,23 +71,17 @@ export function PaymentPlanSection({
         </div>
 
         <div className={styles.fieldGroup}>
-          <label htmlFor="discountType" className={styles.fieldLabel}>
-            Discount / Scholarship
-          </label>
-          <select
+          <Dropdown<DiscountType>
             id="discountType"
+            label="Discount / Scholarship"
             value={formData.discountType}
-            onChange={(e) => {
-              const type = e.target.value as DiscountType;
-              onFieldChange("discountType", type);
-              if (type === "none") onFieldChange("discountValue", 0);
+            onChange={(val) => {
+              onFieldChange("discountType", val);
+              if (val === "none") onFieldChange("discountValue", 0);
             }}
-            className={styles.selectField}
-          >
-            <option value="none">No Discount</option>
-            <option value="percentage">Percentage Discount (%)</option>
-            <option value="fixed">Fixed Deduction (৳ BDT)</option>
-          </select>
+            options={DISCOUNT_OPTIONS}
+            fullWidth
+          />
         </div>
 
         <div className={styles.fieldGroup}>
@@ -149,19 +156,14 @@ export function PaymentPlanSection({
         <div className={styles.installmentContainer}>
           <div className={styles.grid2Col}>
             <div className={styles.fieldGroup}>
-              <label htmlFor="installmentCount" className={styles.fieldLabel}>
-                Number of Installments
-              </label>
-              <select
+              <Dropdown
                 id="installmentCount"
-                value={formData.installmentCount}
-                onChange={(e) => onFieldChange("installmentCount", Number(e.target.value))}
-                className={styles.selectField}
-              >
-                <option value={2}>2 Installments</option>
-                <option value={3}>3 Installments</option>
-                <option value={4}>4 Installments</option>
-              </select>
+                label="Number of Installments"
+                value={String(formData.installmentCount)}
+                onChange={(val) => onFieldChange("installmentCount", Number(val))}
+                options={INSTALLMENT_COUNT_OPTIONS}
+                fullWidth
+              />
             </div>
 
             <div className={styles.fieldGroup}>

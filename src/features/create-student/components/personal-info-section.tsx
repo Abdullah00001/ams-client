@@ -8,6 +8,7 @@
 import type { ChangeEvent } from "react";
 import clsx from "clsx";
 import { Camera, Trash2, User } from "lucide-react";
+import { Dropdown } from "@/components/ui/dropdown";
 import type {
   CreateStudentFormData,
   CreateStudentFormErrors,
@@ -197,17 +198,14 @@ export function PersonalInfoSection({
         </div>
 
         <div className={styles.fieldGroup}>
-          <label htmlFor="gender" className={styles.fieldLabel}>Gender</label>
-          <select
+          <Dropdown<Gender>
             id="gender"
+            label="Gender"
             value={formData.gender}
-            onChange={(e) => onFieldChange("gender", e.target.value as Gender)}
-            className={styles.selectField}
-          >
-            {GENDER_OPTIONS.map((g) => (
-              <option key={g} value={g}>{g}</option>
-            ))}
-          </select>
+            onChange={(val) => onFieldChange("gender", val)}
+            options={GENDER_OPTIONS.map((g) => ({ value: g, label: g }))}
+            fullWidth
+          />
         </div>
       </div>
 
