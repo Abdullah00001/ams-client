@@ -6,6 +6,9 @@
 .pageWrapper {
   min-block-size: calc(100dvh - 70px);
   padding: clamp(20px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .tableCard {

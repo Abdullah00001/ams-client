@@ -2,13 +2,14 @@
  * @fileoverview Main Students View Component
  * @module features/students/components/students-view
  *
- * Slim coordinator component assembling the header, filter toolbar,
- * paginated student table, action menus, and delete confirmation modal.
+ * Slim coordinator component assembling the header, filter card,
+ * search toolbar, paginated student table, action menus, and delete confirmation modal.
  */
 
 "use client";
 
 import { StudentsHeader } from "./students-header";
+import { StudentsFilterCard } from "./students-filter-card";
 import { StudentsFilterToolbar } from "./students-filter-toolbar";
 import { StudentsTable } from "./students-table";
 import { StudentsPagination } from "./students-pagination";
@@ -47,17 +48,22 @@ export function StudentsView() {
         onExportData={handleExportData}
       />
 
-      {/* Main Table Card (Figma Inspect Design matching Branches) */}
+      {/* Filter Card — Branch / Course / Batch / Status dropdowns + Reset */}
+      <StudentsFilterCard
+        filters={filters}
+        onBranchChange={handleBranchFilterChange}
+        onCourseChange={handleCourseFilterChange}
+        onBatchChange={handleBatchFilterChange}
+        onStatusChange={handleStatusFilterChange}
+        onResetFilters={handleResetFilters}
+      />
+
+      {/* Main Table Card */}
       <div className={styles.tableCard}>
-        {/* Filter and Live Search Toolbar */}
+        {/* Live Search Row */}
         <StudentsFilterToolbar
           filters={filters}
           onSearchChange={handleSearchChange}
-          onBranchChange={handleBranchFilterChange}
-          onCourseChange={handleCourseFilterChange}
-          onBatchChange={handleBatchFilterChange}
-          onStatusChange={handleStatusFilterChange}
-          onResetFilters={handleResetFilters}
         />
 
         {/* 9-Column Students Table */}

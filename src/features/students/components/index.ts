@@ -5,6 +5,7 @@
 
 export * from "./students-view";
 export * from "./students-header";
+export * from "./students-filter-card";
 export * from "./students-filter-toolbar";
 export * from "./students-table";
 export * from "./students-pagination";
