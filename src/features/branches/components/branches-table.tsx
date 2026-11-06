@@ -32,7 +32,7 @@ export function BranchesTable({
 
   const handleRowClick = (branch: Branch, e: MouseEvent<HTMLTableRowElement>) => {
     createTouchRipple(e, "dark");
-    router.push(`/admin/branches/${branch.slug}`);
+    router.push(`/branches/${branch.slug}`);
   };
 
   const handleActionClick = (

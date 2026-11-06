@@ -9,7 +9,7 @@
  *  - Enrollment Date
  *
  * Each row is clickable with Material UI touch ripple feedback and
- * deep-links to `/admin/students/{id}`.
+ * deep-links to `/students/{id}`.
  */
 
 "use client";
@@ -50,7 +50,7 @@ export function LatestEnrollments({
     studentId: string,
   ) => {
     createTouchRipple(event, "light");
-    router.push(`/admin/students/${studentId}`);
+    router.push(`/students/${studentId}`);
   };
 
   return (
@@ -67,7 +67,7 @@ export function LatestEnrollments({
         {/* View All Link matching screenshot */}
         <Link
           className={styles.viewAllLink}
-          href="/admin/students"
+          href="/students"
           onClick={(e) => createTouchRipple(e, "light")}
         >
           <span>View All</span>
@@ -99,7 +99,7 @@ export function LatestEnrollments({
                   tabIndex={0}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
-                      router.push(`/admin/students/${enrollment.id}`);
+                      router.push(`/students/${enrollment.id}`);
                     }
                   }}
                 >

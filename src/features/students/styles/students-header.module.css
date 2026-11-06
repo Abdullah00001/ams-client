@@ -1,0 +1,155 @@
+/**
+ * @fileoverview Students Header Component Styles
+ * @module features/students/styles/students-header.module.css
+ */
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-block-end: 16px;
+  flex-wrap: wrap;
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title {
+  margin: 0;
+  color: var(--ams-color-grayscale-400, #071437);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 26px;
+}
+
+.countBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  background-color: var(--ams-color-primary-100, #e8f3ff);
+  color: var(--ams-color-primary-300, #1b84ff);
+  border-radius: var(--ams-radius-4, 4px);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  max-width: 680px;
+}
+
+.actionsGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.exportButton {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--ams-radius-5, 5px);
+  background-color: var(--ams-color-base-white, #ffffff);
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  color: var(--ams-color-grayscale-400, #071437);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    transform 150ms ease;
+  white-space: nowrap;
+}
+
+.exportButton:hover {
+  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+  border-color: #d8dde6;
+  transform: translateY(-1px);
+}
+
+.exportButton:active {
+  transform: translateY(0);
+}
+
+.createButton {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--ams-radius-5, 5px);
+  background-color: var(--ams-color-action-primary-background, #1b84ff);
+  color: var(--ams-color-base-white, #ffffff);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(27, 132, 255, 0.2);
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+  white-space: nowrap;
+}
+
+.createButton:hover {
+  background-color: var(--ams-color-action-primary-hover, #056ee9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(27, 132, 255, 0.28);
+}
+
+.createButton:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(27, 132, 255, 0.2);
+}
+
+.buttonIcon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actionsGroup {
+    justify-content: flex-start;
+  }
+}
+

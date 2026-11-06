@@ -53,7 +53,7 @@ export function RecentActivityFeed({
         {/* View All Link */}
         <Link
           className={styles.viewAllLink}
-          href="/admin/activity"
+          href="/activity"
           onClick={(e) => createTouchRipple(e, "light")}
         >
           <span>View All</span>

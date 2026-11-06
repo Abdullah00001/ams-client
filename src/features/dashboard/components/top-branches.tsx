@@ -300,7 +300,7 @@ export function TopBranches() {
           return (
             <Link
               className={`${styles.legendItem} ${isActive ? styles.legendItemActive : ""} ${isDimmed ? styles.legendItemDimmed : ""}`}
-              href={`/admin/branches/${branch.slug}`}
+              href={`/branches/${branch.slug}`}
               key={branch.id}
               onMouseDown={createRipple}
               onMouseEnter={() => handleLegendHover(branch.id)}

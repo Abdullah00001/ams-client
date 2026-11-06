@@ -1,0 +1,10 @@
+/**
+ * @fileoverview Student Delete Modal Component Styles
+ * @module features/students/styles/student-delete-modal.module.css
+ */
+
+.studentHighlight {
+  color: var(--ams-color-grayscale-400, #071437);
+  font-weight: 600;
+}
+

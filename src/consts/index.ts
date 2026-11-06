@@ -7,6 +7,6 @@ export const APP_CONFIG = {
 export const ROUTES = {
   DASHBOARD: "/",
   BRANCHES: "/branches",
-  STUDENTS: "/admin/students",
-  CERTIFICATES: "/admin/certificates",
+  STUDENTS: "/students",
+  CERTIFICATES: "/certificates",
 } as const;

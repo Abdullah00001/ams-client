@@ -45,7 +45,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: "Barista Foundation Batch 5", bold: true },
     ],
     timestamp: "2 mins ago",
-    targetUrl: "/admin/students/stu-101",
+    targetUrl: "/students/stu-101",
   },
   {
     id: "act-2",
@@ -58,7 +58,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: "DSCA-2026-00043", bold: true },
     ],
     timestamp: "1 hr ago",
-    targetUrl: "/admin/certificates/DSCA-2026-00043",
+    targetUrl: "/certificates/DSCA-2026-00043",
   },
   {
     id: "act-3",
@@ -71,7 +71,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: " as having pending fees for March" },
     ],
     timestamp: "2 hrs ago",
-    targetUrl: "/admin/finance",
+    targetUrl: "/finance",
   },
   {
     id: "act-4",
@@ -84,7 +84,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: "Admin", bold: true },
     ],
     timestamp: "3 hrs ago",
-    targetUrl: "/admin/academic/trainers",
+    targetUrl: "/academic/trainers",
   },
   {
     id: "act-5",
@@ -96,7 +96,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: "Latte Art", bold: true },
     ],
     timestamp: "4 hrs ago",
-    targetUrl: "/admin/academic/exams",
+    targetUrl: "/academic/exams",
   },
   {
     id: "act-6",
@@ -107,7 +107,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: "European Bakery Diploma", bold: true },
     ],
     timestamp: "5 hrs ago",
-    targetUrl: "/admin/students/stu-104",
+    targetUrl: "/students/stu-104",
   },
   {
     id: "act-7",
@@ -118,7 +118,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: "Chittagong Branch", bold: true },
     ],
     timestamp: "Yesterday",
-    targetUrl: "/admin/branches/chittagong",
+    targetUrl: "/branches/chittagong",
   },
   {
     id: "act-8",
@@ -130,7 +130,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: "GBTA-2026-00098", bold: true },
     ],
     timestamp: "Yesterday",
-    targetUrl: "/admin/certificates/GBTA-2026-00098",
+    targetUrl: "/certificates/GBTA-2026-00098",
   },
   {
     id: "act-9",
@@ -141,7 +141,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: "Pastry Chef Shift B", bold: true },
     ],
     timestamp: "Yesterday",
-    targetUrl: "/admin/academic/batches/shift-b",
+    targetUrl: "/academic/batches/shift-b",
   },
   {
     id: "act-10",
@@ -154,7 +154,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: ")" },
     ],
     timestamp: "Yesterday",
-    targetUrl: "/admin/academic/courses/coffee-sensory",
+    targetUrl: "/academic/courses/coffee-sensory",
   },
   {
     id: "act-11",
@@ -165,7 +165,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: "2027 Professional Programs", bold: true },
     ],
     timestamp: "2 days ago",
-    targetUrl: "/admin/finance/fees",
+    targetUrl: "/finance/fees",
   },
   {
     id: "act-12",
@@ -177,7 +177,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: " - Batch 3" },
     ],
     timestamp: "2 days ago",
-    targetUrl: "/admin/students/stu-108",
+    targetUrl: "/students/stu-108",
   },
   {
     id: "act-13",
@@ -188,7 +188,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: "La Marzocco Machine #4", bold: true },
     ],
     timestamp: "2 days ago",
-    targetUrl: "/admin/branches/gbta",
+    targetUrl: "/branches/gbta",
   },
   {
     id: "act-14",
@@ -199,7 +199,7 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: "Barista Level 2", bold: true },
     ],
     timestamp: "3 days ago",
-    targetUrl: "/admin/academic/exams/barista-l2",
+    targetUrl: "/academic/exams/barista-l2",
   },
   {
     id: "act-15",
@@ -210,6 +210,6 @@ export const RECENT_ACTIVITIES_DATA: ActivityItem[] = [
       { text: "revenue reconciliation passed", bold: true },
     ],
     timestamp: "3 days ago",
-    targetUrl: "/admin/finance/audit",
+    targetUrl: "/finance/audit",
   },
 ];
