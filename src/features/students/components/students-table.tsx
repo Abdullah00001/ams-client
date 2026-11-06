@@ -7,6 +7,7 @@
 
 import { Edit3, Trash2, ChevronDown } from "lucide-react";
 import type { MouseEvent } from "react";
+import clsx from "clsx";
 import { DropdownMenu } from "@/components/ui/dropdown";
 import { createTouchRipple } from "@/lib/touch-ripple";
 import type {
@@ -30,6 +31,15 @@ interface StudentsTableProps {
   currentPage?: number;
   onAction: (action: StudentQuickAction, student: Student, extraPayload?: unknown) => void;
 }
+
+const PAYMENT_OPTIONS: PaymentStatus[] = ["Complete", "Due"];
+const CERTIFICATE_OPTIONS: CertificateStatus[] = ["Issued", "Pending"];
+const STATUS_OPTIONS: StudentStatus[] = [
+  "ACTIVE",
+  "ON-GOING",
+  "COMPLETED",
+  "IN-ACTIVE",
+];
 
 export function StudentsTable({
   students,
@@ -72,7 +82,7 @@ export function StudentsTable({
             <th className={styles.th} scope="col">Payment</th>
             <th className={styles.th} scope="col">Certificate</th>
             <th className={styles.th} scope="col">Status</th>
-            <th className={`${styles.th} ${styles.thAction}`} scope="col">Actions</th>
+            <th className={clsx(styles.th, styles.thAction)} scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -136,109 +146,128 @@ export function StudentsTable({
                 {/* Payment Status Dropdown Menu */}
                 <td className={styles.td} onClick={(e) => e.stopPropagation()}>
                   <DropdownMenu
+                    popupClassName={styles.statusDropdownPopup}
                     trigger={
                       <button
                         type="button"
-                        className={styles.statusPill}
+                        className={styles.statusBadge}
                         style={{
                           backgroundColor: paymentConfig.bg,
                           color: paymentConfig.color,
-                          borderColor: paymentConfig.border,
                         }}
                         title={`Payment: ${student.paymentStatus} (Click to change)`}
                       >
-                        <span className={styles.pillDot} />
                         <span>{paymentConfig.label}</span>
-                        <ChevronDown size={11} />
+                        <ChevronDown size={12} className={styles.badgeChevron} />
                       </button>
                     }
-                    items={[
-                      {
-                        label: "Mark as Complete",
-                        onClick: () => onAction("change-payment", student, "Complete" as PaymentStatus),
-                      },
-                      {
-                        label: "Mark as Due",
-                        onClick: () => onAction("change-payment", student, "Due" as PaymentStatus),
-                      },
-                    ]}
+                    items={PAYMENT_OPTIONS.filter(
+                      (statusOpt) => statusOpt !== student.paymentStatus,
+                    ).map((statusOpt) => {
+                      const cfg = getPaymentStatusBadge(statusOpt);
+                      return {
+                        key: statusOpt,
+                        label: (
+                          <span
+                            className={styles.dropdownBadgeItem}
+                            style={{
+                              backgroundColor: cfg.bg,
+                              color: cfg.color,
+                            }}
+                          >
+                            {cfg.label}
+                          </span>
+                        ),
+                        onClick: () => onAction("change-payment", student, statusOpt),
+                      };
+                    })}
                   />
                 </td>
 
                 {/* Certificate Status Dropdown Menu */}
                 <td className={styles.td} onClick={(e) => e.stopPropagation()}>
                   <DropdownMenu
+                    popupClassName={styles.statusDropdownPopup}
                     trigger={
                       <button
                         type="button"
-                        className={styles.statusPill}
+                        className={styles.statusBadge}
                         style={{
                           backgroundColor: certConfig.bg,
                           color: certConfig.color,
-                          borderColor: certConfig.border,
                         }}
                         title={`Certificate: ${student.certificateStatus} (Click to change)`}
                       >
-                        <span className={styles.pillDot} />
                         <span>{certConfig.label}</span>
-                        <ChevronDown size={11} />
+                        <ChevronDown size={12} className={styles.badgeChevron} />
                       </button>
                     }
-                    items={[
-                      {
-                        label: "Mark as Issued",
-                        onClick: () => onAction("change-certificate", student, "Issued" as CertificateStatus),
-                      },
-                      {
-                        label: "Mark as Pending",
-                        onClick: () => onAction("change-certificate", student, "Pending" as CertificateStatus),
-                      },
-                    ]}
+                    items={CERTIFICATE_OPTIONS.filter(
+                      (statusOpt) => statusOpt !== student.certificateStatus,
+                    ).map((statusOpt) => {
+                      const cfg = getCertificateStatusBadge(statusOpt);
+                      return {
+                        key: statusOpt,
+                        label: (
+                          <span
+                            className={styles.dropdownBadgeItem}
+                            style={{
+                              backgroundColor: cfg.bg,
+                              color: cfg.color,
+                            }}
+                          >
+                            {cfg.label}
+                          </span>
+                        ),
+                        onClick: () => onAction("change-certificate", student, statusOpt),
+                      };
+                    })}
                   />
                 </td>
 
                 {/* Active Progression Status Dropdown Menu */}
                 <td className={styles.td} onClick={(e) => e.stopPropagation()}>
                   <DropdownMenu
+                    popupClassName={styles.statusDropdownPopup}
                     trigger={
                       <button
                         type="button"
-                        className={styles.statusPill}
+                        className={styles.statusBadge}
                         style={{
                           backgroundColor: statusConfig.bg,
                           color: statusConfig.color,
-                          borderColor: statusConfig.border,
                         }}
                         title={`Status: ${student.status} (Click to change)`}
                       >
-                        <span className={styles.pillDot} />
                         <span>{statusConfig.label}</span>
-                        <ChevronDown size={11} />
+                        <ChevronDown size={12} className={styles.badgeChevron} />
                       </button>
                     }
-                    items={[
-                      {
-                        label: "Set ACTIVE",
-                        onClick: () => onAction("change-status", student, "ACTIVE" as StudentStatus),
-                      },
-                      {
-                        label: "Set ON-GOING",
-                        onClick: () => onAction("change-status", student, "ON-GOING" as StudentStatus),
-                      },
-                      {
-                        label: "Set COMPLETED",
-                        onClick: () => onAction("change-status", student, "COMPLETED" as StudentStatus),
-                      },
-                      {
-                        label: "Set IN-ACTIVE",
-                        onClick: () => onAction("change-status", student, "IN-ACTIVE" as StudentStatus),
-                      },
-                    ]}
+                    items={STATUS_OPTIONS.filter(
+                      (statusOpt) => statusOpt !== student.status,
+                    ).map((statusOpt) => {
+                      const cfg = getStudentStatusBadge(statusOpt);
+                      return {
+                        key: statusOpt,
+                        label: (
+                          <span
+                            className={styles.dropdownBadgeItem}
+                            style={{
+                              backgroundColor: cfg.bg,
+                              color: cfg.color,
+                            }}
+                          >
+                            {cfg.label}
+                          </span>
+                        ),
+                        onClick: () => onAction("change-status", student, statusOpt),
+                      };
+                    })}
                   />
                 </td>
 
                 {/* Quick Actions (Edit & Delete only — matching Branches Table) */}
-                <td className={`${styles.td} ${styles.tdAction}`} onClick={(e) => e.stopPropagation()}>
+                <td className={clsx(styles.td, styles.tdAction)} onClick={(e) => e.stopPropagation()}>
                   <div className={styles.actionsCell}>
                     {/* Edit */}
                     <button
@@ -280,7 +309,7 @@ export function StudentsTable({
               <td className={styles.td}>&nbsp;</td>
               <td className={styles.td}>&nbsp;</td>
               <td className={styles.td}>&nbsp;</td>
-              <td className={`${styles.td} ${styles.tdAction}`}>&nbsp;</td>
+              <td className={clsx(styles.td, styles.tdAction)}>&nbsp;</td>
             </tr>
           ))}
         </tbody>

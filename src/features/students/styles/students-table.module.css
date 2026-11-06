@@ -239,41 +239,112 @@
   white-space: nowrap;
 }
 
-/* Interactive Status Pill */
-.statusPill {
+/* Badge Status - Order (matching Figma inspect 1:1) */
+.statusBadge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  border: 1px solid;
+  justify-content: center;
+  padding: 4px 6px;
+  gap: 5px;
+  height: 24px;
+  border-radius: 4px;
+  border: none;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
   cursor: pointer;
-  background: transparent;
   outline: none;
-  transition:
-    transform 120ms ease,
-    box-shadow 120ms ease;
   white-space: nowrap;
+  user-select: none;
+  box-sizing: border-box;
+  transition:
+    opacity 150ms ease,
+    transform 120ms ease;
 }
 
-.statusPill:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+.statusBadge:hover {
+  opacity: 0.88;
+  transform: translateY(-0.5px);
 }
 
-.statusPill:active {
+.statusBadge:active {
   transform: translateY(0);
 }
 
-.pillDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: currentColor;
+.badgeChevron {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.2;
+  flex-shrink: 0;
+}
+
+/* Status Dropdown Menu Popup & Badges in Dropdown */
+.statusDropdownPopup {
+  min-width: 100px !important;
+  width: max-content !important;
+  padding: 4px !important;
+  border-radius: 6px !important;
+  background-color: #ffffff !important;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4) !important;
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.08),
+    0 8px 10px -6px rgba(0, 0, 0, 0.04) !important;
+  z-index: 100;
+}
+
+.statusDropdownPopup [class*="list"] {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+}
+
+.statusDropdownPopup [role="menuitem"] {
+  padding: 2px !important;
+  border-radius: 4px !important;
+  background: transparent !important;
+  cursor: pointer;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.statusDropdownPopup [role="menuitem"]:hover,
+.statusDropdownPopup [role="menuitem"][data-highlighted] {
+  background-color: var(--ams-color-grayscale-100, #f4f6fa) !important;
+}
+
+.statusDropdownPopup [class*="itemTextContainer"],
+.statusDropdownPopup [class*="itemLabel"] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+.dropdownBadgeItem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  height: 24px;
+  border-radius: 4px;
+  border: none;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+  user-select: none;
+  transition: opacity 150ms ease, transform 120ms ease;
+}
+
+.dropdownBadgeItem:hover {
+  opacity: 0.9;
 }
 
 /* Actions Cell from Figma Inspect (Clean 2-action layout matching Branches) */

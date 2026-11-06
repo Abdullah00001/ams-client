@@ -47,84 +47,76 @@ export function formatCurrencyBdt(amount: number): string {
 }
 
 /**
- * Visual styling configuration for Student Status badge.
+ * Visual styling configuration for Student Status badge (matching Figma Badge Status - Order).
  */
 export function getStudentStatusBadge(status: StudentStatus) {
   switch (status) {
     case "ACTIVE":
       return {
-        label: "ACTIVE",
-        bg: "rgba(27, 132, 255, 0.1)",
-        color: "#1B84FF",
-        border: "rgba(27, 132, 255, 0.2)",
+        label: "Active",
+        bg: "rgba(27, 132, 255, 0.15)",
+        color: "#1b84ff",
       };
     case "ON-GOING":
       return {
-        label: "ON-GOING",
-        bg: "rgba(246, 168, 0, 0.12)",
-        color: "#D97706",
-        border: "rgba(246, 168, 0, 0.25)",
+        label: "In Process",
+        bg: "rgba(255, 122, 0, 0.15)",
+        color: "#FF7A00",
       };
     case "COMPLETED":
       return {
-        label: "COMPLETED",
-        bg: "rgba(23, 198, 83, 0.12)",
-        color: "#17C653",
-        border: "rgba(23, 198, 83, 0.25)",
+        label: "Completed",
+        bg: "rgba(76, 175, 80, 0.2)",
+        color: "#4CAF50",
       };
     case "IN-ACTIVE":
     default:
       return {
-        label: "IN-ACTIVE",
-        bg: "rgba(153, 161, 183, 0.14)",
-        color: "#7E8299",
-        border: "rgba(153, 161, 183, 0.25)",
+        label: "Cancelled",
+        bg: "rgba(244, 67, 54, 0.15)",
+        color: "#F44336",
       };
   }
 }
 
 /**
- * Visual styling configuration for Payment Status badge.
+ * Visual styling configuration for Payment Status badge (matching Figma Badge Status - Order).
  */
 export function getPaymentStatusBadge(status: PaymentStatus) {
   switch (status) {
     case "Complete":
       return {
-        label: "Complete",
-        bg: "rgba(23, 198, 83, 0.12)",
-        color: "#17C653",
-        border: "rgba(23, 198, 83, 0.25)",
+        label: "Completed",
+        bg: "rgba(76, 175, 80, 0.2)",
+        color: "#4CAF50",
       };
     case "Due":
     default:
       return {
         label: "Due",
-        bg: "rgba(248, 40, 90, 0.12)",
-        color: "#F8285A",
-        border: "rgba(248, 40, 90, 0.25)",
+        bg: "rgba(244, 67, 54, 0.15)",
+        color: "#F44336",
       };
   }
 }
 
 /**
- * Visual styling configuration for Certification Status badge.
+ * Visual styling configuration for Certification Status badge (matching Figma Badge Status - Order).
  */
 export function getCertificateStatusBadge(status: CertificateStatus) {
   switch (status) {
     case "Issued":
       return {
         label: "Issued",
-        bg: "rgba(27, 132, 255, 0.12)",
-        color: "#1B84FF",
-        border: "rgba(27, 132, 255, 0.25)",
+        bg: "rgba(76, 175, 80, 0.2)",
+        color: "#4CAF50",
       };
     case "Pending":
     default:
       return {
         label: "Pending",
-        bg: "rgba(153, 161, 183, 0.14)",
-        color: "#7E8299",
-        border: "rgba(153, 161, 183, 0.25)",
+        bg: "rgba(255, 122, 0, 0.15)",
+        color: "#FF7A00",
       };
   }
 }
