@@ -1,0 +1,101 @@
+/**
+ * @fileoverview Student Form Actions Row Styles
+ * @module features/create-student/styles/student-form-actions.module.css
+ */
+
+.formActionsRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.draftButton {
+  height: 40px;
+  padding: 0 16px;
+  background-color: transparent;
+  color: var(--ams-color-grayscale-400, #071437);
+  border: 1px solid var(--ams-color-border-subtle, #e1e3ea);
+  border-radius: var(--ams-radius-5, 5px);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.draftButton:hover:not(:disabled) {
+  background-color: var(--ams-color-grayscale-100, #f8f9fc);
+  border-color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
+.resetButton {
+  height: 40px;
+  padding: 0 16px;
+  background-color: transparent;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  border: 1px dashed var(--ams-color-border-subtle, #e1e3ea);
+  border-radius: var(--ams-radius-5, 5px);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.resetButton:hover:not(:disabled) {
+  color: var(--ams-color-status-error, #f8285a);
+  border-color: var(--ams-color-status-error, #f8285a);
+  background-color: rgba(248, 40, 90, 0.05);
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 20px;
+  background-color: var(--ams-color-primary-300, #1b84ff);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--ams-radius-5, 5px);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+
+.submitButton:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+.submitButton:disabled,
+.draftButton:disabled,
+.resetButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .formActionsRow {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+}
+

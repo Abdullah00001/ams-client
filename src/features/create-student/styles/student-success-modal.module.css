@@ -1,0 +1,113 @@
+/**
+ * @fileoverview Student Success Modal Styles
+ * @module features/create-student/styles/student-success-modal.module.css
+ */
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+  margin-top: 8px;
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.studentIdBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background-color: #e9f2ff;
+  color: var(--ams-color-primary-400, #056ee9);
+  border: 1px solid #cce4ff;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  background-color: #e8fbf0;
+  color: #028c4a;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.leadText {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ams-color-grayscale-400, #071437);
+  line-height: 1.5;
+}
+
+.feeSnapshot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  background-color: var(--ams-color-grayscale-100, #f8f9fc);
+  border: 1px solid var(--ams-color-border-subtle, #e1e3ea);
+  border-radius: var(--ams-radius-5, 5px);
+}
+
+.feeItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.feeLabel {
+  font-size: 11px;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
+.feeVal {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.feePaid {
+  font-size: 13px;
+  font-weight: 600;
+  color: #028c4a;
+}
+
+.feeDue {
+  font-size: 13px;
+  font-weight: 600;
+  color: #d97706;
+}
+
+.secondaryLinks {
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.allStudentsLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: var(--ams-color-primary-300, #1b84ff);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.allStudentsLink:hover {
+  text-decoration: underline;
+}
+

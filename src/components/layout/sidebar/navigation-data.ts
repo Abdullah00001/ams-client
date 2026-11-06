@@ -100,7 +100,7 @@ export const navigationItems: SidebarNavigationGroup[] = [
     id: "students",
     items: [
       { href: "/students", icon: Users, kind: "implemented", label: "All Students" },
-      { icon: UserPlus, kind: "unimplemented", label: "Add Student" },
+      { href: "/students/create", icon: UserPlus, kind: "implemented", label: "Add Student" },
     ],
     label: "Students",
   },

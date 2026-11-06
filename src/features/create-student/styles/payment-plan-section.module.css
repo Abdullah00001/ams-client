@@ -1,0 +1,334 @@
+/**
+ * @fileoverview Payment Plan Section Styles
+ * @module features/create-student/styles/payment-plan-section.module.css
+ */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 28px;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.sectionSubtitle {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
+.grid3Col {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.grid2Col {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.inputField,
+.selectField {
+  height: 40px;
+  padding: 8px 12px;
+  border-radius: var(--ams-radius-5, 5px);
+  border: 1px solid var(--ams-color-border-subtle, #e1e3ea);
+  background-color: #ffffff;
+  color: var(--ams-color-grayscale-400, #071437);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  outline: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inputField:focus,
+.selectField:focus {
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.1);
+}
+
+.discountHelp {
+  font-size: 11px;
+  color: #028c4a;
+}
+
+/* Base Fee Highlight Card */
+.feeHighlightCard {
+  padding: 12px 16px;
+  background-color: #f8fafd;
+  border: 1px solid #dce8fa;
+  border-radius: var(--ams-radius-8, 8px);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cardLabel {
+  font-size: 11px;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cardValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.cardSubtext {
+  font-size: 11px;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
+/* Payment Mode Cards */
+.paymentTypeGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.paymentCardsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.paymentCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--ams-color-border-subtle, #e1e3ea);
+  border-radius: var(--ams-radius-8, 8px);
+  background-color: #ffffff;
+  cursor: pointer;
+  text-align: left;
+  transition: all 150ms ease;
+  position: relative;
+}
+
+.paymentCard:hover {
+  border-color: var(--ams-color-primary-300, #1b84ff);
+}
+
+.paymentCardActive {
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  background-color: #f0f7ff;
+}
+
+.cardIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background-color: #e9f2ff;
+  color: var(--ams-color-primary-300, #1b84ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.cardTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.cardDesc {
+  font-size: 11px;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
+.cardCheck {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--ams-color-primary-300, #1b84ff);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Installment Container */
+.installmentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  background-color: #fafbfc;
+  border: 1px solid var(--ams-color-border-subtle, #e1e3ea);
+  border-radius: var(--ams-radius-8, 8px);
+}
+
+.scheduleTableWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scheduleTitle {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.scheduleTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.scheduleTable th {
+  background-color: #f4f6fa;
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+  border-bottom: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.scheduleTable td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.itemLabel {
+  font-weight: 500;
+}
+
+.itemAmount {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.statusPaid {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background-color: #e8fbf0;
+  color: #028c4a;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.statusPending {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background-color: #fff4e5;
+  color: #d97706;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Summary Strip */
+.summaryStrip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  background-color: #f0f7ff;
+  border: 1px solid #cce4ff;
+  border-radius: var(--ams-radius-8, 8px);
+  flex-wrap: wrap;
+}
+
+.summaryItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.summaryLabel {
+  font-size: 11px;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  font-weight: 500;
+}
+
+.summaryValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.summaryValueDiscount {
+  font-size: 14px;
+  font-weight: 600;
+  color: #028c4a;
+}
+
+.summaryValueNet {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ams-color-primary-400, #056ee9);
+}
+
+.summaryValuePaid {
+  font-size: 14px;
+  font-weight: 600;
+  color: #028c4a;
+}
+
+.summaryValueDue {
+  font-size: 14px;
+  font-weight: 600;
+  color: #d97706;
+}
+
+@media (max-width: 900px) {
+  .grid3Col,
+  .grid2Col,
+  .paymentCardsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+

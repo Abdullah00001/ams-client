@@ -1,0 +1,74 @@
+/**
+ * @fileoverview Installment Schedule Table Styles
+ * @module features/create-student/styles/installment-schedule-table.module.css
+ */
+
+.scheduleTableWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scheduleTitle {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.scheduleTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.scheduleTable th {
+  background-color: #f4f6fa;
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+  border-bottom: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.scheduleTable td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.itemLabel {
+  font-weight: 500;
+}
+
+.itemAmount {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.statusPaid {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background-color: #e8fbf0;
+  color: #028c4a;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.statusPending {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background-color: #fff4e5;
+  color: #d97706;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+

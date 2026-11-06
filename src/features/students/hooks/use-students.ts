@@ -177,7 +177,7 @@ export function useStudents() {
 
   // Add new student
   const handleAddNewStudent = () => {
-    showToast("Opening Add New Student Profile...");
+    router.push("/students/create");
   };
 
   return {

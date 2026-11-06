@@ -1,0 +1,319 @@
+/**
+ * @fileoverview Student Invoice Modal Styles
+ * @module features/create-student/styles/student-invoice-modal.module.css
+ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(7, 20, 55, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.modalCard {
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  background-color: #ffffff;
+  border-radius: var(--ams-radius-8, 8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background-color: #f4f6fa;
+  border-bottom: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.topBarTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.invoiceTag {
+  padding: 2px 6px;
+  background-color: var(--ams-color-primary-100, #e8f3ff);
+  color: var(--ams-color-primary-400, #056ee9);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.closeBtn {
+  border: none;
+  background: transparent;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.closeBtn:hover {
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.invoiceCanvas {
+  padding: 24px 28px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.invoiceHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.academyName {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.academySub {
+  margin: 2px 0 0 0;
+  font-size: 12px;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
+.invoiceMetaRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.metaStatus {
+  color: #028c4a;
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--ams-color-border-subtle, #eff1f4);
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 12px 16px;
+  background-color: #fafbfc;
+  border-radius: 6px;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.infoCol {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.colTitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.infoValue {
+  font-size: 13px;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.infoSub {
+  font-size: 12px;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
+.feeTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.feeTable th {
+  background-color: #f4f6fa;
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.thRight {
+  text-align: right;
+}
+
+.feeTable td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.tdRight {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.discountRow {
+  color: #028c4a;
+}
+
+.netRow {
+  background-color: #f8fafd;
+}
+
+.paidRow {
+  color: #028c4a;
+}
+
+.dueRow {
+  color: #d97706;
+}
+
+.installmentSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scheduleHeading {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  text-transform: uppercase;
+}
+
+.installmentPills {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.installmentPill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background-color: #f8f9fc;
+  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.pillLabel {
+  font-weight: 500;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.pillAmount {
+  font-weight: 600;
+}
+
+.pillDate {
+  color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
+.pillPaid {
+  color: #028c4a;
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.pillPending {
+  color: #d97706;
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.footerActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 20px;
+  background-color: #f4f6fa;
+  border-top: 1px solid var(--ams-color-border-subtle, #eff1f4);
+  flex-wrap: wrap;
+}
+
+.actionGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actionBtnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background-color: var(--ams-color-primary-300, #1b84ff);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--ams-radius-5, 5px);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+
+.actionBtnPrimary:hover {
+  opacity: 0.9;
+}
+
+.actionBtnSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background-color: #ffffff;
+  color: var(--ams-color-grayscale-400, #071437);
+  border: 1px solid var(--ams-color-border-subtle, #e1e3ea);
+  border-radius: var(--ams-radius-5, 5px);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.actionBtnSecondary:hover {
+  background-color: #f8f9fc;
+}
+
+.doneBtn {
+  padding: 7px 16px;
+  background: transparent;
+  border: 1px solid var(--ams-color-border-subtle, #e1e3ea);
+  color: var(--ams-color-grayscale-400, #071437);
+  border-radius: var(--ams-radius-5, 5px);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.doneBtn:hover {
+  background-color: #ffffff;
+}
+

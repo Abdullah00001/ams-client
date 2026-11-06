@@ -1,0 +1,310 @@
+/**
+ * @fileoverview Personal Info Section Styles
+ * @module features/create-student/styles/personal-info-section.module.css
+ */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--ams-color-border-subtle, #eff1f4);
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.sectionSubtitle {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
+/* Photo Upload Row */
+.photoUploadRow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px;
+  background-color: var(--ams-color-grayscale-100, #f8f9fc);
+  border-radius: var(--ams-radius-8, 8px);
+  border: 1px dashed var(--ams-color-border-subtle, #e1e3ea);
+}
+
+.avatarPreview {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #ffffff;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarPlaceholder {
+  color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
+.photoMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.photoActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.uploadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background-color: var(--ams-color-primary-300, #1b84ff);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: var(--ams-radius-5, 5px);
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+
+.uploadBtn:hover {
+  opacity: 0.9;
+}
+
+.removePhotoBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  background-color: transparent;
+  color: var(--ams-color-status-error, #f8285a);
+  border: 1px solid rgba(248, 40, 90, 0.2);
+  border-radius: var(--ams-radius-5, 5px);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.removePhotoBtn:hover {
+  background-color: rgba(248, 40, 90, 0.06);
+}
+
+.photoHint {
+  font-size: 11px;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+/* Grids */
+.grid3Col {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.gridFull {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ams-color-grayscale-400, #071437);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fieldLabelInvalid {
+  color: var(--ams-color-status-error, #f8285a);
+}
+
+.requiredAsterisk {
+  color: var(--ams-color-status-error, #f8285a);
+}
+
+.optionalTag {
+  font-size: 11px;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  font-weight: 400;
+}
+
+.labelWithAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkboxInline {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  cursor: pointer;
+}
+
+.inputField,
+.selectField {
+  height: 40px;
+  padding: 8px 12px;
+  border-radius: var(--ams-radius-5, 5px);
+  border: 1px solid var(--ams-color-border-subtle, #e1e3ea);
+  background-color: #ffffff;
+  color: var(--ams-color-grayscale-400, #071437);
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 13px;
+  outline: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inputField:focus,
+.selectField:focus {
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.1);
+}
+
+.inputField::placeholder {
+  color: var(--ams-color-grayscale-300, #99a1b7);
+}
+
+.inputInvalid {
+  border-color: var(--ams-color-status-error, #f8285a);
+  background-color: #fff9f9;
+}
+
+.inputDisabled {
+  background-color: var(--ams-color-grayscale-100, #f8f9fc);
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  cursor: not-allowed;
+}
+
+.fieldError {
+  font-size: 11px;
+  color: var(--ams-color-status-error, #f8285a);
+}
+
+/* Document Dropzone & Badge */
+.docUploadDropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  border: 1px dashed var(--ams-color-border-subtle, #e1e3ea);
+  border-radius: var(--ams-radius-5, 5px);
+  background-color: var(--ams-color-grayscale-100, #f8f9fc);
+  color: var(--ams-color-grayscale-300, #99a1b7);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+.docUploadDropzone:hover {
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  color: var(--ams-color-primary-300, #1b84ff);
+}
+
+.uploadedDocBadge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 40px;
+  padding: 0 10px;
+  background-color: #eef6ff;
+  border: 1px solid #c9e0ff;
+  border-radius: var(--ams-radius-5, 5px);
+}
+
+.docIcon {
+  color: var(--ams-color-primary-300, #1b84ff);
+  flex-shrink: 0;
+}
+
+.docName {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ams-color-primary-400, #056ee9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.docRemoveBtn {
+  border: none;
+  background: transparent;
+  color: var(--ams-color-status-error, #f8285a);
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* Emergency Sub Card */
+.emergencySubCard {
+  margin-top: 6px;
+  padding: 16px;
+  background-color: var(--ams-color-grayscale-100, #f8f9fc);
+  border-radius: var(--ams-radius-8, 8px);
+  border: 1px solid var(--ams-color-border-subtle, #e1e3ea);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.subCardTitle {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+@media (max-width: 900px) {
+  .grid3Col {
+    grid-template-columns: 1fr;
+  }
+}
+
