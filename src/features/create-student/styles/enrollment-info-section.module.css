@@ -67,14 +67,15 @@
 
 .inputField,
 .selectField {
-  height: 40px;
-  padding: 8px 12px;
-  border-radius: var(--ams-radius-5, 5px);
+  height: 51px;
+  padding: 10px 16px;
+  border-radius: 4px;
   border: 1px solid var(--ams-color-border-subtle, #e1e3ea);
   background-color: #ffffff;
   color: var(--ams-color-grayscale-400, #071437);
   font-family: var(--ams-font-family-sans, Inter, sans-serif);
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 400;
   outline: none;
   transition:
     border-color 150ms ease,
