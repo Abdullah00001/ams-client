@@ -57,9 +57,9 @@
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(27, 132, 255, 0.2);
   transition:
-    background-color 260ms cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 260ms cubic-bezier(0.4, 0, 0.2, 1),
-    transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    background-color 350ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 350ms cubic-bezier(0.2, 0, 0, 1),
+    transform 280ms cubic-bezier(0.2, 0, 0, 1);
   white-space: nowrap;
   user-select: none;
 }
@@ -95,11 +95,11 @@
   font-weight: 500;
   cursor: pointer;
   transition:
-    color 260ms cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 260ms cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 260ms cubic-bezier(0.4, 0, 0.2, 1),
-    transform 220ms cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 260ms cubic-bezier(0.4, 0, 0.2, 1);
+    color 350ms cubic-bezier(0.2, 0, 0, 1),
+    border-color 350ms cubic-bezier(0.2, 0, 0, 1),
+    background-color 350ms cubic-bezier(0.2, 0, 0, 1),
+    transform 280ms cubic-bezier(0.2, 0, 0, 1),
+    opacity 350ms cubic-bezier(0.2, 0, 0, 1);
   white-space: nowrap;
   user-select: none;
 }
