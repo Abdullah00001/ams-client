@@ -1,9 +1,10 @@
 /**
- * @fileoverview Students Search Toolbar Component
+ * @fileoverview Students Table Header Toolbar Component
  * @module features/students/components/students-filter-toolbar
  *
- * Slim search row rendered as the first row inside the table card.
- * Dropdown filters live in <StudentsFilterCard> above the table card.
+ * Implements the Figma Table Card Header with:
+ * - Left: "Students List" title (16px, font-weight 600) + "10x Per Page" subtitle
+ * - Right: Live search input with search icon
  */
 
 "use client";
@@ -22,16 +23,21 @@ export function StudentsFilterToolbar({
   onSearchChange,
 }: StudentsFilterToolbarProps) {
   return (
-    <div className={styles.searchToolbar}>
+    <div className={styles.tableHeaderToolbar}>
+      <div className={styles.tableTitleGroup}>
+        <h3 className={styles.tableTitle}>Students List</h3>
+        <span className={styles.tableSubtitle}>10x Per Page</span>
+      </div>
+
       <div className={styles.searchGroup}>
         <Search className={styles.searchIcon} />
         <input
           type="text"
           value={filters.searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="Search by name, ID, phone..."
+          placeholder="Search by name"
           className={styles.searchInput}
-          aria-label="Search students"
+          aria-label="Search students by name"
         />
         {filters.searchQuery ? (
           <button

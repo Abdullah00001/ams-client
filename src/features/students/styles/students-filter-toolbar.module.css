@@ -129,32 +129,50 @@
   cursor: not-allowed;
 }
 
-/* ─── Search Toolbar (inside table card) ─────────────────────────────────── */
+/* ─── Table Header Toolbar (inside table card with 24px padding) ─────── */
 
-.searchToolbar {
+.tableHeaderToolbar {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  background-color: var(--ams-color-base-white, #ffffff);
-  border-top-left-radius: var(--ams-radius-8, 8px);
-  border-top-right-radius: var(--ams-radius-8, 8px);
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
+}
+
+.tableTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tableTitle {
+  margin: 0;
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ams-color-grayscale-400, #071437);
+}
+
+.tableSubtitle {
+  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ams-color-grayscale-300, #99a1b7);
 }
 
 .searchGroup {
   position: relative;
   display: flex;
   align-items: center;
-  min-width: 260px;
-  max-width: 340px;
-  flex: 1 1 auto;
+  width: 280px;
+  max-width: 100%;
 }
 
 .searchIcon {
   position: absolute;
-  left: 12px;
+  left: 14px;
   width: 16px;
   height: 16px;
   color: var(--ams-color-grayscale-300, #99a1b7);
@@ -163,20 +181,28 @@
 
 .searchInput {
   width: 100%;
-  height: 38px;
-  padding: 8px 36px 8px 36px;
-  border-radius: var(--ams-radius-5, 5px);
+  height: 40px;
+  padding: 10px 36px 10px 40px;
+  border-radius: var(--ams-radius-6, 6px);
   border: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  background-color: var(--ams-color-grayscale-100, #f4f6fa);
+  background-color: var(--ams-color-base-white, #ffffff);
   color: var(--ams-color-grayscale-400, #071437);
   font-family: var(--ams-font-family-sans, Inter, sans-serif);
   font-size: 13px;
   font-weight: 400;
   outline: none;
   transition:
-    background-color 150ms ease,
-    border-color 150ms ease,
-    box-shadow 150ms ease;
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.searchInput:focus {
+  border-color: var(--ams-color-primary-300, #1b84ff);
+  box-shadow: 0 0 0 3px rgba(27, 132, 255, 0.12);
+}
+
+.searchInput::placeholder {
+  color: var(--ams-color-grayscale-300, #99a1b7);
 }
 
 .searchInput:focus {

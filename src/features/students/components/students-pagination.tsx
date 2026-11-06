@@ -1,6 +1,11 @@
 /**
  * @fileoverview Students Pagination Component
  * @module features/students/components/students-pagination
+ *
+ * Implements the Figma pagination bar matching All Branches:
+ * - Left: Previous button
+ * - Center: Dynamic page numbers list with ellipsis
+ * - Right: Next button
  */
 
 "use client";
@@ -13,25 +18,20 @@ import styles from "../styles/students-pagination.module.css";
 interface StudentsPaginationProps {
   currentPage: number;
   totalPages: number;
-  totalRecords: number;
-  pageSize: number;
+  totalRecords?: number;
+  pageSize?: number;
   onPageChange: (page: number) => void;
 }
 
 export function StudentsPagination({
   currentPage,
   totalPages,
-  totalRecords,
-  pageSize,
   onPageChange,
 }: StudentsPaginationProps) {
   const handleRipple = (e: MouseEvent<HTMLButtonElement>, callback: () => void) => {
     createTouchRipple(e, "dark");
     callback();
   };
-
-  const startRecord = totalRecords === 0 ? 0 : (currentPage - 1) * pageSize + 1;
-  const endRecord = Math.min(currentPage * pageSize, totalRecords);
 
   const getPageNumbers = () => {
     const pages: (number | "ellipsis")[] = [];
@@ -57,70 +57,60 @@ export function StudentsPagination({
 
   return (
     <nav aria-label="Students pagination" className={styles.paginationContainer}>
-      {/* Showing X-Y of Z entries */}
-      <div className={styles.countInfo}>
-        Showing <span className={styles.countBold}>{startRecord}</span> to{" "}
-        <span className={styles.countBold}>{endRecord}</span> of{" "}
-        <span className={styles.countBold}>{totalRecords}</span> students
-      </div>
+      {/* Previous Button */}
+      <button
+        type="button"
+        disabled={currentPage <= 1}
+        className={styles.navButton}
+        onClick={(e) => handleRipple(e, () => onPageChange(currentPage - 1))}
+        aria-label="Previous page"
+      >
+        <ArrowLeft className={styles.navIcon} />
+        <span>Previous</span>
+      </button>
 
-      <div className={styles.controlsGroup}>
-        {/* Previous Button */}
-        <button
-          type="button"
-          disabled={currentPage <= 1}
-          className={styles.navButton}
-          onClick={(e) => handleRipple(e, () => onPageChange(currentPage - 1))}
-          aria-label="Previous page"
-        >
-          <ArrowLeft className={styles.navIcon} />
-          <span>Previous</span>
-        </button>
-
-        {/* Page Numbers */}
-        <ul className={styles.pageNumbersList}>
-          {pages.map((item, index) => {
-            if (item === "ellipsis") {
-              return (
-                <li key={`ellipsis-${index}`}>
-                  <span className={styles.ellipsis}>...</span>
-                </li>
-              );
-            }
-
-            const isCurrent = item === currentPage;
-
+      {/* Page Numbers */}
+      <ul className={styles.pageNumbersList}>
+        {pages.map((item, index) => {
+          if (item === "ellipsis") {
             return (
-              <li key={item}>
-                <button
-                  type="button"
-                  className={`${styles.pageNumberButton} ${
-                    isCurrent ? styles.activePage : ""
-                  }`}
-                  aria-current={isCurrent ? "page" : undefined}
-                  aria-label={`Page ${item}`}
-                  onClick={(e) => handleRipple(e, () => onPageChange(item))}
-                >
-                  {item}
-                </button>
+              <li key={`ellipsis-${index}`}>
+                <span className={styles.ellipsis}>...</span>
               </li>
             );
-          })}
-        </ul>
+          }
 
-        {/* Next Button */}
-        <button
-          type="button"
-          disabled={currentPage >= totalPages}
-          className={styles.navButton}
-          onClick={(e) => handleRipple(e, () => onPageChange(currentPage + 1))}
-          aria-label="Next page"
-        >
-          <span>Next</span>
-          <ArrowRight className={styles.navIcon} />
-        </button>
-      </div>
+          const isCurrent = item === currentPage;
+
+          return (
+            <li key={item}>
+              <button
+                type="button"
+                className={`${styles.pageNumberButton} ${
+                  isCurrent ? styles.activePage : ""
+                }`}
+                aria-current={isCurrent ? "page" : undefined}
+                aria-label={`Page ${item}`}
+                onClick={(e) => handleRipple(e, () => onPageChange(item))}
+              >
+                {item}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+
+      {/* Next Button */}
+      <button
+        type="button"
+        disabled={currentPage >= totalPages}
+        className={styles.navButton}
+        onClick={(e) => handleRipple(e, () => onPageChange(currentPage + 1))}
+        aria-label="Next page"
+      >
+        <span>Next</span>
+        <ArrowRight className={styles.navIcon} />
+      </button>
     </nav>
   );
 }
-

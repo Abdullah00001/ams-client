@@ -5,7 +5,7 @@
 
 "use client";
 
-import { Edit3, MoreVertical, Trash2, User, ChevronDown } from "lucide-react";
+import { Edit3, Trash2, ChevronDown } from "lucide-react";
 import type { MouseEvent } from "react";
 import { DropdownMenu } from "@/components/ui/dropdown";
 import { createTouchRipple } from "@/lib/touch-ripple";
@@ -234,10 +234,10 @@ export function StudentsTable({
                   />
                 </td>
 
-                {/* Quick Actions (Edit & 3-Dot Menu) */}
+                {/* Quick Actions (Edit & Delete only — matching Branches Table) */}
                 <td className={styles.td} onClick={(e) => e.stopPropagation()}>
                   <div className={styles.actionsCell}>
-                    {/* Quick Edit */}
+                    {/* Edit */}
                     <button
                       type="button"
                       className={styles.actionButton}
@@ -248,38 +248,16 @@ export function StudentsTable({
                       <Edit3 className={styles.actionIcon} />
                     </button>
 
-                    {/* 3-Dot Action Menu */}
-                    <DropdownMenu
-                      trigger={
-                        <button
-                          type="button"
-                          className={styles.actionButton}
-                          title="More actions"
-                          aria-label={`More actions for ${student.name}`}
-                        >
-                          <MoreVertical className={styles.actionIcon} />
-                        </button>
-                      }
-                      items={[
-                        {
-                          label: "View Profile",
-                          icon: <User size={14} />,
-                          onClick: () => onAction("view", student),
-                        },
-                        {
-                          label: "Edit Profile",
-                          icon: <Edit3 size={14} />,
-                          onClick: () => onAction("edit", student),
-                        },
-                        "separator",
-                        {
-                          label: "Remove Student",
-                          icon: <Trash2 size={14} />,
-                          destructive: true,
-                          onClick: () => onAction("delete", student),
-                        },
-                      ]}
-                    />
+                    {/* Remove / Delete */}
+                    <button
+                      type="button"
+                      className={`${styles.actionButton} ${styles.actionButtonDanger}`}
+                      title={`Remove ${student.name}`}
+                      aria-label={`Remove ${student.name}`}
+                      onClick={(e) => handleRipple(e, () => onAction("delete", student))}
+                    >
+                      <Trash2 className={styles.actionIcon} />
+                    </button>
                   </div>
                 </td>
               </tr>

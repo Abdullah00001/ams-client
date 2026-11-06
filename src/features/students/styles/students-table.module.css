@@ -241,41 +241,52 @@
   background-color: currentColor;
 }
 
-/* Actions Cell */
+/* Actions Cell from Figma Inspect (Clean 2-action layout matching Branches) */
 .actionsCell {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 6px;
+  align-items: center;
+  gap: 8px;
 }
 
 .actionButton {
+  position: relative;
+  overflow: hidden;
+  width: 32px;
+  height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: var(--ams-radius-5, 5px);
+  border-radius: var(--ams-radius-6, 6px);
   border: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  background-color: var(--ams-color-base-white, #ffffff);
-  color: var(--ams-color-grayscale-300, #99a1b7);
+  background-color: #ffffff;
+  color: #64748b;
   cursor: pointer;
+  outline: none;
   transition:
     background-color 150ms ease,
     color 150ms ease,
-    border-color 150ms ease;
-  padding: 0;
+    border-color 150ms ease,
+    transform 150ms ease;
 }
 
 .actionButton:hover {
   background-color: var(--ams-color-grayscale-100, #f4f6fa);
-  color: var(--ams-color-grayscale-400, #071437);
-  border-color: #d8dde6;
+  color: var(--ams-color-primary-300, #1b84ff);
+  border-color: #d1e6ff;
+  transform: translateY(-1px);
+}
+
+.actionButtonDanger:hover {
+  background-color: #fff1f2;
+  color: #f8285a;
+  border-color: #fecdd3;
 }
 
 .actionIcon {
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
+  stroke-width: 2;
 }
 
 /* Empty row placeholders */
