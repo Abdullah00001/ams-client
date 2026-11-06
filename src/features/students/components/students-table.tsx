@@ -238,7 +238,7 @@ export function StudentsTable({
                 </td>
 
                 {/* Quick Actions (Edit & Delete only — matching Branches Table) */}
-                <td className={styles.td} onClick={(e) => e.stopPropagation()}>
+                <td className={`${styles.td} ${styles.tdAction}`} onClick={(e) => e.stopPropagation()}>
                   <div className={styles.actionsCell}>
                     {/* Edit */}
                     <button
@@ -280,7 +280,7 @@ export function StudentsTable({
               <td className={styles.td}>&nbsp;</td>
               <td className={styles.td}>&nbsp;</td>
               <td className={styles.td}>&nbsp;</td>
-              <td className={styles.td}>&nbsp;</td>
+              <td className={`${styles.td} ${styles.tdAction}`}>&nbsp;</td>
             </tr>
           ))}
         </tbody>

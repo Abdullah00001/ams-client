@@ -7,12 +7,33 @@
   width: 100%;
   min-height: 620px;
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.tableWrapper::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tableWrapper::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+}
+
+.tableWrapper::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.tableWrapper::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 .table {
   width: 100%;
-  min-width: 1080px;
+  min-width: 1300px;
   table-layout: fixed;
   border-collapse: collapse;
   text-align: left;
@@ -20,39 +41,39 @@
 }
 
 .colSl {
-  width: 60px;
+  width: 56px;
 }
 
 .colName {
-  width: 22%;
+  width: 230px;
 }
 
 .colContact {
-  width: 14%;
+  width: 140px;
 }
 
 .colBranch {
-  width: 14%;
+  width: 200px;
 }
 
 .colCourse {
-  width: 13%;
+  width: 190px;
 }
 
 .colPayment {
-  width: 110px;
+  width: 130px;
 }
 
 .colCertificate {
-  width: 110px;
+  width: 130px;
 }
 
 .colStatus {
-  width: 115px;
+  width: 130px;
 }
 
 .colActions {
-  width: 85px;
+  width: 94px;
 }
 
 .headerRow {
@@ -75,6 +96,24 @@
 
 .thAction {
   text-align: center;
+  position: sticky;
+  right: 0;
+  background-color: var(--ams-color-grayscale-100, #f8f9fb);
+  z-index: 3;
+  box-shadow: -4px 0 8px -2px rgba(0, 0, 0, 0.04);
+}
+
+.tdAction {
+  position: sticky;
+  right: 0;
+  background-color: var(--ams-color-base-white, #ffffff);
+  z-index: 2;
+  box-shadow: -4px 0 8px -2px rgba(0, 0, 0, 0.04);
+  transition: background-color 150ms ease;
+}
+
+.row:hover .tdAction {
+  background-color: #fbfcfe;
 }
 
 .row {
@@ -169,35 +208,33 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: var(--ams-radius-4, 4px);
   background-color: var(--ams-color-grayscale-100, #f4f6fa);
   border: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--ams-color-grayscale-400, #071437);
   white-space: nowrap;
   max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* Course */
 .courseInfo {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
 }
 
 .courseTag {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--ams-color-primary-300, #1b84ff);
   white-space: nowrap;
 }
 
 .batchText {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--ams-color-grayscale-300, #99a1b7);
   white-space: nowrap;
 }
