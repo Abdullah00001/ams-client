@@ -27,12 +27,14 @@ import styles from "../styles/students-table.module.css";
 interface StudentsTableProps {
   students: Student[];
   pageSize?: number;
+  currentPage?: number;
   onAction: (action: StudentQuickAction, student: Student, extraPayload?: unknown) => void;
 }
 
 export function StudentsTable({
   students,
   pageSize = 10,
+  currentPage = 1,
   onAction,
 }: StudentsTableProps) {
   const handleRowClick = (student: Student, e: MouseEvent<HTMLTableRowElement>) => {
@@ -50,7 +52,7 @@ export function StudentsTable({
     <div className={styles.tableWrapper}>
       <table className={styles.table}>
         <colgroup>
-          <col className={styles.colId} />
+          <col className={styles.colSl} />
           <col className={styles.colName} />
           <col className={styles.colContact} />
           <col className={styles.colBranch} />
@@ -62,7 +64,7 @@ export function StudentsTable({
         </colgroup>
         <thead>
           <tr className={styles.headerRow}>
-            <th className={styles.th} scope="col">ID</th>
+            <th className={styles.th} scope="col">SL</th>
             <th className={styles.th} scope="col">Student Name</th>
             <th className={styles.th} scope="col">Contact</th>
             <th className={styles.th} scope="col">Branch</th>
@@ -74,7 +76,8 @@ export function StudentsTable({
           </tr>
         </thead>
         <tbody>
-          {students.map((student) => {
+          {students.map((student, index) => {
+            const serialNumber = String((currentPage - 1) * pageSize + index + 1).padStart(2, "0");
             const avatarColor = getStudentAvatarPalette(student.id + student.name);
             const statusConfig = getStudentStatusBadge(student.status);
             const paymentConfig = getPaymentStatusBadge(student.paymentStatus);
@@ -87,9 +90,9 @@ export function StudentsTable({
                 onClick={(e) => handleRowClick(student, e)}
                 title={`Click to view profile of ${student.name}`}
               >
-                {/* ID */}
+                {/* SL (Serial Number) */}
                 <td className={styles.td}>
-                  <span className={styles.studentId}>{student.id}</span>
+                  <span className={styles.slText}>{serialNumber}</span>
                 </td>
 
                 {/* Student Name & Avatar */}

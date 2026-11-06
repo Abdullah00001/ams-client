@@ -70,6 +70,7 @@ export function StudentsView() {
         <StudentsTable
           students={paginatedResult.data}
           pageSize={pageSize}
+          currentPage={currentPage}
           onAction={handleAction}
         />
 
